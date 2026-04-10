@@ -7,9 +7,12 @@ Self-supervised representation learning on the active_matter dataset from The We
 ## Getting Started
 
 ### Note to teammates who don't have the full dataset yet
-A mock dataset is provided in data/mock/ for immediate development and testing.
-It has the exact same structure as the real dataset but with only 10 samples.
-Use it to build and test your code before downloading the full 52GB dataset.
+Run this script to generate a local mock dataset with the exact same structure as the real data:
+
+    python scripts/create_mock_data.py
+
+The mock files are gitignored and will not be committed to the repo.
+Use them to build and test your code before downloading the full 52GB dataset.
 
 ### For the full dataset
 See ENV.md for setup instructions and download commands.
@@ -42,13 +45,23 @@ The full dataset should be downloaded to /scratch/$USER/data/active_matter on th
 - ~65 windows per trajectory x 135 = ~8,750 training samples
 
 ## Repository Structure
-- data/mock/              — small mock dataset for development (10 samples, correct shape)
-- src/dataset.py          — data loading and preprocessing (P1)
-- src/model.py            — model architecture (P2)
-- src/train.py            — training loop (P2)
-- src/evaluate.py         — linear probe and kNN evaluation (P3)
-- configs/base_config.yaml — shared training config
-- scripts/train.slurm     — Slurm job script
-- notebooks/              — exploratory notebooks
-- ENV.md                  — environment setup instructions
-- requirements.txt        — Python dependencies
+active-matter-representation/
+│
+├── src/
+│   ├── dataset.py               # data loading and preprocessing
+│   ├── model.py                 # model architecture
+│   ├── train.py                 # training loop
+│   └── evaluate.py              # linear probe and kNN evaluation
+│
+├── configs/
+│   └── base_config.yaml         # shared training config
+│
+├── scripts/
+│   ├── train.slurm              # Slurm job script
+│   └── create_mock_data.py      # run this to generate mock data locally
+│
+├── notebooks/                   # exploratory notebooks
+├── ENV.md                       # environment setup instructions
+└── requirements.txt             # Python dependenciesgit add .gitignore README.md scripts/create_mock_data.py
+git commit -m "add gitignore, mock data script, and updated README"
+git push
