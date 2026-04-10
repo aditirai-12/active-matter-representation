@@ -45,6 +45,7 @@ The full dataset should be downloaded to /scratch/$USER/data/active_matter on th
 - ~65 windows per trajectory x 135 = ~8,750 training samples
 
 ## Repository Structure
+```
 active-matter-representation/
 │
 ├── src/
@@ -62,6 +63,5 @@ active-matter-representation/
 │
 ├── notebooks/                   # exploratory notebooks
 ├── ENV.md                       # environment setup instructions
-└── requirements.txt             # Python dependenciesgit add .gitignore README.md scripts/create_mock_data.py
-git commit -m "add gitignore, mock data script, and updated README"
-git push
+└── requirements.txt             # Python dependencies
+```
