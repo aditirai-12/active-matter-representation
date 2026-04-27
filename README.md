@@ -199,5 +199,3 @@ To check job status:
 - Do NOT use labels (alpha, zeta) during representation learning
 - Model must be under 100M parameters
 - Evaluation must use linear probing and kNN regression only — no MLPs
-
----
