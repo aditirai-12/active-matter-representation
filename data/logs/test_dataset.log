@@ -1,0 +1,76 @@
+[18:49:08] Starting dataset pipeline test
+  root   : /scratch/ar9598/data/active_matter
+  stats  : data/stats/train_stats.json
+  output : data/logs/test_dataset.log
+
+  [18:49:08] Loading stats JSON... done  (11 channels, alpha std=1.4539, zeta std=5.2109)
+
+── 1. Split sizes ────────────────────────────────────────
+  [18:49:08] Loading train split... done in 0.8s
+  [18:49:09]   train:  175 trajectories  |  45 files  |  alpha unique: 5  zeta unique: 9
+  [18:49:09] Loading valid split... done in 0.3s
+  [18:49:09]   valid:   24 trajectories  |  16 files  |  alpha unique: 5  zeta unique: 9
+  [18:49:09] Loading test split... done in 0.3s
+  [18:49:10]   test :   26 trajectories  |  21 files  |  alpha unique: 5  zeta unique: 9
+
+── 2. SSL mode — no labels ──────────────────────────────
+  [18:49:10] Creating SSL dataset (return_labels=False)... done in 0.7s
+  [18:49:10] Loading first sample... done in 535ms
+  [18:49:11] shape     : (16, 11, 224, 224) ✓
+  [18:49:11] dtype     : torch.float32
+  [18:49:11] no labels : ✓  (returned Tensor, not tuple)
+
+── 3. Eval mode — with labels ───────────────────────────
+  [18:49:11] Creating eval dataset (return_labels=True)... done in 0.7s
+  [18:49:12] Loading first sample with labels... done in 0.410s
+  [18:49:12] frames : (16, 11, 224, 224) ✓
+  [18:49:12] labels : [1.3914, -1.5396]  [alpha_z, zeta_z] ✓
+
+── 4. Channel normalization ─────────────────────────────
+  [18:49:12] Loading 16 samples for normalization check...
+  [18:49:14]   loaded 4/16 samples (1.4s elapsed)
+  [18:49:15]   loaded 8/16 samples (3.1s elapsed)
+  [18:49:17]   loaded 12/16 samples (4.5s elapsed)
+  [18:49:18]   loaded 16/16 samples (6.1s elapsed)
+  [18:49:18] Channel                Mean      Std
+  [18:49:18] ------------------------------------
+  [18:49:18] concentration        +0.005    0.719  ✓
+  [18:49:18] velocity_x           -0.061    1.158  ✓
+  [18:49:18] velocity_y           -0.085    1.283  ✓
+  [18:49:18] D_00                 -0.026    0.812  ✓
+  [18:49:18] D_01                 +0.030    0.876  ✓
+  [18:49:18] D_10                 +0.030    0.876  ✓
+  [18:49:18] D_11                 +0.026    0.812  ✓
+  [18:49:18] E_00                 -0.002    0.628  ✓
+  [18:49:18] E_01                 -0.008    0.880  ✓
+  [18:49:18] E_10                 -0.008    0.880  ✓
+  [18:49:18] E_11                 +0.002    0.628  ✓
+  [18:49:18] overall mean check : ✓
+  [18:49:18] overall std check  : ✓
+
+── 5. Val determinism check ─────────────────────────────
+  [18:49:18] Creating val dataset... done in 0.3s  (24 trajectories)
+  [18:49:19] Loading same sample twice... ✓ identical
+
+── 6. DataLoader batch ──────────────────────────────────
+  [18:49:19] Creating DataLoader (batch_size=4)... done
+  [18:49:19] Fetching first batch... done in 1.5s
+  [18:49:21] batch shape : (4, 16, 11, 224, 224) ✓
+  [18:49:21] value range : min=-8.26  max=9.95  mean=0.0031
+  [18:49:21] any NaN     : ✓ none
+  [18:49:21] any Inf     : ✓ none
+
+── 7. build_dataloaders ─────────────────────────────────
+  [18:49:21] Building all three DataLoaders... done in 1.4s
+  [18:49:22] train :   87 batches  (175 samples)
+  [18:49:22] val   :   12 batches  (24 samples)
+  [18:49:22] test  :   13 batches  (26 samples)
+
+── 8. Label distribution (train) ────────────────────────
+  [18:49:22] alpha (5 unique): [-5.0, -4.0, -3.0, -2.0, -1.0]
+  [18:49:22] zeta  (9 unique): [1.0, 3.0, 5.0, 7.0, 9.0, 11.0, 13.0, 15.0, 17.0]
+  [18:49:22] total combos: 45
+
+==========================================================
+✓  All dataset pipeline checks passed in 14.0s
+==========================================================
