@@ -59,7 +59,7 @@ Replace YOUR_TOKEN with the token you copied in Step 3.
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
     pip install -r requirements.txt
 
-### Step 6 — Generate Mock Data
+### Step 6 — Generate Mock Data (optional, for offline development)
 Run this to generate a local mock dataset with the exact same structure as the real data:
 
     python scripts/create_mock_data.py
@@ -84,13 +84,7 @@ First check your available storage by running:
 
     df -h /scratch/$USER
 
-You will see output like this:
-
-    Filesystem      Size  Used  Avail  Use%  Mounted on
-    ...             30T   27T   3.8T   88%   /scratch
-
-Look at the Avail column — you need at least 60GB free before downloading.
-If you have less than 60GB, contact Person 1 to clear space before proceeding.
+You need at least 60GB free before downloading.
 
 Once you have enough space:
 
@@ -98,31 +92,54 @@ Once you have enough space:
     hf auth login
     hf download polymathic-ai/active_matter --repo-type dataset --local-dir /scratch/$USER/data/active_matter
 
+### Step 9 — Verify the Data Pipeline
+
+    python scripts/test_dataset.py --root /scratch/$USER/data/active_matter --stats data/stats/train_stats.json
+
+This runs a full check: split sizes, SSL/eval modes, normalization, determinism, and DataLoader batching. All checks should pass before you start training.
+
 ---
 
 ## Dataset Structure
 
 ### File Organization
-- Each .hdf5 file = one unique (alpha, zeta) parameter combination
-- Train: 45 files | Valid: 16 files | Test: 21 files
-- 3 simulation trajectories per file
+After downloading, data lives at:
+
+    /scratch/$USER/data/active_matter/data/
+    ├── train/    45 .hdf5 files
+    ├── valid/    16 .hdf5 files
+    └── test/     21 .hdf5 files
+
+Each .hdf5 file = one unique (alpha, zeta) parameter combination.
+
+### Trajectories
+- 5 trajectories per parameter set (per the HuggingFace README)
+- 175 total training trajectories (45 files × ~3.9 avg, since some combos go to valid/test)
 - 81 time steps per trajectory
-- 256x256 spatial resolution
+- 256x256 spatial resolution (cropped to 224x224 for training)
 
 ### The 11 Channels
-- Concentration       (t0_fields/concentration) — 1 channel
-- Velocity            (t1_fields/velocity)      — 2 channels (x, y)
-- Strain-rate tensor  (t2_fields/D)             — 4 channels (2x2)
-- Orientation tensor  (t2_fields/E)             — 4 channels (2x2)
+| Index | Field | Source |
+|-------|-------|--------|
+| 0 | Concentration | t0_fields/concentration — 1 channel |
+| 1–2 | Velocity (x, y) | t1_fields/velocity — 2 channels |
+| 3–6 | Strain-rate tensor D | t2_fields/D — 4 channels (2×2 flattened) |
+| 7–10 | Orientation tensor E | t2_fields/E — 4 channels (2×2 flattened) |
 
-### Labels (withheld during training)
-- scalars/alpha — active dipole strength (5 discrete values)
-- scalars/zeta  — steric alignment (9 discrete values)
+### Labels (withheld during SSL training)
+- scalars/alpha — active dipole strength (5 discrete values: -1, -2, -3, -4, -5)
+- scalars/zeta — steric alignment (9 discrete values: 1, 3, 5, 7, 9, 11, 13, 15, 17)
+- 45 unique (alpha, zeta) combinations total
 
-### How Samples Are Generated
-- 45 files x 3 trajectories = 135 train trajectories
-- Sliding 16-frame windows across 81 time steps with 224x224 crops
-- ~65 windows per trajectory x 135 = ~8,750 training samples
+### How Training Samples Are Generated
+- Each trajectory is 81 timesteps; we extract sliding 16-frame windows
+- Random spatial crop 256→224 during training; center crop during eval
+- Random H/V flips during training; no flips during eval
+
+### Pre-computed Statistics
+Channel and label normalization stats are saved in `data/stats/train_stats.json`. These were computed from the full training split only (no data leakage). To recompute:
+
+    python scripts/compute_stats.py --root /scratch/$USER/data/active_matter --split train --output data/stats/train_stats.json
 
 ---
 
@@ -132,20 +149,27 @@ active-matter-representation/
 │
 ├── src/
 │   ├── dataset.py               # data loading and preprocessing
-│   ├── model.py                 # model architecture
-│   ├── train.py                 # training loop
-│   └── evaluate.py              # linear probe and kNN evaluation
+│   ├── model.py                 # model architecture (TODO)
+│   ├── train.py                 # training loop (TODO)
+│   └── evaluate.py              # linear probe and kNN evaluation (TODO)
 │
 ├── configs/
-│   └── base_config.yaml         # shared training config
+│   └── base_config.yaml         # shared training config (TODO)
+│
+├── data/
+│   └── stats/
+│       └── train_stats.json     # pre-computed channel + label stats
 │
 ├── scripts/
 │   ├── train.slurm              # Slurm job script
-│   └── create_mock_data.py      # run this to generate mock data locally
+│   ├── compute_stats.py         # compute normalization stats from train split
+│   ├── create_mock_data.py      # generate mock data for local testing
+│   └── test_dataset.py          # validate data pipeline end-to-end
 │
 ├── notebooks/                   # exploratory notebooks
 ├── ENV.md                       # environment setup instructions
-└── requirements.txt             # Python dependencies
+├── requirements.txt             # Python dependencies
+└── README.md
 ```
 ---
 
