@@ -1,2 +1,15 @@
-*.hdf5
+.ipynb_checkpoints/
+*.swp
+
+data/
+dataset_cache/
+checkpoints/
+embeddings/
+logs/
+wandb/
+
 *.h5
+*.hdf5
+*.pth
+*.pt
+*.ckpt
