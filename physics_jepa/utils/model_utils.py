@@ -144,17 +144,91 @@ class ConvEncoder(nn.Module):
                         *[ResidualBlock(dims[i], num_spatial_dims=3 if i < 3 else 2) for _ in range(num_res_blocks[i])]
                     )
                 )
-
+        elif num_frames == 8:
+            # For 8-frame context/target blocks:
+            # 8 -> 4 -> 2 -> 1 in time, then switch to 2D convs
+        
+            # layer 1: temporal + spatial downsample
+            self.downsample_layers.append(
+                nn.Sequential(
+                    LayerNorm(dims[0], data_format="channels_first"),
+                    nn.Conv3d(
+                        in_channels=dims[0],
+                        out_channels=dims[1],
+                        kernel_size=2,
+                        stride=2,
+                    ),
+                )
+            )
+        
+            # layer 2: temporal + spatial downsample
+            self.downsample_layers.append(
+                nn.Sequential(
+                    LayerNorm(dims[1], data_format="channels_first"),
+                    nn.Conv3d(
+                        in_channels=dims[1],
+                        out_channels=dims[2],
+                        kernel_size=2,
+                        stride=2,
+                    ),
+                )
+            )
+        
+            # layer 3: temporal + spatial downsample, time becomes 1
+            self.downsample_layers.append(
+                nn.Sequential(
+                    LayerNorm(dims[2], data_format="channels_first"),
+                    nn.Conv3d(
+                        in_channels=dims[2],
+                        out_channels=dims[3],
+                        kernel_size=2,
+                        stride=2,
+                    ),
+                )
+            )
+        
+            # layer 4: spatial-only downsample after time has been squeezed
+            self.downsample_layers.append(
+                nn.Sequential(
+                    LayerNorm(dims[3], data_format="channels_first"),
+                    nn.Conv2d(
+                        in_channels=dims[3],
+                        out_channels=dims[4],
+                        kernel_size=2,
+                        stride=2,
+                    ),
+                )
+            )
+        
+            self.res_blocks = nn.ModuleList()
+            for i in range(len(dims)):
+                self.res_blocks.append(
+                    nn.Sequential(
+                        *[
+                            ResidualBlock(
+                                dims[i],
+                                num_spatial_dims=3 if i < 3 else 2,
+                            )
+                            for _ in range(num_res_blocks[i])
+                        ]
+                    )
+                )
         else:
-            raise ValueError(f"Currently supports 4 and 16 frames, input num_frames: {num_frames}")
+            raise ValueError(f"Currently supports 4, 8, and 16 frames, input num_frames: {num_frames}")
         
         self.dims = dims
 
     def forward(self, x, **kwargs):
         for i in range(len(self.dims)):
             x = self.downsample_layers[i](x)
-            x = x.squeeze(2)
+    
+            # Only remove time dimension when it is actually size 1.
+            # This prevents accidentally treating time as channels.
+            if x.dim() == 5 and x.shape[2] == 1:
+                x = x.squeeze(2)
+    
             x = self.res_blocks[i](x)
+    
         return x
 
 class ConvEncoderViTTiny(nn.Module):

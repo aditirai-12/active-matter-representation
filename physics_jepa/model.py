@@ -8,7 +8,7 @@ from collections import defaultdict
 
 from physics_jepa.utils.model_utils import ConvEncoder, ConvPredictor, ConvDecoder
 
-def get_model_and_loss_cnn(dims, num_res_blocks, num_frames, in_chans=2, sim_coeff=25, std_coeff=25, cov_coeff=1):
+def get_model_and_loss_cnn(dims, num_res_blocks, num_frames, in_chans=11, sim_coeff=25, std_coeff=25, cov_coeff=1):
     encoder = ConvEncoder(
         dims=dims,
         in_chans=in_chans,

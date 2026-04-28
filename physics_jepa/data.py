@@ -13,6 +13,7 @@ import torch.distributed as dist
 import random
 import weakref
 from collections import OrderedDict
+from src.dataset import ActiveMatterDataset
 
 class WellDatasetForJEPA(Dataset):
     """
@@ -608,7 +609,52 @@ class WellDatasetForMPP(Dataset):
         st = self.__dict__.copy()
         st["_open"] = None
         return st
+class ActiveMatterJEPADataset(Dataset):
+    """
+    Adapter from src.dataset.ActiveMatterDataset to JEPA format.
 
+    ActiveMatterDataset returns:
+        frames: (T, C, H, W)
+
+    JEPA training expects:
+        {
+            "context": (C, T_context, H, W),
+            "target":  (C, T_target, H, W)
+        }
+    """
+
+    def __init__(self, base_dataset, include_labels=False):
+        self.base_dataset = base_dataset
+        self.include_labels = include_labels
+
+    def __len__(self):
+        return len(self.base_dataset)
+
+    def __getitem__(self, idx):
+        item = self.base_dataset[idx]
+
+        if self.include_labels:
+            frames, labels = item
+        else:
+            frames = item
+            labels = None
+
+        # frames: (T, C, H, W)
+        mid = frames.shape[0] // 2
+
+        context = frames[:mid].permute(1, 0, 2, 3).contiguous()
+        target = frames[mid:].permute(1, 0, 2, 3).contiguous()
+
+        out = {
+            "context": context,
+            "target": target,
+        }
+
+        if labels is not None:
+            out["label"] = labels
+            out["physical_params"] = labels
+
+        return out
 
 def get_dataset(
     dataset_name, 
@@ -632,15 +678,21 @@ def get_dataset(
     if well_data_dir is None:
         raise ValueError("THE_WELL_DATA_DIR environment variable is not set. "
                          "Set it to the path of The Well datasets directory.")
-    return WellDatasetForJEPA(
-        data_dir=Path(well_data_dir) / dataset_name,
-        num_frames=num_frames,
-        split=split,
-        resolution=resolution,
-        stride=offset,
-        subset_config_path=subset_config_path,
-        noise_std=noise_std,
-    )
+    if dataset_name == "active_matter":
+        split_name = "valid" if split == "val" else split
+
+        base_dataset = ActiveMatterDataset(
+            root=Path(well_data_dir) / dataset_name,
+            split=split_name,
+            n_frames=2 * num_frames,
+            return_labels=include_labels,
+            normalize_channels=True,
+            normalize_labels=True,
+            augment=(split_name == "train"),
+            random_temporal_crop=(split_name == "train"),
+        )
+
+        return ActiveMatterJEPADataset(base_dataset, include_labels=include_labels)
 
 def get_dataset_metadata(dataset_name):
     well_data_dir = os.environ.get("THE_WELL_DATA_DIR")
