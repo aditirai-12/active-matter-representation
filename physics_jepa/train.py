@@ -294,6 +294,10 @@ class Trainer:
                 sim_coeff=self.train_cfg.sim_coeff,
                 std_coeff=self.train_cfg.std_coeff,
                 cov_coeff=self.train_cfg.cov_coeff,
+                use_channel_stem=self.cfg.model.get("use_channel_stem", False),
+                use_temporal_mixer=self.cfg.model.get("use_temporal_mixer", False),
+                predictor_scale_factor=self.cfg.model.get("predictor_scale_factor", 2),
+                predictor_depth=self.cfg.model.get("predictor_depth", 1),
             )
 
             if 'encoder_path' in self.train_cfg and self.train_cfg.encoder_path is not None:

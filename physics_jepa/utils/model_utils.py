@@ -87,17 +87,70 @@ class ResidualBlock(nn.Module):
         x = input + self.drop_path(x)
         return x
 
+
+class TemporalMixerBlock(nn.Module):
+    def __init__(self, dim):
+        super().__init__()
+
+        self.temporal_conv = nn.Conv3d(
+            dim,
+            dim,
+            kernel_size=(3, 1, 1),
+            padding=(1, 0, 0),
+            groups=dim,
+        )
+
+        self.norm = LayerNorm(dim, data_format="channels_first")
+
+        self.channel_mlp = nn.Sequential(
+            nn.Conv3d(dim, 4 * dim, kernel_size=1),
+            nn.GELU(),
+            nn.Conv3d(4 * dim, dim, kernel_size=1),
+        )
+
+    def forward(self, x):
+        # x: [B, C, T, H, W]
+        x = x + self.temporal_conv(x)
+        x = x + self.channel_mlp(self.norm(x))
+        return x
+
 class ConvEncoder(nn.Module):
     def __init__(self,
                  in_chans=2,
                  num_res_blocks=[3, 3, 9, 3],
                  dims=[96, 192, 384, 768],
-                 num_frames=4):
+                 num_frames=4, 
+                 use_channel_stem=False,
+                 use_temporal_mixer=False):
         super().__init__()
+        self.use_channel_stem = use_channel_stem
+        
+        if self.use_channel_stem:
+            self.channel_stem = nn.Sequential(
+                nn.Conv3d(in_chans, 64, kernel_size=1),
+                LayerNorm(64, data_format="channels_first"),
+                nn.GELU(),
+                nn.Conv3d(64, in_chans, kernel_size=1),
+                LayerNorm(in_chans, data_format="channels_first"),
+                nn.GELU(),
+            )
+        else:
+            self.channel_stem = nn.Identity()
+        
         stem = nn.Sequential(
             nn.Conv3d(in_chans, dims[0], kernel_size=(1, 4, 4), padding='same'),
             LayerNorm(dims[0], data_format="channels_first"),
         )
+        self.use_temporal_mixer = use_temporal_mixer
+
+        if self.use_temporal_mixer:
+            self.temporal_mixers = nn.ModuleList([
+                TemporalMixerBlock(dim) for dim in dims
+            ])
+        else:
+            self.temporal_mixers = nn.ModuleList([
+                nn.Identity() for _ in dims
+            ])
 
         self.downsample_layers = nn.ModuleList()
         self.downsample_layers.append(stem)
@@ -219,6 +272,7 @@ class ConvEncoder(nn.Module):
         self.dims = dims
 
     def forward(self, x, **kwargs):
+        x = self.channel_stem(x)
         for i in range(len(self.dims)):
             x = self.downsample_layers[i](x)
     
@@ -228,7 +282,10 @@ class ConvEncoder(nn.Module):
                 x = x.squeeze(2)
     
             x = self.res_blocks[i](x)
-    
+
+            if x.dim() == 5:
+                x = self.temporal_mixers[i](x)
+                
         return x
 
 class ConvEncoderViTTiny(nn.Module):
@@ -349,16 +406,25 @@ class ConvPredictorViTTiny(nn.Module):
         return x
 
 class ConvPredictor(nn.Module):
-    def __init__(self, dims):
+    def __init__(self, dims, scale_factor=2, depth=1):
         super().__init__()
-        # self.thw = (time_dim, height_dim, width_dim)
-        self.scale_factor = 2
+        self.scale_factor = scale_factor
+        hidden_dim = dims[0] * self.scale_factor
 
-        self.conv = nn.Sequential(
-            nn.Conv2d(dims[0], dims[0]*self.scale_factor, kernel_size=2, padding=1),
-            ResidualBlock(dims[0]*self.scale_factor, num_spatial_dims=2),
-            nn.Conv2d(dims[0]*self.scale_factor, dims[0], kernel_size=2)
+        blocks = [
+            nn.Conv2d(dims[0], hidden_dim, kernel_size=2, padding=1),
+        ]
+
+        blocks.extend([
+            ResidualBlock(hidden_dim, num_spatial_dims=2)
+            for _ in range(depth)
+        ])
+
+        blocks.append(
+            nn.Conv2d(hidden_dim, dims[0], kernel_size=2)
         )
+
+        self.conv = nn.Sequential(*blocks)
 
     def forward(self, x):
         x = self.conv(x)

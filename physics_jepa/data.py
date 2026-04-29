@@ -38,6 +38,7 @@ class WellDatasetForJEPA(Dataset):
         stride: int = None, # temporal overlap of training examples, default is num_frames
         subset_config_path: Optional[str | Path] = None, # path to config file containing subset_indices
         noise_std: float = 0.0, # standard deviation of Gaussian noise to add
+        gap_frames: int = 0,
         # HDF5 handle/cache tuning:
         max_open_files: int = 6,
         rdcc_nbytes: int = 512 * 1024**2,
@@ -52,6 +53,10 @@ class WellDatasetForJEPA(Dataset):
         self.split = split
         self.num_frames = int(num_frames)
         assert self.num_frames > 0
+        
+        self.gap_frames = int(gap_frames)
+        assert self.gap_frames >= 0
+        
         self.stride = stride
         self.resolution = resolution
         self.noise_std = float(noise_std)
@@ -99,13 +104,16 @@ class WellDatasetForJEPA(Dataset):
         physical_params_idx: Dict[str, List[np.ndarray]] = {}
         
         F = self.num_frames
+        G = self.gap_frames
+        window_len = 2 * F + G
+        
         paths = sorted(list(self.data_dir.rglob("*.h5")) + list(self.data_dir.rglob("*.hdf5")))
         
         for path in paths:
             with h5py.File(path, 'r') as f:
                 example_scalar_field = f['t0_fields'][list(f['t0_fields'].keys())[0]]
                 T = int(example_scalar_field.shape[1]) # expected shape: num_objs t h w
-                max_t0 = T - 2 * F
+                max_t0 = T - window_len
                 if max_t0 < 0:
                     continue
                 stride = self.stride if self.stride is not None else F
@@ -180,6 +188,8 @@ class WellDatasetForJEPA(Dataset):
             actual_index = i
         file_id, local_obj_idx, t0 = self.index[actual_index]
         F = self.num_frames
+        G = self.gap_frames
+        window_len = 2 * F + G
 
         f, state = self._open_file(file_id)  # per-worker LRU open
         H, W = self._spatial_shape
@@ -200,7 +210,7 @@ class WellDatasetForJEPA(Dataset):
             h_slice = slice(None)
             w_slice = slice(None)
 
-        sel_2f_prefix = (local_obj_idx, slice(t0, t0 + 2*F), h_slice, w_slice)
+        sel_window_prefix = (local_obj_idx, slice(t0, t0 + window_len), h_slice, w_slice)
 
         # per-worker cache of temporary buffers keyed by component shape
         tmp_cache = state.setdefault("twobuf_cache", {})  # e.g., {(): arr(2F,H,W), (2,): arr(2F,H,W,2), (2,2): arr(2F,H,W,2,2)}
@@ -211,21 +221,21 @@ class WellDatasetForJEPA(Dataset):
             ds = self._get_ds_handle(f, state, path)
 
              # ensure a reusable temp buffer of shape (2F, H, W, *comp_shape)
-            need_shape = (2*F, H, W) + comp_shape
+            need_shape = (window_len, H, W) + comp_shape
             buf = tmp_cache.get(comp_shape)
             if buf is None or buf.shape != need_shape or buf.dtype != self._dtype:
                 buf = np.empty(need_shape, dtype=self._dtype, order="C")
                 tmp_cache[comp_shape] = buf
 
             # build full source sel including component dims
-            sel = sel_2f_prefix + (slice(None),) * len(comp_shape)
+            sel = sel_window_prefix + (slice(None),) * len(comp_shape)
             ds.read_direct(buf, source_sel=sel)  # one I/O per field
 
             # flatten component axes to channels view and split into ctx/tgt
-            view = buf.reshape(2*F, H, W, dsize)   # no copy; C-order
+            view = buf.reshape(window_len, H, W, dsize)   # no copy; C-order
             c1 = c0 + dsize
             ctx[..., c0:c1] = view[:F]
-            tgt[..., c0:c1] = view[F:]
+            tgt[..., c0:c1] = view[F + G:F + G + F]
             c0 = c1
 
         # -> torch (C, T, H, W)
@@ -623,10 +633,12 @@ class ActiveMatterJEPADataset(Dataset):
         }
     """
 
-    def __init__(self, base_dataset, include_labels=False):
+    def __init__(self, base_dataset, include_labels=False, num_frames=None, gap_frames=0):
         self.base_dataset = base_dataset
         self.include_labels = include_labels
-
+        self.num_frames = num_frames
+        self.gap_frames = int(gap_frames)
+    
     def __len__(self):
         return len(self.base_dataset)
 
@@ -640,11 +652,27 @@ class ActiveMatterJEPADataset(Dataset):
             labels = None
 
         # frames: (T, C, H, W)
-        mid = frames.shape[0] // 2
+        F = self.num_frames
+        G = self.gap_frames
+        # if idx == 0:
+        #     print("JEPA split check:")
+        #     print("F:", F)
+        #     print("G:", G)
+        #     print("total frames loaded:", frames.shape[0])
+        #     print("context uses frames: 0 to", F - 1)
+        #     print("target uses frames:", F + G, "to", F + G + F - 1)
+                
+        if F is None:
+            mid = frames.shape[0] // 2
+            context_frames = frames[:mid]
+            target_frames = frames[mid:]
+        else:
+            context_frames = frames[:F]
+            target_frames = frames[F + G:F + G + F]
 
-        context = frames[:mid].permute(1, 0, 2, 3).contiguous()
-        target = frames[mid:].permute(1, 0, 2, 3).contiguous()
-
+        context = context_frames.permute(1, 0, 2, 3).contiguous()
+        target = target_frames.permute(1, 0, 2, 3).contiguous()
+        
         out = {
             "context": context,
             "target": target,
@@ -671,6 +699,7 @@ def get_dataset(
     offset=None,
     subset_config_path=None,
     noise_std=0.0,
+    gap_frames=0
 ):
 
     resolution = (resolution, resolution) if isinstance(resolution, int) else resolution
@@ -684,7 +713,7 @@ def get_dataset(
         base_dataset = ActiveMatterDataset(
             root=Path(well_data_dir) / dataset_name,
             split=split_name,
-            n_frames=2 * num_frames,
+            n_frames=2 * num_frames + int(gap_frames),
             return_labels=include_labels,
             normalize_channels=True,
             normalize_labels=True,
@@ -692,7 +721,12 @@ def get_dataset(
             random_temporal_crop=(split_name == "train"),
         )
 
-        return ActiveMatterJEPADataset(base_dataset, include_labels=include_labels)
+        return ActiveMatterJEPADataset(
+            base_dataset,
+            include_labels=include_labels,
+            num_frames=num_frames,
+            gap_frames=gap_frames,
+        )
 
 def get_dataset_metadata(dataset_name):
     well_data_dir = os.environ.get("THE_WELL_DATA_DIR")
@@ -729,6 +763,7 @@ def get_train_dataloader_from_cfg(cfg, stage="train", rank=None, world_size=None
         offset=cfg.dataset.get("offset", None),
         subset_config_path=cfg.dataset.get("subset_config_path", None),
         noise_std=cfg[stage].get("noise_std", 0.0),
+        gap_frames=cfg.dataset.get("gap_frames", 0),
     )
 
 def get_val_dataloader_from_cfg(cfg, stage="train", rank=None, world_size=None):
@@ -748,6 +783,7 @@ def get_val_dataloader_from_cfg(cfg, stage="train", rank=None, world_size=None):
         resolution=cfg.dataset.get("resolution", None),
         offset=cfg.dataset.get("offset", None),
         noise_std=cfg[stage].get("noise_std", 0.0),
+        gap_frames=cfg.dataset.get("gap_frames", 0),
     )
 
 def get_train_dataloader(
@@ -773,6 +809,7 @@ def get_train_dataloader(
         offset=None,
         subset_config_path=None,
         noise_std=0.0,
+        gap_frames=0,
     ):
     dataset = get_dataset(dataset_name,
                           num_frames, 
@@ -788,6 +825,7 @@ def get_train_dataloader(
                           offset=offset,
                           subset_config_path=subset_config_path,
                           noise_std=noise_std,
+                          gap_frames=gap_frames,
                         )
     if rank == 0:
         print(f"total number of block pairs in train dataset: {len(dataset)}")
@@ -846,6 +884,7 @@ def get_val_dataloader(
         resolution=None,
         offset=None,
         noise_std=0.0,
+        gap_frames=0,
     ):
     dataset = get_dataset(dataset_name, 
                           num_frames, 
@@ -860,6 +899,7 @@ def get_val_dataloader(
                           resolution=resolution,
                           offset=offset,
                           noise_std=noise_std,
+                          gap_frames=gap_frames,
                         )
     if world_size == 1:
         sampler = None

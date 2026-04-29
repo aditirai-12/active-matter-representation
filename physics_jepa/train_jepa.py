@@ -11,8 +11,9 @@ class JepaTrainer(Trainer):
 
     def pred_fn(self, batch, model_components, loss_fn):
         encoder, predictor = model_components
-        print("context shape before encoder:", batch["context"].shape)
-        print("target shape before encoder:", batch["target"].shape)
+        # print("context shape before encoder:", batch["context"].shape)
+        # print("target shape before encoder:", batch["target"].shape)
+        # print("gap test mean abs diff:", (batch["context"] - batch["target"]).abs().mean().item())
         ctx_embed = encoder(batch['context'])
         tgt_embed = encoder(batch['target'])
         pred = predictor(ctx_embed)

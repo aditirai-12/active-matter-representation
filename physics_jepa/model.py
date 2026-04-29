@@ -8,20 +8,25 @@ from collections import defaultdict
 
 from physics_jepa.utils.model_utils import ConvEncoder, ConvPredictor, ConvDecoder
 
-def get_model_and_loss_cnn(dims, num_res_blocks, num_frames, in_chans=11, sim_coeff=25, std_coeff=25, cov_coeff=1):
+def get_model_and_loss_cnn(dims, num_res_blocks, num_frames, in_chans=11, sim_coeff=25, std_coeff=25, cov_coeff=1, use_channel_stem=False, use_temporal_mixer=False, predictor_scale_factor=2, predictor_depth=1,):
     encoder = ConvEncoder(
         dims=dims,
         in_chans=in_chans,
         num_res_blocks=num_res_blocks,
         num_frames=num_frames,
+        use_channel_stem=use_channel_stem,
+        use_temporal_mixer=use_temporal_mixer,
     )
     loss = partial(vicreg_loss_3d,
                 sim_coeff=sim_coeff,
                 std_coeff=std_coeff,
                 cov_coeff=cov_coeff,
                 n_chunks=5)
-    predictor = ConvPredictor(dims=list(reversed(encoder.dims))[:2])
-    
+    predictor = ConvPredictor(
+        dims=list(reversed(encoder.dims))[:2],
+        scale_factor=predictor_scale_factor,
+        depth=predictor_depth,
+    )
     return encoder, predictor, loss
 
 def vicreg_loss_3d(
