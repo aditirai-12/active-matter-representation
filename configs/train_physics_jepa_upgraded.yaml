@@ -15,6 +15,7 @@ model:
   use_temporal_mixer: true
   predictor_scale_factor: 3
   predictor_depth: 2
+  perserve_temporal: true
 
 train:
   num_epochs: 30

@@ -170,9 +170,11 @@ class BaseFinetuner(Trainer, ABC):
             labels = batch['label'].to(self.rank) # don't normalize here since it's already done when saving embeddings, embeddings save as 'label'
         
         # Convert spatial encoder feature maps into one vector per sample.
-        # Encoder embeddings are shaped (B, 128, 14, 14), but the linear head expects (B, 128).
+        # Encoder output may be (B, C, H, W) or (B, C, T, H, W) if preserve_temporal=True.
         # This is non-learned global average pooling, so the trainable evaluation head is still just one linear layer.
-        if ctx.ndim == 4:
+        if ctx.ndim == 5:
+            ctx = ctx.mean(dim=(-3, -2, -1))
+        elif ctx.ndim == 4:
             ctx = ctx.mean(dim=(-2, -1))
 
         pred = head(ctx)
