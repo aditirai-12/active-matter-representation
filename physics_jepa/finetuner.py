@@ -26,7 +26,6 @@ from .data import EmbeddingsDataset, get_dataset_metadata, get_train_dataloader,
 from .model import get_model_and_loss_cnn, get_autoencoder
 from .utils.data_utils import normalize_labels
 from .utils.model_utils import RegressionHead, RegressionMLP
-from .attentive_pooler import AttentiveClassifier
 from .utils.train_utils import accuracy
 from .train import Trainer
 from .videomae import vit_small_patch16_224, vit_base_patch16_224, vit_large_patch16_224, vit_huge_patch16_224
@@ -494,58 +493,34 @@ class JepaFinetuner(BaseFinetuner):
     def create_head(self, metadata):
         embed_dim = self.cfg.model.dims[-1]
 
-        if self.cfg.ft.get("use_attentive_pooling", False):
-            # Use attentive pooling
-            if self.cfg.ft.task == "regression":
-                head = AttentiveClassifier(
-                    embed_dim=embed_dim,
-                    num_classes=len(metadata.constant_scalar_names),
-                    num_heads=8, # needs to be divisible by embed_dim
-                    mlp_ratio=12.0,
-                    dropout_rate=self.cfg.ft.get("dropout_rate", 0.0)
-                )
-            elif "classification" in self.cfg.ft.task:
-                head = AttentiveClassifier(
-                    embed_dim=embed_dim,
-                    num_classes=self.cfg.ft.num_classes,
-                    num_heads=8, # needs to be divisible by embed_dim
-                    mlp_ratio=12.0,
-                    dropout_rate=self.cfg.ft.get("dropout_rate", 0.0)
-                )
-        else:
-            # Use traditional pooling
-            if self.cfg.ft.task == "regression":
-                if self.cfg.ft.head_type == "linear":
-                    head = RegressionHead(
-                        in_dim=embed_dim,
-                        out_dim=len(metadata.constant_scalar_names),
-                        flatten_first=True
-                    )
-                elif self.cfg.ft.head_type == "mlp":
-                    head = RegressionMLP(
-                        in_dim=embed_dim,
-                        out_dim=len(metadata.constant_scalar_names),
-                        flatten_first=True,
-                        add_dropout=self.cfg.ft.get("add_dropout", False),
-                        dropout_rate=self.cfg.ft.get("dropout_rate", 0.2)
-                    )
-            elif "classification" in self.cfg.ft.task:
+        if self.cfg.ft.task == "regression":
+            if self.cfg.ft.head_type == "linear":
                 head = RegressionHead(
                     in_dim=embed_dim,
-                    out_dim=self.cfg.ft.num_classes,
+                    out_dim=len(metadata.constant_scalar_names),
+                    flatten_first=True
+                )
+            elif self.cfg.ft.head_type == "mlp":
+                head = RegressionMLP(
+                    in_dim=embed_dim,
+                    out_dim=len(metadata.constant_scalar_names),
                     flatten_first=True,
                     add_dropout=self.cfg.ft.get("add_dropout", False),
-                    dropout_rate=self.cfg.ft.get("dropout_rate", 0.8)
+                    dropout_rate=self.cfg.ft.get("dropout_rate", 0.2)
                 )
+        elif "classification" in self.cfg.ft.task:
+            head = RegressionHead(
+                in_dim=embed_dim,
+                out_dim=self.cfg.ft.num_classes,
+                flatten_first=True,
+                add_dropout=self.cfg.ft.get("add_dropout", False),
+                dropout_rate=self.cfg.ft.get("dropout_rate", 0.8)
+            )
         return head
 
     def _model_inference(self, ctx, encoder):
         with torch.no_grad():
             enc_ctx = encoder(ctx)
-            if self.cfg.ft.get("use_attentive_pooling", False):
-                # reshape to (batch_size, num_tokens, embed_dim)
-                enc_ctx = rearrange(enc_ctx, 'b c h w -> b (h w) c')
-            # Check for NaN values in the encoded context
             if torch.isnan(enc_ctx).any():
                 raise ValueError(f"NaN values detected in encoded context. Shape: {enc_ctx.shape}, NaN count: {torch.isnan(enc_ctx).sum()}")
         return enc_ctx
@@ -624,60 +599,32 @@ class VideoMAEFinetuner(BaseFinetuner):
             'pretrain_videomae_huge_patch16_224': 1280,
         }[model_arch]
 
-        if self.cfg.ft.get("use_attentive_pooling", False):
-            # Use attentive pooling over patch embeddings
-            if self.cfg.ft.task == "regression":
-                head = AttentiveClassifier(
-                    embed_dim=embed_dim,
-                    num_classes=len(metadata.constant_scalar_names),
-                    # use defaults for other values
-                    num_heads=8, # needs to be divisible by embed_dim
-                    mlp_ratio=0.25,
-                    dropout_rate=self.cfg.ft.get("dropout_rate", 0.0)
-                )
-            elif "classification" in self.cfg.ft.task:
-                head = AttentiveClassifier(
-                    embed_dim=embed_dim,
-                    num_classes=self.cfg.ft.num_classes,
-                    num_heads=8, # needs to be divisible by embed_dim
-                    mlp_ratio=0.25,
-                    dropout_rate=self.cfg.ft.get("dropout_rate", 0.0)
-                )
-        else:
-            # Use traditional pooling with CLS token
-            if self.cfg.ft.task == "regression":
-                if self.cfg.ft.head_type == "linear":
-                    head = RegressionHead(
-                        in_dim=embed_dim,
-                        out_dim=len(metadata.constant_scalar_names),
-                        flatten_first=True
-                    )
-                elif self.cfg.ft.head_type == "mlp":
-                    head = RegressionMLP(
-                        in_dim=embed_dim,
-                        out_dim=len(metadata.constant_scalar_names),
-                        flatten_first=True,
-                        add_dropout=self.cfg.ft.get("add_dropout", False),
-                        dropout_rate=self.cfg.ft.get("dropout_rate", 0.2)
-                    )
-            elif "classification" in self.cfg.ft.task:
+        if self.cfg.ft.task == "regression":
+            if self.cfg.ft.head_type == "linear":
                 head = RegressionHead(
                     in_dim=embed_dim,
-                    out_dim=self.cfg.ft.num_classes,
-                    flatten_first=True,
+                    out_dim=len(metadata.constant_scalar_names),
+                    flatten_first=True
                 )
-            else:
-                raise ValueError(f"task {self.cfg.ft.task} not supported for VideoMAE finetuning")
+            elif self.cfg.ft.head_type == "mlp":
+                head = RegressionMLP(
+                    in_dim=embed_dim,
+                    out_dim=len(metadata.constant_scalar_names),
+                    flatten_first=True,
+                    add_dropout=self.cfg.ft.get("add_dropout", False),
+                    dropout_rate=self.cfg.ft.get("dropout_rate", 0.2)
+                )
+        elif "classification" in self.cfg.ft.task:
+            head = RegressionHead(
+                in_dim=embed_dim,
+                out_dim=self.cfg.ft.num_classes,
+                flatten_first=True,
+            )
+        else:
+            raise ValueError(f"task {self.cfg.ft.task} not supported for VideoMAE finetuning")
         return head
     
     def _model_inference(self, ctx, encoder):
         with torch.no_grad():
-            if self.cfg.ft.get("use_attentive_pooling", False):
-                # Get patch embeddings for attentive pooling
-                patch_embeddings = encoder.get_patch_embeddings(ctx)
-                return patch_embeddings
-            else:
-                # Return CLS token for traditional pooling
-                cls_token = encoder.forward_features(ctx)  # (B, embed_dim) - already the CLS token
-                return cls_token
- 
+            cls_token = encoder.forward_features(ctx)  # (B, embed_dim)
+            return cls_token

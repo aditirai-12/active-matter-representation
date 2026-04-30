@@ -22,8 +22,6 @@ from .utils.data_utils import mae
 from .utils.hydra import compose
 from .utils.misc import distprint
 from .utils.train_utils import ddp_setup, gather_losses_and_report
-from .utils.model_summary import summarize_convs
-from .attentive_pooler import AttentiveClassifier
 
 class Trainer:
     def __init__(self, cfg, stage="train"):
@@ -344,10 +342,11 @@ class Trainer:
                 in_chans=self.cfg.dataset.num_chans if 'fields' not in self.train_cfg else len(self.train_cfg.fields),
             )
             metadata = get_dataset_metadata(self.cfg.dataset.name)
-            head = AttentiveClassifier(
-                embed_dim=self.cfg.model.dims[-1],
-                num_classes=len(metadata.constant_scalar_names),
-                num_heads=8,
+            from .utils.model_utils import RegressionHead
+            head = RegressionHead(
+                in_dim=self.cfg.model.dims[-1],
+                out_dim=len(metadata.constant_scalar_names),
+                flatten_first=True,
             )
 
             distprint(f"num encoder parameters: {sum(p.numel() for p in encoder.parameters())}", local_rank=self.rank)

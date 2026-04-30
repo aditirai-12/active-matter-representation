@@ -61,16 +61,41 @@ CHANNEL_NAMES: List[str] = (
     + [f"E_{i}{j}" for i in range(2) for j in range(2)]
 )
 
-# Placeholder stats — replace with output of compute_channel_stats_fast()
+# Per-channel z-score stats computed from training data (data/stats/train_stats.json).
+# Channels: concentration, velocity_x, velocity_y, D_00, D_01, D_10, D_11, E_00, E_01, E_10, E_11
 CHANNEL_STATS: Dict[str, List[float]] = {
-    "mean": [0.0] * N_CHANNELS,
-    "std":  [1.0] * N_CHANNELS,
+    "mean": [
+        1.0000147,   #  concentration
+        0.0073079,   #  velocity_x
+       -0.0057337,   #  velocity_y
+        0.5024746,   #  D_00
+       -0.0076769,   #  D_01
+       -0.0076769,   #  D_10
+        0.4975401,   #  D_11
+        0.0002608,   #  E_00
+       -0.0011301,   #  E_01
+       -0.0011301,   #  E_10
+       -0.0002608,   #  E_11
+    ],
+    "std": [
+        0.0028454,   #  concentration  ← very tight; normalization matters a lot here
+        0.5740187,   #  velocity_x
+        0.5643068,   #  velocity_y
+        0.3203980,   #  D_00
+        0.3308609,   #  D_01
+        0.3308609,   #  D_10
+        0.3204363,   #  D_11
+        0.4073318,   #  E_00
+        0.4315492,   #  E_01
+        0.4315492,   #  E_10
+        0.4073318,   #  E_11
+    ],
 }
 
-# Placeholder label stats — replace with output of compute_label_stats()
+# Label z-score stats computed from training data (data/stats/train_stats.json).
 LABEL_STATS: Dict[str, Dict[str, float]] = {
-    "alpha": {"mean": 0.0, "std": 1.0},
-    "zeta":  {"mean": 0.0, "std": 1.0},
+    "alpha": {"mean": -3.0228571, "std": 1.4538787},
+    "zeta":  {"mean":  9.0228571, "std": 5.2109273},
 }
 
 

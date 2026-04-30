@@ -32,7 +32,6 @@ train:
 
 ft:
   task: "regression"
-  use_attentive_pooling: true
   lr_scheduler: "cosine"
   lr_scheduler_warmup_epochs: 2
   min_lr: 0

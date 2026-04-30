@@ -39,7 +39,6 @@ ft:
   head_type: linear
   embeddings_dir: "./embeddings/baseline"
   task: "regression"
-  use_attentive_pooling: false
   lr_scheduler: "cosine"
   lr_scheduler_warmup_epochs: 2
   min_lr: 0
