@@ -22,6 +22,7 @@ from .utils.data_utils import mae
 from .utils.hydra import compose
 from .utils.misc import distprint
 from .utils.train_utils import ddp_setup, gather_losses_and_report
+from .utils.model_summary import summarize_convs
 
 class Trainer:
     def __init__(self, cfg, stage="train"):
