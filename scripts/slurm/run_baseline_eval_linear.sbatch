@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=baseline-linear-eval
 #SBATCH --account=csci_ga_2572-2026sp
-#SBATCH --partition=c12m85-a100-1
+#SBATCH --partition=n1s8-t4-1 
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=24G

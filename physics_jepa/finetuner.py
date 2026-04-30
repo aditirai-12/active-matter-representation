@@ -479,6 +479,10 @@ class JepaFinetuner(BaseFinetuner):
             self.cfg.model.num_res_blocks,
             self.cfg.dataset.num_frames,
             in_chans=self.cfg.dataset.num_chans if 'fields' not in self.cfg.ft else len(self.cfg.ft.fields),
+            use_channel_stem=self.cfg.model.get("use_channel_stem", False),
+            use_temporal_mixer=self.cfg.model.get("use_temporal_mixer", False),
+            predictor_scale_factor=self.cfg.model.get("predictor_scale_factor", 2),
+            predictor_depth=self.cfg.model.get("predictor_depth", 1),
         )
         if self.trained_model_path is not None:
             print(f"loading state dict from {self.trained_model_path}", flush=True)
