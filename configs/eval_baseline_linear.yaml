@@ -8,13 +8,13 @@ dataset:
 
 model:
   objective: "jepa"
-  dims: [32, 64, 128, 256, 256]
+  dims: [16, 32, 64, 128, 128]
   num_res_blocks: [3, 3, 3, 9, 3]
 
 train:
   run_name: "baseline-jepa-full"
   num_epochs: 5
-  batch_size: 4 # per-device
+  batch_size: 4
   report_every: 100
   save_every: 2
   include_labels: false
@@ -25,7 +25,7 @@ train:
   lr_scheduler: "cosine"
   lr_scheduler_warmup_epochs: 2
   min_lr: 1e-6
-  lr: 1e-3 # following 1e-3 * global_batch_size/256 rule
+  lr: 1e-3
   weight_decay: 0.05
   noise_std: 1.0
   distributed: false

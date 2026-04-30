@@ -13,13 +13,12 @@ model:
   num_res_blocks: [3, 3, 3, 9, 3]
   use_channel_stem: true
   use_temporal_mixer: true
-  predictor_scale_factor: 3
-  predictor_depth: 2
   preserve_temporal: true
 
 train:
-  num_epochs: 30
-  batch_size: 8
+  run_name: "upgraded-jepa"
+  num_epochs: 5
+  batch_size: 4
   report_every: 100
   save_every: 2
   include_labels: false
@@ -33,19 +32,24 @@ train:
   lr: 1e-3
   weight_decay: 0.05
   noise_std: 1.0
-  run_name: "upgraded-jepa"
-  distributed: true
+  distributed: false
 
 ft:
+  num_epochs: 100
+  lr: 1e-3
+  batch_size: 16
+  report_every: 100
+  save_every: 10
+  head_type: linear
+  embeddings_dir: "./embeddings/upgraded"
   task: "regression"
   lr_scheduler: "cosine"
   lr_scheduler_warmup_epochs: 2
   min_lr: 0
-  lr: 1e-3
   weight_decay: 0.01
-  noise_std: 1.0
-  run_name: "upgraded-jepa-FT"
+  noise_std: 0.0
+  run_name: "upgraded-linear-probe"
   distributed: false
 
-out_path: "./checkpoints/upgraded-jepa"
+out_path: "./checkpoints/upgraded-linear-probe"
 cache_path: "./dataset_cache"

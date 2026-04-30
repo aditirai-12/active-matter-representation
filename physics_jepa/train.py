@@ -373,11 +373,9 @@ class Trainer:
             loss_fn = partial(vicreg_loss_bcs, sim_coeff=self.train_cfg.sim_coeff, bcs_coeff=self.train_cfg.bcs_coeff, num_slices=self.train_cfg.num_slices)
 
         if self.world_size > 1:
-            for component in model_components:
-                component = DDP(component.to(self.rank), device_ids=[self.rank])
+            model_components = [DDP(component.to(self.rank), device_ids=[self.rank]) for component in model_components]
         else:
-            for component in model_components:
-                component = component.to(self.rank)
+            model_components = [component.to(self.rank) for component in model_components]
 
         return model_components, loss_fn
 
