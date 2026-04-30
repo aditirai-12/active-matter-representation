@@ -22,6 +22,7 @@ export WANDB_PROJECT=active-matter-representation
 export WANDB_ENTITY=aditirai2020-new-york-university
 export WANDB_NAME=upgraded-jepa-${SLURM_JOB_ID}
 export WANDB_MODE=online
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 mkdir -p logs checkpoints embeddings dataset_cache
 
