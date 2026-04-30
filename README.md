@@ -6,6 +6,67 @@ Self-supervised representation learning on the active_matter dataset from The We
 
 ---
 
+## What Changed (trying-new-model branch)
+
+This branch contains significant architectural improvements over the baseline JEPA. Here's a summary of every change and why it was made.
+
+### 1. EMA Target Encoder
+**Files:** `physics_jepa/train_jepa.py`, `physics_jepa/train.py`
+
+The baseline encoded both context and target frames through the same encoder with gradients flowing through both branches. This forces VICReg to do all the collapse prevention work alone. Now the target branch uses a separate encoder updated via exponential moving average (EMA) with stop-gradient — the standard approach in V-JEPA, I-JEPA, BYOL, and DINO.
+
+- Target encoder is a deep copy of the online encoder, updated each step: `p_target = τ * p_target + (1-τ) * p_online`
+- Momentum τ follows a cosine schedule from 0.996 → 1.0 over training
+- Configurable via `ema_start` and `ema_end` in the train config
+- Target encoder checkpoints are saved alongside regular checkpoints as `TargetEncoder_{epoch}.pth`
+- Lifecycle hooks added to `Trainer` base class: `on_training_start()`, `on_after_optimizer_step()`, `save_extra_state()`
+
+### 2. Wider Channel Dimensions
+**Files:** config changes only
+
+Baseline dims `[16, 32, 64, 128, 128]` → upgraded dims `[32, 64, 128, 256, 256]`. The narrow 128-channel bottleneck couldn't represent the full dynamics of 11 physical fields (especially the 8 tensor channels that drive ζ variation). The wider network is still well under the 100M parameter limit.
+
+### 3. Temporal Preservation in Encoder
+**Files:** `physics_jepa/utils/model_utils.py`, `physics_jepa/model.py`, `physics_jepa/finetuner.py`, `scripts/eval_knn.py`
+
+With 16-frame input, the encoder used to squeeze time as 16→8→4→2→1 and drop the time axis entirely. The predictor then operated on a purely spatial 2D feature map with no temporal structure — it couldn't reason about *how* features evolve, only what they look like at one instant.
+
+With `preserve_temporal: true`, the last downsample uses stride `(1,2,2)` instead of `(2,2,2)`, keeping time as 16→8→4→2→2. The output stays 5D as `(B, C, 2, H, W)`. The predictor now uses 3D convolutions and can see temporal evolution patterns, which is critical for distinguishing ζ values (steric alignment manifests through orientation dynamics over time).
+
+- Controlled by `preserve_temporal: true` in model config (defaults to `false` for backward compatibility)
+- Predictor automatically switches to Conv3d when enabled
+- Eval code handles both 4D and 5D embeddings via generalized average pooling
+
+### 4. Per-Channel Normalization (fixed)
+**Files:** `src/dataset.py`, `physics_jepa/data.py`
+
+The normalization code existed but was using placeholder stats (mean=0, std=1 for all channels — effectively a no-op). Now uses real stats from `data/stats/train_stats.json`. This matters especially for the concentration channel, which has std ≈ 0.003 vs velocity channels at std ≈ 0.57 — a 200× scale difference.
+
+### 5. Rebalanced Loss Coefficients
+**Files:** config changes only
+
+Baseline used `sim=2, std=40, cov=2` — the variance penalty dominated, which made sense when VICReg alone was preventing collapse. With EMA handling collapse structurally, we rebalanced to `sim=10, std=10, cov=1` so the similarity (prediction quality) term gets more weight.
+
+### 6. Attentive Pooling Removed
+**Files:** `physics_jepa/finetuner.py`, `physics_jepa/train.py`, all configs
+
+Attentive pooling is a complex evaluation head (cross-attention + MLP), which is prohibited by the project rules. Removed all `use_attentive_pooling` branches and config keys to prevent accidental use. Only `RegressionHead` (single linear layer) and kNN are used for evaluation.
+
+---
+
+## Configs
+
+| Config | Purpose |
+|--------|---------|
+| `configs/train_baseline.yaml` | Train the pre-improvement model (narrow dims, no EMA, old loss) |
+| `configs/eval_baseline_linear.yaml` | Linear probe eval for baseline checkpoints |
+| `configs/train_physics_jepa_upgraded.yaml` | Train the improved model (all changes above) |
+| `configs/eval_upgraded_linear.yaml` | Linear probe eval for upgraded checkpoints |
+
+The `train_physics_jepa.yaml` config is an intermediate version — ignore it or delete it.
+
+---
+
 ## Quickstart (for Teammates!!)
 
 ### Step 1 — Access the Cluster
@@ -100,6 +161,29 @@ This runs a full check: split sizes, SSL/eval modes, normalization, determinism,
 
 ---
 
+## Training & Evaluation
+
+### Train the upgraded model
+
+    export THE_WELL_DATA_DIR=/scratch/$USER/data
+    python -m physics_jepa.train_jepa configs/train_physics_jepa_upgraded.yaml
+
+Or submit via slurm:
+
+    sbatch scripts/slurm/run_baseline_jepa.sbatch
+
+(Update the sbatch script to point to `train_physics_jepa_upgraded.yaml` and your scratch path first.)
+
+### Run linear probe evaluation
+
+    python -u -m physics_jepa.finetune configs/eval_upgraded_linear.yaml --trained_model_path <path_to_ConvEncoder_checkpoint.pth>
+
+### Run kNN evaluation
+
+    python scripts/eval_knn.py --embeddings_dir ./embeddings/upgraded --output_csv results/upgraded_knn_val.csv
+
+---
+
 ## Dataset Structure
 
 ### File Organization
@@ -132,7 +216,8 @@ Each .hdf5 file = one unique (alpha, zeta) parameter combination.
 - 45 unique (alpha, zeta) combinations total
 
 ### How Training Samples Are Generated
-- Each trajectory is 81 timesteps; we extract sliding 16-frame windows
+- Each trajectory is 81 timesteps; we extract sliding windows of 2×num_frames + gap_frames
+- Context = first num_frames frames, target = last num_frames frames (with gap in between)
 - Random spatial crop 256→224 during training; center crop during eval
 - Random H/V flips during training; no flips during eval
 
@@ -147,30 +232,52 @@ Channel and label normalization stats are saved in `data/stats/train_stats.json`
 ```
 active-matter-representation/
 │
+├── physics_jepa/                # Main codebase
+│   ├── train.py                 # Base Trainer class with lifecycle hooks
+│   ├── train_jepa.py            # JepaTrainer — EMA target encoder, JEPA forward pass
+│   ├── model.py                 # Model factory (get_model_and_loss_cnn)
+│   ├── finetuner.py             # Linear probe evaluation pipeline
+│   ├── finetune.py              # Finetuner entry point
+│   ├── data.py                  # Data loading for JEPA (context/target pairs)
+│   ├── videomae.py              # VideoMAE architecture (alternative approach)
+│   ├── attentive_pooler.py      # Attentive pooling (used by baselines only)
+│   ├── baselines/               # Baseline model implementations
+│   └── utils/
+│       ├── model_utils.py       # ConvEncoder, ConvPredictor, schedulers
+│       ├── model_summary.py     # Parameter counting utilities
+│       ├── data_utils.py        # Normalization helpers
+│       ├── train_utils.py       # DDP setup, loss gathering
+│       └── hydra.py             # Config composition
+│
 ├── src/
-│   ├── dataset.py               # data loading and preprocessing
-│   ├── model.py                 # model architecture (TODO)
-│   ├── train.py                 # training loop (TODO)
-│   └── evaluate.py              # linear probe and kNN evaluation (TODO)
+│   └── dataset.py               # ActiveMatterDataset with per-channel normalization
 │
 ├── configs/
-│   └── base_config.yaml         # shared training config (TODO)
+│   ├── train_baseline.yaml              # Baseline JEPA training
+│   ├── eval_baseline_linear.yaml        # Baseline linear probe eval
+│   ├── train_physics_jepa_upgraded.yaml  # Upgraded JEPA training (all improvements)
+│   ├── eval_upgraded_linear.yaml        # Upgraded linear probe eval
+│   ├── dataset/                         # Dataset-specific defaults
+│   ├── model/                           # Model size presets
+│   └── ft/                              # Finetuning presets (linear, mlp)
 │
 ├── data/
-│   └── stats/
-│       └── train_stats.json     # pre-computed channel + label stats
+│   └── stats/train_stats.json   # Pre-computed channel + label stats
 │
 ├── scripts/
-│   ├── train.slurm              # Slurm job script
-│   ├── compute_stats.py         # compute normalization stats from train split
-│   ├── create_mock_data.py      # generate mock data for local testing
-│   └── test_dataset.py          # validate data pipeline end-to-end
+│   ├── eval_knn.py              # kNN regression evaluation
+│   ├── collapse_check.py        # Check for representation collapse
+│   ├── compute_stats.py         # Compute normalization stats
+│   ├── create_mock_data.py      # Generate mock data for testing
+│   ├── test_dataset.py          # Validate data pipeline
+│   └── slurm/                   # Slurm job scripts
 │
-├── notebooks/                   # exploratory notebooks
-├── ENV.md                       # environment setup instructions
-├── requirements.txt             # Python dependencies
+├── results/                     # Evaluation results (CSV)
+├── ENV.md
+├── requirements.txt
 └── README.md
 ```
+
 ---
 
 ## Compute Resources
@@ -185,11 +292,13 @@ To check your remaining GPU quota:
 
 To submit a training job:
 
-    sbatch scripts/train.slurm
+    sbatch scripts/slurm/run_baseline_jepa.sbatch
 
 To check job status:
 
     squeue -u $USER
+
+**Important:** Cloud resources run on spot instances and may be preempted. The EMA target encoder checkpoint is saved alongside regular checkpoints. To resume, set `target_encoder_path` in the train config.
 
 ---
 
@@ -198,4 +307,4 @@ To check job status:
 - Do NOT train on validation or test splits
 - Do NOT use labels (alpha, zeta) during representation learning
 - Model must be under 100M parameters
-- Evaluation must use linear probing and kNN regression only — no MLPs
+- Evaluation must use linear probing and kNN regression only — no MLPs, no attentive pooling
