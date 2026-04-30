@@ -483,6 +483,8 @@ class JepaFinetuner(BaseFinetuner):
             use_channel_stem=self.cfg.model.get("use_channel_stem", False),
             use_temporal_mixer=self.cfg.model.get("use_temporal_mixer", False),
             preserve_temporal=self.cfg.model.get("preserve_temporal", False),
+            predictor_scale_factor=self.cfg.model.get("predictor_scale_factor", 2),
+            predictor_depth=self.cfg.model.get("predictor_depth", 1),
         )
         if self.trained_model_path is not None:
             print(f"loading state dict from {self.trained_model_path}", flush=True)
