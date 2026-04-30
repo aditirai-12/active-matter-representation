@@ -24,6 +24,14 @@ class JepaTrainer(Trainer):
         else:
             loss_dict = loss_fn(pred, tgt_embed)
 
+        # representation collapse check
+        with torch.no_grad():
+            # std across batch dimension per feature
+            ctx_std = ctx_embed.float().std(dim=0).mean()
+            tgt_std = tgt_embed.float().std(dim=0).mean()
+            loss_dict['ctx_embed_std'] = ctx_std
+            loss_dict['tgt_embed_std'] = tgt_std
+
         return pred, loss_dict
 
 if __name__ == "__main__":
