@@ -124,10 +124,11 @@ class Trainer:
         date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         out_path = Path(self.cfg.out_path) / f"{run_name}_{date_str}"
 
+        start_epoch = self.train_cfg.get("start_epoch", 0)
         if self.rank == 0:
-            epochs = tqdm(range(self.train_cfg.num_epochs))
+            epochs = tqdm(range(start_epoch, self.train_cfg.num_epochs))
         else:
-            epochs = range(self.train_cfg.num_epochs)
+            epochs = range(start_epoch, self.train_cfg.num_epochs)
 
         for epoch in epochs:
             if self.train_cfg.get("not_from_embeddings", False): # compute embeddings at each epoch
