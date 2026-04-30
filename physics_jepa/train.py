@@ -22,7 +22,6 @@ from .utils.data_utils import mae
 from .utils.hydra import compose
 from .utils.misc import distprint
 from .utils.train_utils import ddp_setup, gather_losses_and_report
-from .utils.model_summary import summarize_convs
 
 class Trainer:
     def __init__(self, cfg, stage="train"):
@@ -118,6 +117,9 @@ class Trainer:
         if not self.is_iterable_dataset:
             distprint(f"starting to train w/ {len(self.train_loader)} batches per device", local_rank=self.rank)
 
+        # Hook for subclasses (e.g. EMA target encoder setup)
+        self.on_training_start(model_components, steps)
+
         date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         out_path = Path(self.cfg.out_path) / f"{run_name}_{date_str}"
 
@@ -160,6 +162,9 @@ class Trainer:
                     if lr_scheduler is not None:
                         lr_scheduler.step()
 
+                    # Hook for subclasses (e.g. EMA target encoder update)
+                    self.on_after_optimizer_step()
+
                 for loss_name, loss_value in loss_dict.items():
                     epoch_losses_dict[loss_name].append(loss_value.detach())
 
@@ -198,6 +203,7 @@ class Trainer:
                             OmegaConf.save(self.cfg, cfg_path)
                         for component in model_components:
                             torch.save(component.state_dict(), out_path / f"{component.__class__.__name__}_step{i}.pth")
+                        self.save_extra_state(out_path, f"step{i}")
                         print(f"checkpoint at step {i} saved to {out_path}")
 
                 if self.train_cfg.get("steps", None) is not None and i > self.train_cfg.steps:
@@ -217,6 +223,7 @@ class Trainer:
                     OmegaConf.save(self.cfg, cfg_path)
                 for i, component in enumerate(model_components):
                     torch.save(component.state_dict(), out_path / f"{component.__class__.__name__}_{epoch}.pth")
+                self.save_extra_state(out_path, epoch)
 
         distprint(f"all checkpoints saved to {out_path}", local_rank=self.rank)
 
@@ -371,6 +378,20 @@ class Trainer:
                 component = component.to(self.rank)
 
         return model_components, loss_fn
+
+    # ---- Lifecycle hooks (override in subclasses) ----
+
+    def on_training_start(self, model_components, total_steps):
+        """Called once at the start of training, after schedulers are set up."""
+        pass
+
+    def on_after_optimizer_step(self):
+        """Called after every optimizer.step() (i.e. after each gradient accumulation cycle)."""
+        pass
+
+    def save_extra_state(self, out_path, tag):
+        """Called during checkpointing to save additional state (e.g. EMA encoder)."""
+        pass
 
     def time_to_completion(self, start_time, i, total_steps):
         steps_per_sec = (i + 1) / (datetime.datetime.now() - start_time).total_seconds()
