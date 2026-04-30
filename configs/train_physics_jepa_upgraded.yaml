@@ -4,7 +4,7 @@ defaults:
   - ft: linear
 
 dataset:
-  num_frames: 8
+  num_frames: 16
   gap_frames: 8
 
 model:
