@@ -1,0 +1,4 @@
+CUDA: True
+GPUs: 1
+NVIDIA L4
+No checkpoint directory found — starting fresh

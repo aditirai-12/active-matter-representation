@@ -1,0 +1,4 @@
+CUDA: True
+GPUs: 1
+NVIDIA A100-SXM4-40GB
+No checkpoint directory found — starting fresh
