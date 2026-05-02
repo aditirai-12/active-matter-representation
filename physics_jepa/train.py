@@ -45,13 +45,6 @@ class Trainer:
             self.world_size = 1
             torch.cuda.set_device(0)
 
-        seed = self.cfg.get("seed", 42) + self.rank
-        random.seed(seed)
-        np.random.seed(seed)
-        torch.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)
-        print(f"Using seed: {seed}", flush=True)
-
         distprint(OmegaConf.to_yaml(self.cfg, resolve=True), local_rank=self.rank)
 
         self.train_loader = get_train_dataloader_from_cfg(self.cfg, stage=stage, rank=self.rank, world_size=self.world_size)
@@ -127,8 +120,13 @@ class Trainer:
         if not self.is_iterable_dataset:
             distprint(f"starting to train w/ {len(self.train_loader)} batches per device", local_rank=self.rank)
 
-        # Hook for subclasses (e.g. EMA target encoder setup)
         self.on_training_start(model_components, steps)
+        seed = self.cfg.get("seed", 2026) + self.rank
+        random.seed(seed)
+        np.random.seed(seed)
+        torch.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        distprint(f"Using seed: {seed}", local_rank=self.rank)
 
         date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         out_path = Path(self.cfg.out_path) / f"{run_name}_{date_str}"
