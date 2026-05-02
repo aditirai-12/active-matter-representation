@@ -1,17 +1,22 @@
 .ipynb_checkpoints/
 *.swp
 
-data/
+data/mock/
+data/logs
 dataset_cache/
-checkpoints/
 embeddings/
-logs/
 wandb/
 
-*.h5
-*.hdf5
-*.pth
+checkpoints/**
+!checkpoints/final/
+!checkpoints/final/ConvEncoder*.pth
+
 *.pt
 *.ckpt
+*.h5
+*.hdf5
+
+!data/stats/
+!data/stats/*.json
 
 __pycache__
