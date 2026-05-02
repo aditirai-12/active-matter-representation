@@ -16,7 +16,7 @@ This branch contains significant architectural improvements over the baseline JE
 The baseline encoded both context and target frames through the same encoder with gradients flowing through both branches. This forces VICReg to do all the collapse prevention work alone. Now the target branch uses a separate encoder updated via exponential moving average (EMA) with stop-gradient — the standard approach in V-JEPA, I-JEPA, BYOL, and DINO.
 
 - Target encoder is a deep copy of the online encoder, updated each step: `p_target = τ * p_target + (1-τ) * p_online`
-- Momentum τ follows a cosine schedule from 0.996 → 1.0 over training
+- Momentum τ follows a cosine schedule from 0.99 → 1.0 over training
 - Configurable via `ema_start` and `ema_end` in the train config
 - Target encoder checkpoints are saved alongside regular checkpoints as `TargetEncoder_{epoch}.pth`
 - Lifecycle hooks added to `Trainer` base class: `on_training_start()`, `on_after_optimizer_step()`, `save_extra_state()`
