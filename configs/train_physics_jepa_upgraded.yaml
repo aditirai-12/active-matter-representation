@@ -19,7 +19,7 @@ model:
 
 train:
   num_epochs: 30
-  batch_size: 4
+  batch_size: 2
   report_every: 100
   save_every: 2
   include_labels: false
