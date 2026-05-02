@@ -51,4 +51,4 @@ ft:
 
 out_path: "./checkpoints/upgraded-jepa"
 cache_path: "./dataset_cache"
-seed: 42
+seed: 0
