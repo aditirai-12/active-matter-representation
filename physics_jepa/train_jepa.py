@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 from omegaconf import OmegaConf
-
+import torch
 from .train import Trainer
 from .utils.hydra import compose
 

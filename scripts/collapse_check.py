@@ -47,44 +47,32 @@ def main():
     base_ds = ActiveMatterDataset(
         root=args.root,
         split="valid",
-<<<<<<< HEAD
-        n_frames=2 * (args.num_frames // 2),  # need context + target
-=======
         n_frames=2 * args.num_frames,  # need context + target
->>>>>>> 2613d82 (adding eval scripts and results)
+
         return_labels=False,
         channel_stats=channel_stats,
         label_stats=label_stats,
         augment=False,
         random_temporal_crop=False,
     )
-<<<<<<< HEAD
-    jepa_ds = ActiveMatterJEPADataset(base_ds, include_labels=False, num_frames=args.num_frames // 2)
-=======
+
     jepa_ds = ActiveMatterJEPADataset(base_ds, include_labels=False, num_frames=args.num_frames)
->>>>>>> 2613d82 (adding eval scripts and results)
+    
     loader = DataLoader(jepa_ds, batch_size=args.batch_size, shuffle=False, num_workers=0)
 
     # Build encoder with same config as training
     encoder, _, _ = get_model_and_loss_cnn(
         dims=args.dims,
         num_res_blocks=args.num_res_blocks,
-<<<<<<< HEAD
-        num_frames=args.num_frames // 2,
-=======
         num_frames=args.num_frames,
->>>>>>> 2613d82 (adding eval scripts and results)
         in_chans=args.in_chans,
     )
 
     # Load weights
     state_dict = torch.load(args.encoder_path, map_location="cpu")
     state_dict = {k.replace("module.", ""): v for k, v in state_dict.items()}
-<<<<<<< HEAD
-    encoder.load_state_dict(state_dict)
-=======
+
     encoder.load_state_dict(state_dict, strict=False)
->>>>>>> 2613d82 (adding eval scripts and results)
     encoder.to(device)
     encoder.eval()
 
