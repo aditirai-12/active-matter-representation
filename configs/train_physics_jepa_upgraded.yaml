@@ -18,6 +18,7 @@ model:
   preserve_temporal: true
 
 train:
+  start_epoch: 0
   num_epochs: 30
   batch_size: 2
   report_every: 100
