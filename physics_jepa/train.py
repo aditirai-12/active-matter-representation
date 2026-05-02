@@ -50,6 +50,7 @@ class Trainer:
         np.random.seed(seed)
         torch.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
+        print(f"Using seed: {seed}", flush=True)
 
         distprint(OmegaConf.to_yaml(self.cfg, resolve=True), local_rank=self.rank)
 
