@@ -25,8 +25,6 @@ if __name__ == "__main__":
 
     if cfg.model.objective == "jepa":
         finetuner = JepaFinetuner(cfg, trained_model_path=args.trained_model_path)
-    elif cfg.model.objective == "videomae":
-        finetuner = VideoMAEFinetuner(cfg, trained_model_path=args.trained_model_path)
     else:
         raise ValueError(f"Unknown objective: {cfg.model.objective}")
 
