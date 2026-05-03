@@ -1,0 +1,15 @@
+/scratch/ar9598/miniconda3/envs/active_matter/lib/python3.10/site-packages/requests/__init__.py:86: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+/scratch/ar9598/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ar9598/.netrc.
+wandb: Currently logged in as: aditirai2020 (aditirai2020-new-york-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.26.1
+wandb: Run data is saved locally in /scratch/ar9598/active-matter-representation/wandb/run-20260502_230414-ypofmjty
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run active_matter-16frames-cnn-jepa-ablation-baseline-loss-seed
+wandb: ⭐️ View project at https://wandb.ai/aditirai2020-new-york-university/physics-jepa-seeds
+wandb: 🚀 View run at https://wandb.ai/aditirai2020-new-york-university/physics-jepa-seeds/runs/ypofmjty
+  0%|                                                                                                                              | 0/30 [00:00<?, ?it/s]/scratch/ar9598/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/conv.py:720: UserWarning: Using padding='same' with even kernel lengths and odd dilation may require a zero-padded copy of the input be created (Triggered internally at /pytorch/aten/src/ATen/native/Convolution.cpp:1036.)
+  return F.conv3d(
+slurmstepd: error: *** JOB 181898 ON b-19-92 CANCELLED AT 2026-05-02T23:05:50 ***
