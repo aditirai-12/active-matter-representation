@@ -1,7 +1,0 @@
-CUDA: True
-GPUs: 1
-NVIDIA A100-SXM4-40GB
-Resuming from epoch 29, starting at epoch 30
-Encoder:         checkpoints/upgraded-jepa/active_matter-16frames-cnn-jepa-upgraded-jepa_2026-05-02_08-21-17/ConvEncoder_29.pth
-Predictor:       checkpoints/upgraded-jepa/active_matter-16frames-cnn-jepa-upgraded-jepa_2026-05-02_08-21-17/ConvPredictor_29.pth
-Target encoder:  checkpoints/upgraded-jepa/active_matter-16frames-cnn-jepa-upgraded-jepa_2026-05-02_08-21-17/TargetEncoder_29.pth
