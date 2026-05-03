@@ -6,6 +6,8 @@ from torch.utils.data import IterableDataset
 from torch.nn import MSELoss
 import time
 import os
+import random
+import numpy as np
 from pathlib import Path
 from tqdm import tqdm
 from einops import rearrange
@@ -23,7 +25,6 @@ from .utils.hydra import compose
 from .utils.misc import distprint
 from .utils.train_utils import ddp_setup, gather_losses_and_report
 from .utils.model_summary import summarize_convs
-from .attentive_pooler import AttentiveClassifier
 
 class Trainer:
     def __init__(self, cfg, stage="train"):
@@ -96,7 +97,7 @@ class Trainer:
         if self.train_cfg.get("lr_scheduler", None) == "cosine":
             max_lr = self.train_cfg.get("lr", self.train_cfg.lr)
             min_lr = self.train_cfg.get("min_lr", 1e-6)
-            warmup_steps_from_epochs = self.train_cfg.get("lr_scheduler_warmup_epochs", 0) * len(self.train_loader) if isinstance(self.train_loader.dataset, IterableDataset) else 0
+            warmup_steps_from_epochs = 0 if isinstance(self.train_loader.dataset, IterableDataset) else self.train_cfg.get("lr_scheduler_warmup_epochs", 0) * len(self.train_loader)
             warmup_steps = max(self.train_cfg.get("lr_scheduler_warmup_steps", 0), warmup_steps_from_epochs)
             warmup_updates = (warmup_steps + grad_accum_steps - 1) // grad_accum_steps
             total_updates = (steps + grad_accum_steps - 1) // grad_accum_steps
@@ -119,13 +120,21 @@ class Trainer:
         if not self.is_iterable_dataset:
             distprint(f"starting to train w/ {len(self.train_loader)} batches per device", local_rank=self.rank)
 
+        self.on_training_start(model_components, steps)
+        seed = self.cfg.get("seed", 2026)
+        random.seed(seed)
+        np.random.seed(seed)
+        distprint(f"Weight init seed (PyTorch): {torch.initial_seed()}", local_rank=self.rank)
+        distprint(f"Using seed: {seed}", local_rank=self.rank)
+
         date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         out_path = Path(self.cfg.out_path) / f"{run_name}_{date_str}"
 
+        start_epoch = self.train_cfg.get("start_epoch", 0)
         if self.rank == 0:
-            epochs = tqdm(range(self.train_cfg.num_epochs))
+            epochs = tqdm(range(start_epoch, self.train_cfg.num_epochs))
         else:
-            epochs = range(self.train_cfg.num_epochs)
+            epochs = range(start_epoch, self.train_cfg.num_epochs)
 
         for epoch in epochs:
             if self.train_cfg.get("not_from_embeddings", False): # compute embeddings at each epoch
@@ -153,13 +162,16 @@ class Trainer:
                 loss = loss_dict['loss'] / grad_accum_steps
                 loss.backward()
 
-                if i % grad_accum_steps == 0:
+                if (i + 1) % grad_accum_steps == 0:
                     optimizer.step()
                     optimizer.zero_grad(set_to_none=True)
 
                     # Set learning rate from schedule
                     if lr_scheduler is not None:
                         lr_scheduler.step()
+
+                    # Hook for subclasses (e.g. EMA target encoder update)
+                    self.on_after_optimizer_step()
 
                 for loss_name, loss_value in loss_dict.items():
                     epoch_losses_dict[loss_name].append(loss_value.detach())
@@ -199,6 +211,7 @@ class Trainer:
                             OmegaConf.save(self.cfg, cfg_path)
                         for component in model_components:
                             torch.save(component.state_dict(), out_path / f"{component.__class__.__name__}_step{i}.pth")
+                        self.save_extra_state(out_path, f"step{i}")
                         print(f"checkpoint at step {i} saved to {out_path}")
 
                 if self.train_cfg.get("steps", None) is not None and i > self.train_cfg.steps:
@@ -218,6 +231,7 @@ class Trainer:
                     OmegaConf.save(self.cfg, cfg_path)
                 for i, component in enumerate(model_components):
                     torch.save(component.state_dict(), out_path / f"{component.__class__.__name__}_{epoch}.pth")
+                self.save_extra_state(out_path, epoch)
 
         distprint(f"all checkpoints saved to {out_path}", local_rank=self.rank)
 
@@ -298,6 +312,7 @@ class Trainer:
                 use_temporal_mixer=self.cfg.model.get("use_temporal_mixer", False),
                 predictor_scale_factor=self.cfg.model.get("predictor_scale_factor", 2),
                 predictor_depth=self.cfg.model.get("predictor_depth", 1),
+                preserve_temporal=self.cfg.model.get("preserve_temporal", False),
             )
 
             if 'encoder_path' in self.train_cfg and self.train_cfg.encoder_path is not None:
@@ -344,10 +359,11 @@ class Trainer:
                 in_chans=self.cfg.dataset.num_chans if 'fields' not in self.train_cfg else len(self.train_cfg.fields),
             )
             metadata = get_dataset_metadata(self.cfg.dataset.name)
-            head = AttentiveClassifier(
-                embed_dim=self.cfg.model.dims[-1],
-                num_classes=len(metadata.constant_scalar_names),
-                num_heads=8,
+            from .utils.model_utils import RegressionHead
+            head = RegressionHead(
+                in_dim=self.cfg.model.dims[-1],
+                out_dim=len(metadata.constant_scalar_names),
+                flatten_first=True,
             )
 
             distprint(f"num encoder parameters: {sum(p.numel() for p in encoder.parameters())}", local_rank=self.rank)
@@ -364,13 +380,25 @@ class Trainer:
             loss_fn = partial(vicreg_loss_bcs, sim_coeff=self.train_cfg.sim_coeff, bcs_coeff=self.train_cfg.bcs_coeff, num_slices=self.train_cfg.num_slices)
 
         if self.world_size > 1:
-            for component in model_components:
-                component = DDP(component.to(self.rank), device_ids=[self.rank])
+            model_components = [DDP(component.to(self.rank), device_ids=[self.rank]) for component in model_components]
         else:
-            for component in model_components:
-                component = component.to(self.rank)
+            model_components = [component.to(self.rank) for component in model_components]
 
         return model_components, loss_fn
+
+    # ---- Lifecycle hooks (override in subclasses) ----
+
+    def on_training_start(self, model_components, total_steps):
+        """Called once at the start of training, after schedulers are set up."""
+        pass
+
+    def on_after_optimizer_step(self):
+        """Called after every optimizer.step() (i.e. after each gradient accumulation cycle)."""
+        pass
+
+    def save_extra_state(self, out_path, tag):
+        """Called during checkpointing to save additional state (e.g. EMA encoder)."""
+        pass
 
     def time_to_completion(self, start_time, i, total_steps):
         steps_per_sec = (i + 1) / (datetime.datetime.now() - start_time).total_seconds()

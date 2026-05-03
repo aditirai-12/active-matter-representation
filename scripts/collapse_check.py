@@ -48,16 +48,13 @@ def main():
         root=args.root,
         split="valid",
         n_frames=2 * args.num_frames,  # need context + target
-
         return_labels=False,
         channel_stats=channel_stats,
         label_stats=label_stats,
         augment=False,
         random_temporal_crop=False,
     )
-
     jepa_ds = ActiveMatterJEPADataset(base_ds, include_labels=False, num_frames=args.num_frames)
-    
     loader = DataLoader(jepa_ds, batch_size=args.batch_size, shuffle=False, num_workers=0)
 
     # Build encoder with same config as training
@@ -71,7 +68,6 @@ def main():
     # Load weights
     state_dict = torch.load(args.encoder_path, map_location="cpu")
     state_dict = {k.replace("module.", ""): v for k, v in state_dict.items()}
-
     encoder.load_state_dict(state_dict, strict=False)
     encoder.to(device)
     encoder.eval()

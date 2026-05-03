@@ -21,8 +21,8 @@ HDF5 file structure (real data + mock from create_mock_data.py)
     t1_fields/
         velocity            (N_TRAJ, T, H, W, 2)        →  2 channels
     t2_fields/
-        D                   (N_TRAJ, T, H, W, 2, 2)     →  4 channels  (strain-rate)
-        E                   (N_TRAJ, T, H, W, 2, 2)     →  4 channels  (orientation)
+        D                   (N_TRAJ, T, H, W, 2, 2)     →  4 channels  (orientation)
+        E                   (N_TRAJ, T, H, W, 2, 2)     →  4 channels  (strain-rate)
 
 Output tensor shape:  (T=16, C=11, H=224, W=224)  float32
 """
@@ -52,8 +52,8 @@ N_CHANNELS: int = 11   # total physical channels
 # Channel layout (concatenation order):
 #   [0]      concentration
 #   [1–2]    velocity x, y
-#   [3–6]    strain-rate D (2×2 flattened)
-#   [7–10]   orientation E (2×2 flattened)
+#   [3–6]    orientation D (2×2 flattened)
+#   [7–10]   strain-rate E (2×2 flattened)
 CHANNEL_NAMES: List[str] = (
     ["concentration"]
     + ["velocity_x", "velocity_y"]
@@ -61,16 +61,41 @@ CHANNEL_NAMES: List[str] = (
     + [f"E_{i}{j}" for i in range(2) for j in range(2)]
 )
 
-# Placeholder stats — replace with output of compute_channel_stats_fast()
+# Per-channel z-score stats computed from training data (data/stats/train_stats.json).
+# Channels: concentration, velocity_x, velocity_y, D_00, D_01, D_10, D_11, E_00, E_01, E_10, E_11
 CHANNEL_STATS: Dict[str, List[float]] = {
-    "mean": [0.0] * N_CHANNELS,
-    "std":  [1.0] * N_CHANNELS,
+    "mean": [
+        1.0000147,   #  concentration
+        0.0073079,   #  velocity_x
+       -0.0057337,   #  velocity_y
+        0.5024746,   #  D_00
+       -0.0076769,   #  D_01
+       -0.0076769,   #  D_10
+        0.4975401,   #  D_11
+        0.0002608,   #  E_00
+       -0.0011301,   #  E_01
+       -0.0011301,   #  E_10
+       -0.0002608,   #  E_11
+    ],
+    "std": [
+        0.0028454,   #  concentration  ← very tight; normalization matters a lot here
+        0.5740187,   #  velocity_x
+        0.5643068,   #  velocity_y
+        0.3203980,   #  D_00
+        0.3308609,   #  D_01
+        0.3308609,   #  D_10
+        0.3204363,   #  D_11
+        0.4073318,   #  E_00
+        0.4315492,   #  E_01
+        0.4315492,   #  E_10
+        0.4073318,   #  E_11
+    ],
 }
 
-# Placeholder label stats — replace with output of compute_label_stats()
+# Label z-score stats computed from training data (data/stats/train_stats.json).
 LABEL_STATS: Dict[str, Dict[str, float]] = {
-    "alpha": {"mean": 0.0, "std": 1.0},
-    "zeta":  {"mean": 0.0, "std": 1.0},
+    "alpha": {"mean": -3.0228571, "std": 1.4538787},
+    "zeta":  {"mean":  9.0228571, "std": 5.2109273},
 }
 
 
@@ -138,11 +163,11 @@ def _load_raw_window(
     v = f["t1_fields"]["velocity"][i, t]
     v = v.transpose(0, 3, 1, 2)
 
-    # D (strain-rate): (T, H, W, 2, 2) → (T, 4, H, W)
+    # D (orientation): (T, H, W, 2, 2) → (T, 4, H, W)
     D = f["t2_fields"]["D"][i, t]
     D = D.reshape(D.shape[0], D.shape[1], D.shape[2], 4).transpose(0, 3, 1, 2)
 
-    # E (orientation): (T, H, W, 2, 2) → (T, 4, H, W)
+    # E (strain-rate): (T, H, W, 2, 2) → (T, 4, H, W)
     E = f["t2_fields"]["E"][i, t]
     E = E.reshape(E.shape[0], E.shape[1], E.shape[2], 4).transpose(0, 3, 1, 2)
 
@@ -259,12 +284,26 @@ def _random_spatial_crop(frames: np.ndarray) -> np.ndarray:
     return frames[:, :, top:top + CROP_H, left:left + CROP_H]
 
 
+# Channels whose sign flips under x -> -x (horizontal): v_x and tensor off-diagonals
+_HFLIP_SIGN_FLIP_CHANNELS = np.array([1, 4, 5, 8, 9])
+# Channels whose sign flips under y -> -y (vertical): v_y and tensor off-diagonals
+_VFLIP_SIGN_FLIP_CHANNELS = np.array([2, 4, 5, 8, 9])
+
+
 def _random_flip(frames: np.ndarray) -> np.ndarray:
-    """Random horizontal and/or vertical flip, applied consistently across T."""
+    """Random horizontal/vertical flip with sign correction for vector/tensor channels.
+
+    Frames are (T, C, H, W) with the active_matter channel layout:
+      [0] concentration, [1,2] velocity, [3-6] D tensor, [7-10] E tensor.
+    A spatial reflection x -> -x must negate v_x and the tensor off-diagonals
+    (D_xy, D_yx, E_xy, E_yx); analogously for y -> -y.
+    """
     if np.random.rand() < 0.5:
-        frames = frames[:, :, :, ::-1]    # horizontal
+        frames = frames[:, :, :, ::-1].copy()    # horizontal: x -> -x
+        frames[:, _HFLIP_SIGN_FLIP_CHANNELS] *= -1
     if np.random.rand() < 0.5:
-        frames = frames[:, :, ::-1, :]    # vertical
+        frames = frames[:, :, ::-1, :].copy()    # vertical: y -> -y
+        frames[:, _VFLIP_SIGN_FLIP_CHANNELS] *= -1
     return frames
 
 

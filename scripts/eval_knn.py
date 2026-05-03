@@ -49,9 +49,11 @@ def main():
     print(f"y_val shape: {y_val.shape}")
 
     # Match the linear-probe evaluation: non-learned global average pooling.
-    if X_train.ndim == 4:
-        X_train = X_train.mean(axis=(-2, -1))
-        X_val = X_val.mean(axis=(-2, -1))
+    # Handles both (N, C, H, W) and (N, C, T, H, W) encoder outputs.
+    if X_train.ndim > 2:
+        pool_axes = tuple(range(2, X_train.ndim))
+        X_train = X_train.mean(axis=pool_axes)
+        X_val = X_val.mean(axis=pool_axes)
 
     X_train = X_train.reshape(X_train.shape[0], -1)
     X_val = X_val.reshape(X_val.shape[0], -1)
