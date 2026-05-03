@@ -16,7 +16,7 @@ This branch contains significant architectural improvements over the baseline JE
 The baseline encoded both context and target frames through the same encoder with gradients flowing through both branches. This forces VICReg to do all the collapse prevention work alone. Now the target branch uses a separate encoder updated via exponential moving average (EMA) with stop-gradient — the standard approach in V-JEPA, I-JEPA, BYOL, and DINO.
 
 - Target encoder is a deep copy of the online encoder, updated each step: `p_target = τ * p_target + (1-τ) * p_online`
-- Momentum τ follows a cosine schedule from 0.99 → 1.0 over training
+- Momentum τ follows a cosine schedule from 0.996 → 0.999 over training (defaults; configurable per run)
 - Configurable via `ema_start` and `ema_end` in the train config
 - Target encoder checkpoints are saved alongside regular checkpoints as `TargetEncoder_{epoch}.pth`
 - Lifecycle hooks added to `Trainer` base class: `on_training_start()`, `on_after_optimizer_step()`, `save_extra_state()`
@@ -62,8 +62,6 @@ Attentive pooling is a complex evaluation head (cross-attention + MLP), which is
 | `configs/eval_baseline_linear.yaml` | Linear probe eval for baseline checkpoints |
 | `configs/train_physics_jepa_upgraded.yaml` | Train the improved model (all changes above) |
 | `configs/eval_upgraded_linear.yaml` | Linear probe eval for upgraded checkpoints |
-
-The `train_physics_jepa.yaml` config is an intermediate version — ignore it or delete it.
 
 ---
 
@@ -120,15 +118,7 @@ Replace YOUR_TOKEN with the token you copied in Step 3.
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
     pip install -r requirements.txt
 
-### Step 6 — Generate Mock Data (optional, for offline development)
-Run this to generate a local mock dataset with the exact same structure as the real data:
-
-    python scripts/create_mock_data.py
-
-The mock files are gitignored and will not be committed to the repo.
-Use them to build and test your code before downloading the full 52GB dataset.
-
-### Step 7 — Set Up Weights & Biases
+### Step 6 — Set Up Weights & Biases
     wandb login
 
 To get your API key:
@@ -140,7 +130,7 @@ To get your API key:
 
 If you don't have access, ask Aditi to add you to the W&B project as a member.
 
-### Step 8 — Download the Full Dataset (only when ready to train)
+### Step 7 — Download the Full Dataset (only when ready to train)
 First check your available storage by running:
 
     df -h /scratch/$USER
@@ -153,12 +143,6 @@ Once you have enough space:
     hf auth login
     hf download polymathic-ai/active_matter --repo-type dataset --local-dir /scratch/$USER/data/active_matter
 
-### Step 9 — Verify the Data Pipeline
-
-    python scripts/test_dataset.py --root /scratch/$USER/data/active_matter --stats data/stats/train_stats.json
-
-This runs a full check: split sizes, SSL/eval modes, normalization, determinism, and DataLoader batching. All checks should pass before you start training.
-
 ---
 
 ## Training & Evaluation
@@ -168,11 +152,9 @@ This runs a full check: split sizes, SSL/eval modes, normalization, determinism,
     export THE_WELL_DATA_DIR=/scratch/$USER/data
     python -m physics_jepa.train_jepa configs/train_physics_jepa_upgraded.yaml
 
-Or submit via slurm:
+Or submit via slurm (auto-resumes from latest checkpoint if one exists):
 
-    sbatch scripts/slurm/run_baseline_jepa.sbatch
-
-(Update the sbatch script to point to `train_physics_jepa_upgraded.yaml` and your scratch path first.)
+    sbatch scripts/slurm/run_upgraded_jepa.sbatch
 
 ### Run linear probe evaluation
 
@@ -207,8 +189,8 @@ Each .hdf5 file = one unique (alpha, zeta) parameter combination.
 |-------|-------|--------|
 | 0 | Concentration | t0_fields/concentration — 1 channel |
 | 1–2 | Velocity (x, y) | t1_fields/velocity — 2 channels |
-| 3–6 | Strain-rate tensor D | t2_fields/D — 4 channels (2×2 flattened) |
-| 7–10 | Orientation tensor E | t2_fields/E — 4 channels (2×2 flattened) |
+| 3–6 | Orientation tensor D | t2_fields/D — 4 channels (2×2 flattened) |
+| 7–10 | Strain-rate tensor E | t2_fields/E — 4 channels (2×2 flattened) |
 
 ### Labels (withheld during SSL training)
 - scalars/alpha — active dipole strength (5 discrete values: -1, -2, -3, -4, -5)
@@ -239,9 +221,6 @@ active-matter-representation/
 │   ├── finetuner.py             # Linear probe evaluation pipeline
 │   ├── finetune.py              # Finetuner entry point
 │   ├── data.py                  # Data loading for JEPA (context/target pairs)
-│   ├── videomae.py              # VideoMAE architecture (alternative approach)
-│   ├── attentive_pooler.py      # Attentive pooling (used by baselines only)
-│   ├── baselines/               # Baseline model implementations
 │   └── utils/
 │       ├── model_utils.py       # ConvEncoder, ConvPredictor, schedulers
 │       ├── model_summary.py     # Parameter counting utilities
@@ -268,8 +247,6 @@ active-matter-representation/
 │   ├── eval_knn.py              # kNN regression evaluation
 │   ├── collapse_check.py        # Check for representation collapse
 │   ├── compute_stats.py         # Compute normalization stats
-│   ├── create_mock_data.py      # Generate mock data for testing
-│   ├── test_dataset.py          # Validate data pipeline
 │   └── slurm/                   # Slurm job scripts
 │
 ├── results/                     # Evaluation results (CSV)
@@ -292,7 +269,7 @@ To check your remaining GPU quota:
 
 To submit a training job:
 
-    sbatch scripts/slurm/run_baseline_jepa.sbatch
+    sbatch scripts/slurm/run_upgraded_jepa.sbatch
 
 To check job status:
 

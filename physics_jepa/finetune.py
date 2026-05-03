@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 from omegaconf import OmegaConf
 
-from .finetuner import JepaFinetuner, VideoMAEFinetuner
+from .finetuner import JepaFinetuner
 from .utils.hydra import compose
 
 if __name__ == "__main__":

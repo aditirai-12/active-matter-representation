@@ -28,7 +28,6 @@ from .utils.data_utils import normalize_labels
 from .utils.model_utils import RegressionHead, RegressionMLP
 from .utils.train_utils import accuracy
 from .train import Trainer
-from .videomae import vit_small_patch16_224, vit_base_patch16_224, vit_large_patch16_224, vit_huge_patch16_224
 
 class BaseFinetuner(Trainer, ABC):
     def __init__(self, cfg, trained_model_path=None, rank=0, world_size=1):

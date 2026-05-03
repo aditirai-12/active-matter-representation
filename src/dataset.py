@@ -21,8 +21,8 @@ HDF5 file structure (real data + mock from create_mock_data.py)
     t1_fields/
         velocity            (N_TRAJ, T, H, W, 2)        →  2 channels
     t2_fields/
-        D                   (N_TRAJ, T, H, W, 2, 2)     →  4 channels  (strain-rate)
-        E                   (N_TRAJ, T, H, W, 2, 2)     →  4 channels  (orientation)
+        D                   (N_TRAJ, T, H, W, 2, 2)     →  4 channels  (orientation)
+        E                   (N_TRAJ, T, H, W, 2, 2)     →  4 channels  (strain-rate)
 
 Output tensor shape:  (T=16, C=11, H=224, W=224)  float32
 """
@@ -52,8 +52,8 @@ N_CHANNELS: int = 11   # total physical channels
 # Channel layout (concatenation order):
 #   [0]      concentration
 #   [1–2]    velocity x, y
-#   [3–6]    strain-rate D (2×2 flattened)
-#   [7–10]   orientation E (2×2 flattened)
+#   [3–6]    orientation D (2×2 flattened)
+#   [7–10]   strain-rate E (2×2 flattened)
 CHANNEL_NAMES: List[str] = (
     ["concentration"]
     + ["velocity_x", "velocity_y"]
@@ -163,11 +163,11 @@ def _load_raw_window(
     v = f["t1_fields"]["velocity"][i, t]
     v = v.transpose(0, 3, 1, 2)
 
-    # D (strain-rate): (T, H, W, 2, 2) → (T, 4, H, W)
+    # D (orientation): (T, H, W, 2, 2) → (T, 4, H, W)
     D = f["t2_fields"]["D"][i, t]
     D = D.reshape(D.shape[0], D.shape[1], D.shape[2], 4).transpose(0, 3, 1, 2)
 
-    # E (orientation): (T, H, W, 2, 2) → (T, 4, H, W)
+    # E (strain-rate): (T, H, W, 2, 2) → (T, 4, H, W)
     E = f["t2_fields"]["E"][i, t]
     E = E.reshape(E.shape[0], E.shape[1], E.shape[2], 4).transpose(0, 3, 1, 2)
 
