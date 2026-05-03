@@ -121,11 +121,10 @@ class Trainer:
             distprint(f"starting to train w/ {len(self.train_loader)} batches per device", local_rank=self.rank)
 
         self.on_training_start(model_components, steps)
-        seed = self.cfg.get("seed", 2026) + self.rank
+        seed = self.cfg.get("seed", 2026)
         random.seed(seed)
         np.random.seed(seed)
-        torch.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)
+        distprint(f"Weight init seed (PyTorch): {torch.initial_seed()}", local_rank=self.rank)
         distprint(f"Using seed: {seed}", local_rank=self.rank)
 
         date_str = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
