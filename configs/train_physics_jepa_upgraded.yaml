@@ -24,7 +24,7 @@ train:
   report_every: 100
   save_every: 2
   include_labels: false
-  sim_coeff: 1
+  sim_coeff: 2
   std_coeff: 25
   cov_coeff: 1
   predict_n_steps: false
