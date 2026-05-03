@@ -97,7 +97,7 @@ class Trainer:
         if self.train_cfg.get("lr_scheduler", None) == "cosine":
             max_lr = self.train_cfg.get("lr", self.train_cfg.lr)
             min_lr = self.train_cfg.get("min_lr", 1e-6)
-            warmup_steps_from_epochs = self.train_cfg.get("lr_scheduler_warmup_epochs", 0) * len(self.train_loader) if isinstance(self.train_loader.dataset, IterableDataset) else 0
+            warmup_steps_from_epochs = 0 if isinstance(self.train_loader.dataset, IterableDataset) else self.train_cfg.get("lr_scheduler_warmup_epochs", 0) * len(self.train_loader)
             warmup_steps = max(self.train_cfg.get("lr_scheduler_warmup_steps", 0), warmup_steps_from_epochs)
             warmup_updates = (warmup_steps + grad_accum_steps - 1) // grad_accum_steps
             total_updates = (steps + grad_accum_steps - 1) // grad_accum_steps
@@ -162,7 +162,7 @@ class Trainer:
                 loss = loss_dict['loss'] / grad_accum_steps
                 loss.backward()
 
-                if i % grad_accum_steps == 0:
+                if (i + 1) % grad_accum_steps == 0:
                     optimizer.step()
                     optimizer.zero_grad(set_to_none=True)
 

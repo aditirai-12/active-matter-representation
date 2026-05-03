@@ -284,12 +284,26 @@ def _random_spatial_crop(frames: np.ndarray) -> np.ndarray:
     return frames[:, :, top:top + CROP_H, left:left + CROP_H]
 
 
+# Channels whose sign flips under x -> -x (horizontal): v_x and tensor off-diagonals
+_HFLIP_SIGN_FLIP_CHANNELS = np.array([1, 4, 5, 8, 9])
+# Channels whose sign flips under y -> -y (vertical): v_y and tensor off-diagonals
+_VFLIP_SIGN_FLIP_CHANNELS = np.array([2, 4, 5, 8, 9])
+
+
 def _random_flip(frames: np.ndarray) -> np.ndarray:
-    """Random horizontal and/or vertical flip, applied consistently across T."""
+    """Random horizontal/vertical flip with sign correction for vector/tensor channels.
+
+    Frames are (T, C, H, W) with the active_matter channel layout:
+      [0] concentration, [1,2] velocity, [3-6] D tensor, [7-10] E tensor.
+    A spatial reflection x -> -x must negate v_x and the tensor off-diagonals
+    (D_xy, D_yx, E_xy, E_yx); analogously for y -> -y.
+    """
     if np.random.rand() < 0.5:
-        frames = frames[:, :, :, ::-1]    # horizontal
+        frames = frames[:, :, :, ::-1].copy()    # horizontal: x -> -x
+        frames[:, _HFLIP_SIGN_FLIP_CHANNELS] *= -1
     if np.random.rand() < 0.5:
-        frames = frames[:, :, ::-1, :]    # vertical
+        frames = frames[:, :, ::-1, :].copy()    # vertical: y -> -y
+        frames[:, _VFLIP_SIGN_FLIP_CHANNELS] *= -1
     return frames
 
 
