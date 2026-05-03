@@ -121,9 +121,11 @@ class ConvEncoder(nn.Module):
                  dims=[96, 192, 384, 768],
                  num_frames=4, 
                  use_channel_stem=False,
-                 use_temporal_mixer=False):
+                 use_temporal_mixer=False,
+                 preserve_temporal=False):
         super().__init__()
         self.use_channel_stem = use_channel_stem
+        self.preserve_temporal = preserve_temporal
         
         if self.use_channel_stem:
             self.channel_stem = nn.Sequential(
@@ -157,18 +159,28 @@ class ConvEncoder(nn.Module):
 
         if num_frames == 16:
             for i in range(len(dims)-1):
+                # When preserve_temporal=True, the last downsample keeps T=2
+                # instead of squeezing to T=1, so the predictor has temporal info.
+                if self.preserve_temporal and i == len(dims) - 2:
+                    stride = (1, 2, 2)
+                    kernel_size = (1, 2, 2)
+                else:
+                    stride = 2
+                    kernel_size = 2
                 self.downsample_layers.append(
                     nn.Sequential(
                         LayerNorm(dims[i], data_format="channels_first"),
-                        nn.Conv3d(in_channels=dims[i], out_channels=dims[i+1], kernel_size=2, stride=2)
+                        nn.Conv3d(in_channels=dims[i], out_channels=dims[i+1], kernel_size=kernel_size, stride=stride)
                     )
                 )
     
             self.res_blocks = nn.ModuleList()
             for i in range(len(dims)):
+                # When preserve_temporal, all stages stay 3D (time dim is never 1)
+                use_3d = (i < len(dims)-1) or self.preserve_temporal
                 self.res_blocks.append(
                     nn.Sequential(
-                        *[ResidualBlock(dims[i], num_spatial_dims=3 if i < len(dims)-1 else 2) for _ in range(num_res_blocks[i])]
+                        *[ResidualBlock(dims[i], num_spatial_dims=3 if use_3d else 2) for _ in range(num_res_blocks[i])]
                     )
                 )
 
@@ -406,22 +418,26 @@ class ConvPredictorViTTiny(nn.Module):
         return x
 
 class ConvPredictor(nn.Module):
-    def __init__(self, dims, scale_factor=2, depth=1):
+    def __init__(self, dims, scale_factor=2, depth=1, use_3d=False):
         super().__init__()
         self.scale_factor = scale_factor
+        self.use_3d = use_3d
         hidden_dim = dims[0] * self.scale_factor
 
+        Conv = nn.Conv3d if use_3d else nn.Conv2d
+        spatial_dims = 3 if use_3d else 2
+
         blocks = [
-            nn.Conv2d(dims[0], hidden_dim, kernel_size=2, padding=1),
+            Conv(dims[0], hidden_dim, kernel_size=2, padding=1),
         ]
 
         blocks.extend([
-            ResidualBlock(hidden_dim, num_spatial_dims=2)
+            ResidualBlock(hidden_dim, num_spatial_dims=spatial_dims)
             for _ in range(depth)
         ])
 
         blocks.append(
-            nn.Conv2d(hidden_dim, dims[0], kernel_size=2)
+            Conv(hidden_dim, dims[0], kernel_size=2)
         )
 
         self.conv = nn.Sequential(*blocks)

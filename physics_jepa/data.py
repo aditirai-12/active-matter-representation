@@ -13,7 +13,15 @@ import torch.distributed as dist
 import random
 import weakref
 from collections import OrderedDict
-from src.dataset import ActiveMatterDataset
+from src.dataset import ActiveMatterDataset, load_stats, CHANNEL_STATS, LABEL_STATS
+
+# Load real per-channel and label stats from the pre-computed file.
+# Falls back to the hardcoded constants if the file is missing (e.g. in tests).
+_STATS_PATH = Path(__file__).parent.parent / "data" / "stats" / "train_stats.json"
+if _STATS_PATH.exists():
+    _CHANNEL_STATS, _LABEL_STATS = load_stats(str(_STATS_PATH))
+else:
+    _CHANNEL_STATS, _LABEL_STATS = CHANNEL_STATS, LABEL_STATS
 
 class WellDatasetForJEPA(Dataset):
     """
@@ -716,7 +724,9 @@ def get_dataset(
             n_frames=2 * num_frames + int(gap_frames),
             return_labels=include_labels,
             normalize_channels=True,
+            channel_stats=_CHANNEL_STATS,
             normalize_labels=True,
+            label_stats=_LABEL_STATS,
             augment=(split_name == "train"),
             random_temporal_crop=(split_name == "train"),
         )
