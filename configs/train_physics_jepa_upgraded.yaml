@@ -24,8 +24,8 @@ train:
   report_every: 100
   save_every: 2
   include_labels: false
-  sim_coeff: 10
-  std_coeff: 10
+  sim_coeff: 1
+  std_coeff: 25
   cov_coeff: 1
   predict_n_steps: false
   lr_scheduler: "cosine"

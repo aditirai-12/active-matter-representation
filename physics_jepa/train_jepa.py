@@ -32,7 +32,7 @@ class JepaTrainer(Trainer):
 
         # Cosine schedule for momentum: ema_start -> ema_end over training
         ema_start = self.train_cfg.get("ema_start", 0.996)
-        ema_end   = self.train_cfg.get("ema_end",   1.0)
+        ema_end   = self.train_cfg.get("ema_end",   0.999)
         grad_accum_steps = self.set_up_gradient_accumulation()
         total_updates = (total_steps + grad_accum_steps - 1) // grad_accum_steps
         # Cosine interpolation from ema_start to ema_end
