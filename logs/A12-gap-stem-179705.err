@@ -1,0 +1,46 @@
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ml9542/.netrc.
+wandb: Currently logged in as: ml9542 (aditirai2020-new-york-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run 5lmpfd2m
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in /scratch/ml9542/active-matter-representation/wandb/run-20260430_134612-5lmpfd2m
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run active_matter-8frames-cnn-jepa-A12-gap-stem-e50-bs8-179705
+wandb: ⭐️ View project at https://wandb.ai/aditirai2020-new-york-university/physics-jepa
+wandb: 🚀 View run at https://wandb.ai/aditirai2020-new-york-university/physics-jepa/runs/5lmpfd2m
+  0%|                                                                    | 0/50 [00:00<?, ?it/s]/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/conv.py:720: UserWarning: Using padding='same' with even kernel lengths and odd dilation may require a zero-padded copy of the input be created (Triggered internally at /pytorch/aten/src/ATen/native/Convolution.cpp:1036.)
+  return F.conv3d(
+  0%|                                                                    | 0/50 [00:11<?, ?it/s]
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train_jepa.py", line 57, in <module>
+    trainer.train()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 79, in train
+    self.training_loop(model_components, loss_fn, optimizer, run_name)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 145, in training_loop
+    pred, loss_dict = self.step(batch, model_components, loss_fn, self.rank, log=(i == 0 and epoch % 10 == 0))
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 245, in step
+    pred, loss_dict = self.pred_fn(batch, model_components, loss_fn)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train_jepa.py", line 28, in pred_fn
+    with torch.no_grad():
+NameError: name 'torch' is not defined
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train_jepa.py", line 57, in <module>
+    trainer.train()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 79, in train
+    self.training_loop(model_components, loss_fn, optimizer, run_name)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 145, in training_loop
+    pred, loss_dict = self.step(batch, model_components, loss_fn, self.rank, log=(i == 0 and epoch % 10 == 0))
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 245, in step
+    pred, loss_dict = self.pred_fn(batch, model_components, loss_fn)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train_jepa.py", line 28, in pred_fn
+    with torch.no_grad():
+NameError: name 'torch' is not defined

@@ -1,0 +1,67 @@
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:303: UserWarning: Overwriting vit_small_patch16_224 in registry with physics_jepa.videomae.vit_small_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_small_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:312: UserWarning: Overwriting vit_base_patch16_224 in registry with physics_jepa.videomae.vit_base_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_base_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:321: UserWarning: Overwriting vit_base_patch16_384 in registry with physics_jepa.videomae.vit_base_patch16_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_base_patch16_384(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:330: UserWarning: Overwriting vit_large_patch16_224 in registry with physics_jepa.videomae.vit_large_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_large_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:339: UserWarning: Overwriting vit_large_patch16_384 in registry with physics_jepa.videomae.vit_large_patch16_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_large_patch16_384(pretrained=False, **kwargs):
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ml9542/.netrc.
+wandb: Currently logged in as: ml9542 (aditirai2020-new-york-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run og8w1m9t
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in /scratch/ml9542/active-matter-representation/wandb/run-20260429_190631-og8w1m9t
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run A234-no-gap-linear-178560
+wandb: ⭐️ View project at https://wandb.ai/aditirai2020-new-york-university/physics-jepa
+wandb: 🚀 View run at https://wandb.ai/aditirai2020-new-york-university/physics-jepa/runs/og8w1m9t
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetune.py", line 33, in <module>
+    finetuner.train()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetuner.py", line 110, in train
+    train_dataset, train_labels, val_dataset, val_labels = self.get_embeddings()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetuner.py", line 267, in get_embeddings
+    encoder = self.get_encoder_and_raw_loaders()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetuner.py", line 242, in get_encoder_and_raw_loaders
+    encoder = self.load_model()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetuner.py", line 489, in load_model
+    state_dict = torch.load(self.trained_model_path)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/serialization.py", line 1479, in load
+    with _open_file_like(f, "rb") as opened_file:
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/serialization.py", line 759, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/serialization.py", line 740, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '/scratch/ml9542/active-matter-representation/checkpoints/YOUR_FOLDER_NAME/ConvEncoder_49.pth'
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetune.py", line 33, in <module>
+    finetuner.train()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetuner.py", line 110, in train
+    train_dataset, train_labels, val_dataset, val_labels = self.get_embeddings()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetuner.py", line 267, in get_embeddings
+    encoder = self.get_encoder_and_raw_loaders()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetuner.py", line 242, in get_encoder_and_raw_loaders
+    encoder = self.load_model()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetuner.py", line 489, in load_model
+    state_dict = torch.load(self.trained_model_path)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/serialization.py", line 1479, in load
+    with _open_file_like(f, "rb") as opened_file:
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/serialization.py", line 759, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/serialization.py", line 740, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '/scratch/ml9542/active-matter-representation/checkpoints/YOUR_FOLDER_NAME/ConvEncoder_49.pth'

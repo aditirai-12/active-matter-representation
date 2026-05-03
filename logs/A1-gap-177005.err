@@ -1,0 +1,13 @@
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ml9542/.netrc.
+wandb: Currently logged in as: ml9542 (aditirai2020-new-york-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in /scratch/ml9542/active-matter-representation/wandb/run-20260428_220453-x7akmx9w
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run active_matter-8frames-cnn-jepa-A1-gap-only-177005
+wandb: ⭐️ View project at https://wandb.ai/aditirai2020-new-york-university/physics-jepa
+wandb: 🚀 View run at https://wandb.ai/aditirai2020-new-york-university/physics-jepa/runs/x7akmx9w
+  0%|                                                                      | 0/5 [00:00<?, ?it/s]/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/conv.py:720: UserWarning: Using padding='same' with even kernel lengths and odd dilation may require a zero-padded copy of the input be created (Triggered internally at /pytorch/aten/src/ATen/native/Convolution.cpp:1036.)
+  return F.conv3d(
+ 20%|████████████▍                                                 | 1/5 [00:48<03:13, 48.49s/it] 40%|████████████████████████▊                                     | 2/5 [01:31<02:15, 45.24s/it] 60%|█████████████████████████████████████▏                        | 3/5 [02:14<01:28, 44.11s/it] 80%|█████████████████████████████████████████████████▌            | 4/5 [02:57<00:43, 43.66s/it]100%|██████████████████████████████████████████████████████████████| 5/5 [03:39<00:00, 43.29s/it]100%|██████████████████████████████████████████████████████████████| 5/5 [03:39<00:00, 43.97s/it]

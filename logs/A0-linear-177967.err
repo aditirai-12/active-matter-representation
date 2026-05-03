@@ -1,0 +1,18 @@
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:303: UserWarning: Overwriting vit_small_patch16_224 in registry with physics_jepa.videomae.vit_small_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_small_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:312: UserWarning: Overwriting vit_base_patch16_224 in registry with physics_jepa.videomae.vit_base_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_base_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:321: UserWarning: Overwriting vit_base_patch16_384 in registry with physics_jepa.videomae.vit_base_patch16_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_base_patch16_384(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:330: UserWarning: Overwriting vit_large_patch16_224 in registry with physics_jepa.videomae.vit_large_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_large_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:339: UserWarning: Overwriting vit_large_patch16_384 in registry with physics_jepa.videomae.vit_large_patch16_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_large_patch16_384(pretrained=False, **kwargs):
+usage: finetune.py [-h] [--trained_model_path TRAINED_MODEL_PATH] [--seed SEED] [--rank RANK]
+                   [--world_size WORLD_SIZE] [--dry_run]
+                   config [overrides ...]
+finetune.py: error: unrecognized arguments: dataset.num_frames=8 dataset.gap_frames=0 model.use_channel_stem=false model.use_temporal_mixer=false model.predictor_scale_factor=2 model.predictor_depth=1 ft.use_attentive_pooling=false ft.head_type=linear ft.task=regression ft.noise_std=0.0 ft.embeddings_dir=./embeddings/A0 ft.run_name=A0-linear-177967

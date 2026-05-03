@@ -1,0 +1,139 @@
+Using encoder:
+checkpoints/baseline-jepa-full/active_matter-16frames-cnn-jepa-baseline-jepa-full_2026-04-25_12-16-38/ConvEncoder_3.pth
+dataset:
+  name: active_matter
+  num_frames: 16
+  num_frames_per_patch: 2
+  num_chans: 11
+  resolution: 224
+  offset: 1
+model:
+  dims:
+  - 16
+  - 32
+  - 64
+  - 128
+  - 128
+  num_res_blocks:
+  - 3
+  - 3
+  - 3
+  - 9
+  - 3
+  name: cnn
+  objective: jepa
+ft:
+  num_epochs: 100
+  lr: 0.001
+  batch_size: 32
+  report_every: 100
+  save_every: 10
+  head_type: linear
+  embeddings_dir: ./embeddings/baseline
+  task: regression
+  use_attentive_pooling: false
+  lr_scheduler: cosine
+  lr_scheduler_warmup_epochs: 2
+  min_lr: 0
+  weight_decay: 0.01
+  noise_std: 0.0
+  run_name: baseline-linear-probe
+  distributed: false
+train:
+  run_name: baseline-jepa-full
+  num_epochs: 5
+  batch_size: 4
+  report_every: 100
+  save_every: 2
+  include_labels: false
+  sim_coeff: 2
+  std_coeff: 40
+  cov_coeff: 2
+  predict_n_steps: false
+  lr_scheduler: cosine
+  lr_scheduler_warmup_epochs: 2
+  min_lr: 1.0e-06
+  lr: 0.001
+  weight_decay: 0.05
+  noise_std: 1.0
+  distributed: false
+out_path: ./checkpoints/baseline-linear-probe
+cache_path: ./dataset_cache
+dry_run: false
+seed: 42
+
+dataset:
+  name: active_matter
+  num_frames: 16
+  num_frames_per_patch: 2
+  num_chans: 11
+  resolution: 224
+  offset: 1
+model:
+  dims:
+  - 16
+  - 32
+  - 64
+  - 128
+  - 128
+  num_res_blocks:
+  - 3
+  - 3
+  - 3
+  - 9
+  - 3
+  name: cnn
+  objective: jepa
+ft:
+  num_epochs: 100
+  lr: 0.001
+  batch_size: 32
+  report_every: 100
+  save_every: 10
+  head_type: linear
+  embeddings_dir: ./embeddings/baseline
+  task: regression
+  use_attentive_pooling: false
+  lr_scheduler: cosine
+  lr_scheduler_warmup_epochs: 2
+  min_lr: 0
+  weight_decay: 0.01
+  noise_std: 0.0
+  run_name: baseline-linear-probe
+  distributed: false
+train:
+  run_name: baseline-jepa-full
+  num_epochs: 5
+  batch_size: 4
+  report_every: 100
+  save_every: 2
+  include_labels: false
+  sim_coeff: 2
+  std_coeff: 40
+  cov_coeff: 2
+  predict_n_steps: false
+  lr_scheduler: cosine
+  lr_scheduler_warmup_epochs: 2
+  min_lr: 1.0e-06
+  lr: 0.001
+  weight_decay: 0.05
+  noise_std: 1.0
+  distributed: false
+out_path: ./checkpoints/baseline-linear-probe
+cache_path: ./dataset_cache
+dry_run: false
+seed: 42
+
+Found 8750 examples
+Physical params: {'active_matter_L_10.0_zeta_1.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(9.0)]}
+total number of block pairs in train dataset: 8750
+Found 1200 examples
+Physical params: {'active_matter_L_10.0_zeta_1.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(9.0)]}
+populating rank from args: 0
+saving val embeddings to embeddings/baseline/active_matter-16frames-cnn-jepa-baseline-jepa-full_2026-04-25_12-16-38_ConvEncoder_3.pth_embeddings_val.h5
+Found 8750 examples
+Physical params: {'active_matter_L_10.0_zeta_1.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(9.0)]}
+total number of block pairs in train dataset: 8750
+Found 1200 examples
+Physical params: {'active_matter_L_10.0_zeta_1.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(9.0)]}
+loading state dict from checkpoints/baseline-jepa-full/active_matter-16frames-cnn-jepa-baseline-jepa-full_2026-04-25_12-16-38/ConvEncoder_3.pth

@@ -1,0 +1,3710 @@
+Using encoder:
+checkpoints/baseline-jepa-full/active_matter-16frames-cnn-jepa-baseline-jepa-full_2026-04-25_12-16-38/ConvEncoder_3.pth
+dataset:
+  name: active_matter
+  num_frames: 16
+  num_frames_per_patch: 2
+  num_chans: 11
+  resolution: 224
+  offset: 1
+model:
+  dims:
+  - 16
+  - 32
+  - 64
+  - 128
+  - 128
+  num_res_blocks:
+  - 3
+  - 3
+  - 3
+  - 9
+  - 3
+  name: cnn
+  objective: jepa
+ft:
+  num_epochs: 100
+  lr: 0.001
+  batch_size: 16
+  report_every: 100
+  save_every: 10
+  head_type: linear
+  embeddings_dir: ./embeddings/baseline
+  task: regression
+  use_attentive_pooling: false
+  lr_scheduler: cosine
+  lr_scheduler_warmup_epochs: 2
+  min_lr: 0
+  weight_decay: 0.01
+  noise_std: 0.0
+  run_name: baseline-linear-probe
+  distributed: false
+train:
+  run_name: baseline-jepa-full
+  num_epochs: 5
+  batch_size: 4
+  report_every: 100
+  save_every: 2
+  include_labels: false
+  sim_coeff: 2
+  std_coeff: 40
+  cov_coeff: 2
+  predict_n_steps: false
+  lr_scheduler: cosine
+  lr_scheduler_warmup_epochs: 2
+  min_lr: 1.0e-06
+  lr: 0.001
+  weight_decay: 0.05
+  noise_std: 1.0
+  distributed: false
+out_path: ./checkpoints/baseline-linear-probe
+cache_path: ./dataset_cache
+dry_run: false
+seed: 42
+
+dataset:
+  name: active_matter
+  num_frames: 16
+  num_frames_per_patch: 2
+  num_chans: 11
+  resolution: 224
+  offset: 1
+model:
+  dims:
+  - 16
+  - 32
+  - 64
+  - 128
+  - 128
+  num_res_blocks:
+  - 3
+  - 3
+  - 3
+  - 9
+  - 3
+  name: cnn
+  objective: jepa
+ft:
+  num_epochs: 100
+  lr: 0.001
+  batch_size: 16
+  report_every: 100
+  save_every: 10
+  head_type: linear
+  embeddings_dir: ./embeddings/baseline
+  task: regression
+  use_attentive_pooling: false
+  lr_scheduler: cosine
+  lr_scheduler_warmup_epochs: 2
+  min_lr: 0
+  weight_decay: 0.01
+  noise_std: 0.0
+  run_name: baseline-linear-probe
+  distributed: false
+train:
+  run_name: baseline-jepa-full
+  num_epochs: 5
+  batch_size: 4
+  report_every: 100
+  save_every: 2
+  include_labels: false
+  sim_coeff: 2
+  std_coeff: 40
+  cov_coeff: 2
+  predict_n_steps: false
+  lr_scheduler: cosine
+  lr_scheduler_warmup_epochs: 2
+  min_lr: 1.0e-06
+  lr: 0.001
+  weight_decay: 0.05
+  noise_std: 1.0
+  distributed: false
+out_path: ./checkpoints/baseline-linear-probe
+cache_path: ./dataset_cache
+dry_run: false
+seed: 42
+
+Found 8750 examples
+Physical params: {'active_matter_L_10.0_zeta_1.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(9.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(9.0)]}
+total number of block pairs in train dataset: 8750
+Found 1200 examples
+Physical params: {'active_matter_L_10.0_zeta_1.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_1.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(1.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_11.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(11.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_13.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(13.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_15.0_alpha_-5.0.hdf5': [np.float32(-5.0), np.float32(15.0)], 'active_matter_L_10.0_zeta_17.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(17.0)], 'active_matter_L_10.0_zeta_3.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(3.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_5.0_alpha_-4.0.hdf5': [np.float32(-4.0), np.float32(5.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-2.0.hdf5': [np.float32(-2.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_7.0_alpha_-3.0.hdf5': [np.float32(-3.0), np.float32(7.0)], 'active_matter_L_10.0_zeta_9.0_alpha_-1.0.hdf5': [np.float32(-1.0), np.float32(9.0)]}
+populating rank from args: 0
+loading embeddings from embeddings/baseline/active_matter-16frames-cnn-jepa-baseline-jepa-full_2026-04-25_12-16-38_ConvEncoder_3.pth_embeddings_train.h5
+using gradient accumulation with 16 steps
+using cosine scheduler with max_lr 0.001, min_lr 0, warmup_steps 0, total_updates 3419
+starting to train w/ 547 batches per device
+pred shape: torch.Size([16, 2])
+label: tensor([[ 0.0000,  1.5504],
+        [ 0.0000, -1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092, -1.1628],
+        [ 0.0000,  0.0000],
+        [-1.4184, -0.3876],
+        [ 1.4184,  1.5504],
+        [-1.4184,  0.7752],
+        [-1.4184, -0.7752],
+        [ 0.7092,  1.5504],
+        [ 0.0000,  0.7752],
+        [-0.7092,  0.7752],
+        [-1.4184,  0.0000],
+        [ 0.0000,  0.3876],
+        [ 0.0000, -0.3876],
+        [-1.4184,  1.5504]])
+train batch 0 pred: tensor([[-0.0252, -0.0852],
+        [-0.1204,  0.1776],
+        [ 0.0015, -0.1085],
+        [-0.0087, -0.1412],
+        [-0.0264, -0.0644]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  1.5504],
+        [ 0.0000, -1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092, -1.1628],
+        [ 0.0000,  0.0000]])
+batch 0 loss: 1.0860140323638916
+step 0
+step 100
+ETA: 3.08 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.50 min remaining
+step 500
+ETA: 2.51 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[ 0.1031, -0.0789],
+        [-0.0722, -0.2266],
+        [ 0.1346, -0.0577],
+        [ 0.1286, -0.0561],
+        [-0.0863, -0.2537]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 0 val loss: 0.7924795746803284
+train batch 0 pred: tensor([[ 0.2020,  0.0083],
+        [ 0.0718, -0.0943],
+        [ 0.1506, -0.1039],
+        [ 0.0420, -0.1138],
+        [ 0.1472, -0.0374]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.5504],
+        [-0.7092,  1.1628],
+        [ 1.4184,  0.7752],
+        [-1.4184,  0.0000],
+        [ 0.0000,  0.0000]])
+batch 0 loss: 1.2271814346313477
+step 0
+step 100
+ETA: 2.71 min remaining
+step 200
+ETA: 2.64 min remaining
+step 300
+ETA: 2.60 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.37 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[ 0.0664, -0.0727],
+        [-0.0661, -0.2783],
+        [ 0.2139, -0.0383],
+        [ 0.2042, -0.0387],
+        [-0.0787, -0.3452]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 1 val loss: 0.7401930093765259
+train batch 0 pred: tensor([[-0.1842, -0.7237],
+        [ 0.0340, -0.2983],
+        [ 0.1541, -0.2242],
+        [ 0.1848, -0.1746],
+        [ 0.0999,  0.0189]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.5504],
+        [-1.4184, -1.1628],
+        [ 0.0000, -0.3876],
+        [ 0.0000, -0.3876],
+        [-0.7092, -1.5504]])
+batch 0 loss: 0.685637354850769
+step 0
+step 100
+ETA: 2.55 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.45 min remaining
+step 400
+ETA: 2.42 min remaining
+step 500
+ETA: 2.49 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.0309, -0.0192],
+        [-0.1445, -0.2369],
+        [ 0.1937,  0.0332],
+        [ 0.1796,  0.0302],
+        [-0.1584, -0.3464]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 2 val loss: 0.7076691389083862
+train batch 0 pred: tensor([[ 0.2771, -0.0020],
+        [ 0.1476,  0.1501],
+        [ 0.2918,  0.1207],
+        [ 0.2348,  0.1087],
+        [ 0.0098, -0.1059]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  1.5504],
+        [-0.7092,  0.7752],
+        [ 0.7092, -1.1628],
+        [ 0.7092,  0.3876],
+        [-1.4184, -0.3876]])
+batch 0 loss: 1.0117449760437012
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.39 min remaining
+step 300
+ETA: 2.47 min remaining
+step 400
+ETA: 2.43 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.0818, -0.0316],
+        [-0.1395, -0.2949],
+        [ 0.2014,  0.0318],
+        [ 0.1824,  0.0263],
+        [-0.1786, -0.4119]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 3 val loss: 0.6841980218887329
+train batch 0 pred: tensor([[ 0.1633, -0.0371],
+        [ 0.0753,  0.0085],
+        [ 0.4587,  0.1304],
+        [ 0.2156,  0.0235],
+        [ 0.4248,  0.0316]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  0.7752],
+        [-1.4184,  1.5504],
+        [ 0.7092, -0.7752],
+        [ 0.0000,  1.5504],
+        [ 1.4184, -0.7752]])
+batch 0 loss: 0.8987689018249512
+step 0
+step 100
+ETA: 2.60 min remaining
+step 200
+ETA: 2.42 min remaining
+step 300
+ETA: 2.45 min remaining
+step 400
+ETA: 2.47 min remaining
+step 500
+ETA: 2.47 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.1375, -0.0074],
+        [-0.1311, -0.2740],
+        [ 0.1969,  0.0657],
+        [ 0.1729,  0.0571],
+        [-0.1972, -0.4102]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 4 val loss: 0.6654615998268127
+train batch 0 pred: tensor([[-0.0359, -0.0694],
+        [ 0.2988,  0.1529],
+        [-0.1150, -0.0309],
+        [ 0.1459,  0.0031],
+        [-0.0728, -0.1187]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.5504],
+        [ 0.0000,  0.7752],
+        [-1.4184,  0.7752],
+        [ 0.0000, -0.7752],
+        [-0.7092,  0.7752]])
+batch 0 loss: 0.8307695984840393
+step 0
+step 100
+ETA: 2.52 min remaining
+step 200
+ETA: 2.46 min remaining
+step 300
+ETA: 2.40 min remaining
+step 400
+ETA: 2.44 min remaining
+step 500
+ETA: 2.40 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.1845, -0.0180],
+        [-0.1116, -0.3146],
+        [ 0.1883,  0.0566],
+        [ 0.1600,  0.0447],
+        [-0.2044, -0.4456]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 5 val loss: 0.6495100855827332
+train batch 0 pred: tensor([[-0.0208, -0.0443],
+        [ 0.0719,  0.1506],
+        [ 0.0324,  0.0976],
+        [ 0.1988,  0.0526],
+        [-0.2934, -0.2976]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.7752],
+        [ 0.0000, -0.3876],
+        [ 0.0000,  0.3876],
+        [ 0.7092,  0.0000],
+        [ 0.0000, -0.7752]])
+batch 0 loss: 0.5976195931434631
+step 0
+step 100
+ETA: 2.65 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.47 min remaining
+step 400
+ETA: 2.47 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.2121, -0.0028],
+        [-0.0530, -0.3017],
+        [ 0.2061,  0.0788],
+        [ 0.1738,  0.0636],
+        [-0.1796, -0.4368]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 6 val loss: 0.6341895461082458
+train batch 0 pred: tensor([[-0.3576, -0.0803],
+        [ 0.2083,  0.2528],
+        [-0.0532, -0.0378],
+        [-0.1723, -0.0821],
+        [ 0.2810,  0.1702]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184,  0.3876],
+        [ 0.7092, -1.1628],
+        [-0.7092,  1.1628],
+        [-0.7092, -0.7752],
+        [ 0.7092,  1.1628]])
+batch 0 loss: 0.927362322807312
+step 0
+step 100
+ETA: 2.48 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.2712,  0.0022],
+        [-0.0519, -0.3052],
+        [ 0.1688,  0.0891],
+        [ 0.1322,  0.0708],
+        [-0.2110, -0.4327]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 7 val loss: 0.6220744848251343
+train batch 0 pred: tensor([[-0.0982,  0.0806],
+        [ 0.8977,  0.3901],
+        [ 0.0237, -0.0046],
+        [ 0.0530,  0.2535],
+        [-0.1579, -0.4267]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.3876],
+        [ 1.4184,  0.7752],
+        [ 0.0000,  0.0000],
+        [-0.7092,  1.1628],
+        [-1.4184,  0.3876]])
+batch 0 loss: 0.8924056887626648
+step 0
+step 100
+ETA: 2.54 min remaining
+step 200
+ETA: 2.52 min remaining
+step 300
+ETA: 2.44 min remaining
+step 400
+ETA: 2.46 min remaining
+step 500
+ETA: 2.50 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.3225,  0.0115],
+        [-0.0435, -0.2941],
+        [ 0.1418,  0.0975],
+        [ 0.1015,  0.0753],
+        [-0.2283, -0.4251]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 8 val loss: 0.6104848384857178
+train batch 0 pred: tensor([[ 0.4089, -0.2870],
+        [ 0.1938,  0.0774],
+        [-0.4906, -0.0241],
+        [ 0.3271,  0.0887],
+        [ 0.1876,  0.2399]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -1.1628],
+        [-0.7092,  1.1628],
+        [-1.4184, -0.7752],
+        [ 0.7092, -0.7752],
+        [ 0.0000,  1.5504]])
+batch 0 loss: 0.7697362899780273
+step 0
+step 100
+ETA: 2.51 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.47 min remaining
+step 400
+ETA: 2.46 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.3642,  0.0408],
+        [-0.0252, -0.2520],
+        [ 0.1233,  0.1357],
+        [ 0.0794,  0.1101],
+        [-0.2346, -0.3837]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 9 val loss: 0.6012457013130188
+pred shape: torch.Size([16, 2])
+label: tensor([[-1.4184, -1.1628],
+        [-1.4184, -1.1628],
+        [-0.7092,  1.1628],
+        [-1.4184,  0.0000],
+        [-1.4184,  0.0000],
+        [-1.4184,  0.0000],
+        [-0.7092, -1.5504],
+        [-0.7092,  0.0000],
+        [-0.7092,  1.5504],
+        [ 0.7092, -0.7752],
+        [-0.7092,  0.3876],
+        [ 0.7092, -0.7752],
+        [-0.7092, -0.3876],
+        [ 1.4184, -1.5504],
+        [-1.4184, -0.7752],
+        [ 1.4184, -0.7752]])
+train batch 0 pred: tensor([[-0.7935, -0.0988],
+        [-0.7621, -1.3011],
+        [-0.0817,  0.1586],
+        [-0.3432,  0.2161],
+        [-0.2289,  0.0839]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.1628],
+        [-1.4184, -1.1628],
+        [-0.7092,  1.1628],
+        [-1.4184,  0.0000],
+        [-1.4184,  0.0000]])
+batch 0 loss: 0.6568412780761719
+step 0
+step 100
+ETA: 2.62 min remaining
+step 200
+ETA: 2.47 min remaining
+step 300
+ETA: 2.52 min remaining
+step 400
+ETA: 2.47 min remaining
+step 500
+ETA: 2.54 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.3789,  0.0120],
+        [ 0.0402, -0.3111],
+        [ 0.1405,  0.1024],
+        [ 0.0932,  0.0745],
+        [-0.2041, -0.4212]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 10 val loss: 0.5879057049751282
+train batch 0 pred: tensor([[ 0.3225, -0.1166],
+        [ 0.3390,  0.1516],
+        [-0.0344,  0.2341],
+        [ 0.2850, -0.1816],
+        [ 0.0037,  0.0491]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  1.5504],
+        [ 0.7092, -1.1628],
+        [ 0.0000,  0.0000],
+        [ 0.7092,  1.5504],
+        [ 0.0000,  1.1628]])
+batch 0 loss: 0.9002082347869873
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.60 min remaining
+step 400
+ETA: 2.52 min remaining
+step 500
+ETA: 2.51 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.4382,  0.0288],
+        [ 0.0178, -0.2832],
+        [ 0.0940,  0.1243],
+        [ 0.0440,  0.0929],
+        [-0.2431, -0.3981]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 11 val loss: 0.579786479473114
+train batch 0 pred: tensor([[-0.8786,  0.0161],
+        [-0.1578,  0.0999],
+        [ 0.1493,  0.1016],
+        [ 0.8973,  0.2552],
+        [-0.4849, -0.2302]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.5504],
+        [-0.7092,  0.7752],
+        [ 1.4184,  0.3876],
+        [ 1.4184,  0.7752],
+        [ 1.4184, -1.1628]])
+batch 0 loss: 0.8116896152496338
+step 0
+step 100
+ETA: 2.54 min remaining
+step 200
+ETA: 2.45 min remaining
+step 300
+ETA: 2.46 min remaining
+step 400
+ETA: 2.53 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.4416,  0.0143],
+        [ 0.1000, -0.3183],
+        [ 0.1212,  0.1055],
+        [ 0.0680,  0.0711],
+        [-0.1967, -0.4193]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 12 val loss: 0.5689085721969604
+train batch 0 pred: tensor([[ 2.6950e-01, -3.1471e-01],
+        [-5.8764e-04,  6.9722e-02],
+        [ 6.0613e-01,  1.6816e-01],
+        [-4.2720e-01, -8.8673e-02],
+        [-4.1897e-01,  1.4073e-01]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -1.1628],
+        [ 0.0000,  0.3876],
+        [ 0.7092,  1.5504],
+        [-1.4184,  0.0000],
+        [-0.7092, -0.3876]])
+batch 0 loss: 0.6637760400772095
+step 0
+step 100
+ETA: 2.62 min remaining
+step 200
+ETA: 2.58 min remaining
+step 300
+ETA: 2.46 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.5209,  0.0249],
+        [ 0.0311, -0.2966],
+        [ 0.0503,  0.1212],
+        [-0.0051,  0.0833],
+        [-0.2679, -0.3996]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 13 val loss: 0.5627616047859192
+train batch 0 pred: tensor([[-0.3059, -0.0375],
+        [ 0.2176,  0.1417],
+        [-0.0141, -0.4084],
+        [ 0.9824,  0.4269],
+        [-0.3419,  0.0863]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.3876],
+        [ 0.0000,  0.0000],
+        [ 0.0000,  1.5504],
+        [ 1.4184,  1.5504],
+        [-1.4184,  1.5504]])
+batch 0 loss: 0.5847792625427246
+step 0
+step 100
+ETA: 2.52 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.52 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.49 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.5350,  0.0291],
+        [ 0.0776, -0.2899],
+        [ 0.0562,  0.1279],
+        [-0.0015,  0.0872],
+        [-0.2485, -0.3859]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 14 val loss: 0.5535686016082764
+train batch 0 pred: tensor([[ 0.3590, -0.0072],
+        [ 0.4924,  0.3109],
+        [ 0.8864,  0.2239],
+        [-0.1784,  0.1483],
+        [-0.1109, -0.5701]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -0.3876],
+        [ 0.7092, -1.5504],
+        [ 1.4184,  1.1628],
+        [-1.4184, -0.7752],
+        [ 1.4184, -0.7752]])
+batch 0 loss: 0.9936800599098206
+step 0
+step 100
+ETA: 2.70 min remaining
+step 200
+ETA: 2.58 min remaining
+step 300
+ETA: 2.44 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.49 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.5536,  0.0468],
+        [ 0.1134, -0.2720],
+        [ 0.0575,  0.1500],
+        [-0.0025,  0.1063],
+        [-0.2319, -0.3657]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 15 val loss: 0.5459277629852295
+train batch 0 pred: tensor([[-0.3256,  0.0883],
+        [-0.4310,  0.1193],
+        [-0.3280,  0.1843],
+        [ 0.0900, -0.3537],
+        [-0.1614,  0.0558]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -0.3876],
+        [-1.4184,  0.0000],
+        [-1.4184,  1.1628],
+        [ 0.0000,  0.7752],
+        [-0.7092, -0.7752]])
+batch 0 loss: 0.5670305490493774
+step 0
+step 100
+ETA: 2.59 min remaining
+step 200
+ETA: 2.63 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.58 min remaining
+step 500
+ETA: 2.57 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.5593,  0.0488],
+        [ 0.1730, -0.2687],
+        [ 0.0689,  0.1507],
+        [ 0.0062,  0.1041],
+        [-0.2031, -0.3554]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 16 val loss: 0.538181483745575
+train batch 0 pred: tensor([[ 0.5412,  0.1081],
+        [ 0.9322,  0.3509],
+        [-0.2430,  0.1081],
+        [ 0.0315, -0.3094],
+        [-0.2539,  0.0526]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  0.0000],
+        [ 1.4184, -1.1628],
+        [-0.7092,  0.3876],
+        [ 0.7092,  1.1628],
+        [-1.4184, -1.5504]])
+batch 0 loss: 0.920126736164093
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.61 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.55 min remaining
+step 500
+ETA: 2.51 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.5849,  0.0136],
+        [ 0.1891, -0.3363],
+        [ 0.0622,  0.1096],
+        [-0.0026,  0.0602],
+        [-0.2030, -0.4086]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 17 val loss: 0.5306613445281982
+train batch 0 pred: tensor([[ 0.3109, -0.3458],
+        [-0.4160,  0.0651],
+        [ 0.2764, -0.1593],
+        [ 0.4860,  0.1155],
+        [ 0.4685,  0.1372]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -0.3876],
+        [-0.7092,  0.0000],
+        [ 0.0000, -0.3876],
+        [ 0.7092, -1.1628],
+        [ 0.7092,  0.0000]])
+batch 0 loss: 0.44914594292640686
+step 0
+step 100
+ETA: 2.54 min remaining
+step 200
+ETA: 2.47 min remaining
+step 300
+ETA: 2.47 min remaining
+step 400
+ETA: 2.44 min remaining
+step 500
+ETA: 2.42 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.6136,  0.0253],
+        [ 0.1999, -0.3113],
+        [ 0.0466,  0.1287],
+        [-0.0202,  0.0762],
+        [-0.2082, -0.3819]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 18 val loss: 0.5241925716400146
+train batch 0 pred: tensor([[ 0.4988,  0.0456],
+        [ 0.0613,  0.2355],
+        [ 0.8542,  0.1784],
+        [-0.6332, -0.7588],
+        [-0.7411, -0.0194]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092,  0.0000],
+        [-0.7092,  0.7752],
+        [ 1.4184, -0.7752],
+        [ 0.0000, -1.5504],
+        [-1.4184, -0.7752]])
+batch 0 loss: 0.4677491784095764
+step 0
+step 100
+ETA: 2.53 min remaining
+step 200
+ETA: 2.40 min remaining
+step 300
+ETA: 2.47 min remaining
+step 400
+ETA: 2.49 min remaining
+step 500
+ETA: 2.42 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.6466,  0.0736],
+        [ 0.1957, -0.2339],
+        [ 0.0212,  0.1831],
+        [-0.0475,  0.1276],
+        [-0.2238, -0.3137]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 19 val loss: 0.5207996368408203
+pred shape: torch.Size([16, 2])
+label: tensor([[ 0.7092, -0.3876],
+        [ 0.0000,  1.1628],
+        [-1.4184, -0.3876],
+        [ 1.4184, -0.7752],
+        [-1.4184, -1.5504],
+        [ 0.0000, -0.3876],
+        [ 1.4184,  1.1628],
+        [ 1.4184, -1.1628],
+        [ 0.0000, -0.7752],
+        [ 1.4184,  1.1628],
+        [ 0.7092, -1.1628],
+        [ 1.4184,  0.0000],
+        [ 1.4184, -0.3876],
+        [-1.4184,  0.3876],
+        [ 0.7092,  0.7752],
+        [ 0.7092, -0.3876]])
+train batch 0 pred: tensor([[ 0.0518,  0.0502],
+        [-0.0308,  0.2695],
+        [-0.5066,  0.0316],
+        [ 0.8249,  0.2280],
+        [-0.5802, -1.7218]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -0.3876],
+        [ 0.0000,  1.1628],
+        [-1.4184, -0.3876],
+        [ 1.4184, -0.7752],
+        [-1.4184, -1.5504]])
+batch 0 loss: 0.4311176836490631
+step 0
+step 100
+ETA: 2.55 min remaining
+step 200
+ETA: 2.36 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.47 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.6638,  0.0544],
+        [ 0.2240, -0.2707],
+        [ 0.0200,  0.1622],
+        [-0.0508,  0.1039],
+        [-0.2154, -0.3429]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 20 val loss: 0.5133048892021179
+train batch 0 pred: tensor([[-0.2869,  0.2271],
+        [-0.3290,  0.0046],
+        [-0.5671, -0.0781],
+        [ 0.1976, -0.1123],
+        [-0.1517,  0.0160]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.3876],
+        [-1.4184, -1.5504],
+        [-0.7092,  1.1628],
+        [ 1.4184,  0.7752],
+        [ 0.0000,  0.3876]])
+batch 0 loss: 0.7577661275863647
+step 0
+step 100
+ETA: 2.51 min remaining
+step 200
+ETA: 2.42 min remaining
+step 300
+ETA: 2.42 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.52 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.6725,  0.0208],
+        [ 0.2559, -0.3309],
+        [ 0.0300,  0.1266],
+        [-0.0424,  0.0668],
+        [-0.1968, -0.3843]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 21 val loss: 0.5071003437042236
+train batch 0 pred: tensor([[ 0.3403,  0.0618],
+        [ 0.2199,  0.0300],
+        [-0.6602, -0.0634],
+        [ 0.3624,  0.0869],
+        [-0.0847, -0.0141]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000, -0.3876],
+        [ 0.0000,  0.3876],
+        [-0.7092,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092, -0.3876]])
+batch 0 loss: 0.4251505434513092
+step 0
+step 100
+ETA: 2.63 min remaining
+step 200
+ETA: 2.46 min remaining
+step 300
+ETA: 2.47 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.7214,  0.0207],
+        [ 0.2194, -0.3361],
+        [-0.0176,  0.1236],
+        [-0.0915,  0.0603],
+        [-0.2413, -0.3923]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 22 val loss: 0.5036982297897339
+train batch 0 pred: tensor([[ 0.1892,  0.1777],
+        [ 1.6736,  0.4814],
+        [ 0.0366, -0.0374],
+        [-0.2655,  0.1633],
+        [ 0.1196, -0.0235]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  1.1628],
+        [ 1.4184,  0.3876],
+        [ 0.7092,  1.5504],
+        [-0.7092, -0.3876],
+        [ 0.0000, -1.5504]])
+batch 0 loss: 0.7394247055053711
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.50 min remaining
+step 400
+ETA: 2.56 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.7066,  0.0843],
+        [ 0.2950, -0.2260],
+        [ 0.0156,  0.2025],
+        [-0.0602,  0.1366],
+        [-0.1884, -0.2923]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 23 val loss: 0.49913716316223145
+train batch 0 pred: tensor([[ 1.3703, -0.1042],
+        [-0.5714,  0.0917],
+        [ 1.2355, -0.2848],
+        [-0.3511,  0.0313],
+        [-0.4035, -0.6631]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -1.5504],
+        [-1.4184, -1.5504],
+        [ 1.4184, -1.5504],
+        [-0.7092,  1.1628],
+        [ 0.0000, -1.1628]])
+batch 0 loss: 0.8339167833328247
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.65 min remaining
+step 300
+ETA: 2.56 min remaining
+step 400
+ETA: 2.62 min remaining
+step 500
+ETA: 2.49 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.7364,  0.0372],
+        [ 0.2879, -0.3137],
+        [-0.0032,  0.1517],
+        [-0.0805,  0.0833],
+        [-0.2028, -0.3622]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 24 val loss: 0.4926142990589142
+train batch 0 pred: tensor([[ 0.4186,  0.1695],
+        [-0.3209, -0.0608],
+        [-0.4810, -0.0805],
+        [-0.0211,  0.2085],
+        [-0.4269,  0.1015]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  0.3876],
+        [ 0.0000,  0.3876],
+        [-0.7092, -0.7752],
+        [ 0.0000,  0.0000],
+        [-1.4184,  0.7752]])
+batch 0 loss: 0.3962925374507904
+step 0
+step 100
+ETA: 2.68 min remaining
+step 200
+ETA: 2.60 min remaining
+step 300
+ETA: 2.58 min remaining
+step 400
+ETA: 2.53 min remaining
+step 500
+ETA: 2.53 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.7565,  0.0445],
+        [ 0.2945, -0.3024],
+        [-0.0137,  0.1593],
+        [-0.0925,  0.0886],
+        [-0.2071, -0.3511]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 25 val loss: 0.4882865846157074
+train batch 0 pred: tensor([[-0.3541,  0.0411],
+        [-0.0606, -0.0129],
+        [-0.5322,  0.0968],
+        [-0.4768,  0.1377],
+        [-0.3179, -0.0161]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.3876],
+        [ 0.0000,  0.7752],
+        [-1.4184,  1.5504],
+        [-1.4184,  1.1628],
+        [-0.7092,  0.7752]])
+batch 0 loss: 0.6369941234588623
+step 0
+step 100
+ETA: 2.54 min remaining
+step 200
+ETA: 2.57 min remaining
+step 300
+ETA: 2.45 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.49 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.7833,  0.0339],
+        [ 0.2884, -0.3263],
+        [-0.0325,  0.1467],
+        [-0.1126,  0.0734],
+        [-0.2206, -0.3696]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 26 val loss: 0.4846254587173462
+train batch 0 pred: tensor([[-0.1065,  0.1036],
+        [-0.5701, -0.0640],
+        [ 0.4468, -0.0811],
+        [ 0.8793,  0.1937],
+        [ 0.6352,  0.1453]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.3876],
+        [-1.4184, -0.3876],
+        [ 0.7092,  0.3876],
+        [ 1.4184, -0.3876],
+        [ 0.7092, -0.7752]])
+batch 0 loss: 0.3829856216907501
+step 0
+step 100
+ETA: 2.51 min remaining
+step 200
+ETA: 2.61 min remaining
+step 300
+ETA: 2.59 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.50 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8053,  0.0681],
+        [ 0.2880, -0.2666],
+        [-0.0413,  0.1846],
+        [-0.1225,  0.1086],
+        [-0.2241, -0.3193]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 27 val loss: 0.48088786005973816
+train batch 0 pred: tensor([[-0.7994, -0.1540],
+        [ 1.0952,  0.3757],
+        [ 0.3916, -1.3117],
+        [ 0.4595,  0.1109],
+        [-0.1826, -0.1067]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.1628],
+        [ 1.4184, -0.3876],
+        [ 0.7092, -1.1628],
+        [ 0.7092,  1.5504],
+        [ 0.0000, -1.5504]])
+batch 0 loss: 0.5254105925559998
+step 0
+step 100
+ETA: 2.49 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.57 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8141,  0.0615],
+        [ 0.3126, -0.2764],
+        [-0.0446,  0.1834],
+        [-0.1274,  0.1055],
+        [-0.2162, -0.3225]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 28 val loss: 0.476680189371109
+train batch 0 pred: tensor([[-0.3130, -0.4662],
+        [-0.3752,  0.0073],
+        [ 0.0793, -0.0809],
+        [ 0.5532,  0.2942],
+        [-1.2390,  0.1107]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -1.5504],
+        [-0.7092,  1.1628],
+        [ 1.4184,  0.3876],
+        [ 0.7092,  0.0000],
+        [-1.4184, -1.5504]])
+batch 0 loss: 0.8435580730438232
+step 0
+step 100
+ETA: 2.67 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.51 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8183,  0.0306],
+        [ 0.3402, -0.3363],
+        [-0.0365,  0.1462],
+        [-0.1206,  0.0655],
+        [-0.2013, -0.3742]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 29 val loss: 0.47315242886543274
+pred shape: torch.Size([16, 2])
+label: tensor([[ 0.0000,  1.5504],
+        [ 0.7092,  0.3876],
+        [ 0.0000, -1.1628],
+        [-1.4184, -0.3876],
+        [-0.7092,  1.5504],
+        [ 0.7092,  0.3876],
+        [-0.7092, -0.3876],
+        [-1.4184,  1.5504],
+        [ 1.4184, -1.1628],
+        [ 0.7092,  1.1628],
+        [ 0.7092, -0.7752],
+        [ 0.7092,  0.0000],
+        [-0.7092,  1.5504],
+        [ 0.7092,  0.0000],
+        [-0.7092,  0.7752],
+        [ 1.4184, -0.3876]])
+train batch 0 pred: tensor([[ 0.0933,  0.0621],
+        [ 0.5397,  0.1561],
+        [-0.0840, -0.1520],
+        [-0.4816,  0.0021],
+        [-0.2009,  0.1798]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  1.5504],
+        [ 0.7092,  0.3876],
+        [ 0.0000, -1.1628],
+        [-1.4184, -0.3876],
+        [-0.7092,  1.5504]])
+batch 0 loss: 0.6535228490829468
+step 0
+step 100
+ETA: 2.61 min remaining
+step 200
+ETA: 2.43 min remaining
+step 300
+ETA: 2.43 min remaining
+step 400
+ETA: 2.49 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8478,  0.0742],
+        [ 0.3206, -0.2627],
+        [-0.0619,  0.2016],
+        [-0.1468,  0.1188],
+        [-0.2215, -0.3111]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 30 val loss: 0.47020223736763
+train batch 0 pred: tensor([[-0.5058,  0.1268],
+        [-0.8423,  0.0743],
+        [-0.4944, -0.2203],
+        [ 0.1517, -0.4131],
+        [ 0.0655, -0.1607]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.7752],
+        [-1.4184,  0.3876],
+        [-0.7092, -1.1628],
+        [ 0.0000,  1.5504],
+        [ 0.0000,  0.0000]])
+batch 0 loss: 0.672374963760376
+step 0
+step 100
+ETA: 2.50 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.40 min remaining
+step 400
+ETA: 2.50 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8515,  0.1042],
+        [ 0.3518, -0.2111],
+        [-0.0545,  0.2374],
+        [-0.1409,  0.1520],
+        [-0.2050, -0.2665]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 31 val loss: 0.4684884548187256
+train batch 0 pred: tensor([[ 1.1759,  0.4740],
+        [-0.4331,  0.0523],
+        [ 0.1047, -0.1443],
+        [ 0.0732, -1.2191],
+        [-0.6136, -0.0776]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  0.7752],
+        [-0.7092,  1.5504],
+        [ 0.7092, -1.1628],
+        [ 0.7092, -1.5504],
+        [-0.7092, -0.3876]])
+batch 0 loss: 0.5740640163421631
+step 0
+step 100
+ETA: 2.48 min remaining
+step 200
+ETA: 2.46 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.50 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8573,  0.0585],
+        [ 0.3667, -0.2899],
+        [-0.0497,  0.1859],
+        [-0.1371,  0.0986],
+        [-0.1967, -0.3333]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 32 val loss: 0.4624784290790558
+train batch 0 pred: tensor([[-0.7112,  0.1202],
+        [ 1.3009,  0.2316],
+        [-0.4259,  0.0819],
+        [-0.2177,  0.1297],
+        [-0.1343,  0.2854]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -0.7752],
+        [ 1.4184,  1.1628],
+        [-0.7092,  0.3876],
+        [-0.7092, -0.3876],
+        [-0.7092,  1.5504]])
+batch 0 loss: 0.42959392070770264
+step 0
+step 100
+ETA: 2.64 min remaining
+step 200
+ETA: 2.58 min remaining
+step 300
+ETA: 2.56 min remaining
+step 400
+ETA: 2.54 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8745,  0.0868],
+        [ 0.3733, -0.2445],
+        [-0.0627,  0.2201],
+        [-0.1515,  0.1305],
+        [-0.2020, -0.2954]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 33 val loss: 0.4604462683200836
+train batch 0 pred: tensor([[-0.9375,  0.1606],
+        [ 0.0282, -0.0101],
+        [ 0.6218,  0.0817],
+        [ 0.7529,  0.2296],
+        [-0.5543,  0.2594]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.0000,  0.0000],
+        [ 0.7092,  0.0000],
+        [ 0.7092,  0.0000],
+        [-0.7092,  1.5504]])
+batch 0 loss: 0.2953752875328064
+step 0
+step 100
+ETA: 2.65 min remaining
+step 200
+ETA: 2.55 min remaining
+step 300
+ETA: 2.51 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.51 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8883,  0.0582],
+        [ 0.3737, -0.2965],
+        [-0.0664,  0.1890],
+        [-0.1558,  0.0976],
+        [-0.2008, -0.3364]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 34 val loss: 0.45678579807281494
+train batch 0 pred: tensor([[ 1.2568, -1.2479],
+        [-0.5550,  0.1598],
+        [ 1.9932, -0.8082],
+        [ 1.1652, -1.2402],
+        [-0.4030,  0.0773]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000, -1.5504],
+        [-1.4184,  0.0000],
+        [ 0.7092, -1.5504],
+        [-0.7092, -1.5504],
+        [-0.7092,  1.5504]])
+batch 0 loss: 0.6370751857757568
+step 0
+step 100
+ETA: 2.59 min remaining
+step 200
+ETA: 2.57 min remaining
+step 300
+ETA: 2.50 min remaining
+step 400
+ETA: 2.52 min remaining
+step 500
+ETA: 2.52 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.8977,  0.0744],
+        [ 0.3880, -0.2692],
+        [-0.0720,  0.2087],
+        [-0.1628,  0.1154],
+        [-0.2006, -0.3133]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 35 val loss: 0.4542027711868286
+train batch 0 pred: tensor([[ 0.0622,  0.0645],
+        [ 0.4662, -0.0741],
+        [ 0.9965,  0.1105],
+        [-0.4104,  0.2197],
+        [ 0.0084,  0.0540]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  1.1628],
+        [ 0.7092,  1.1628],
+        [ 1.4184,  0.0000],
+        [-0.7092,  1.1628],
+        [ 0.0000,  0.7752]])
+batch 0 loss: 0.47421029210090637
+step 0
+step 100
+ETA: 2.70 min remaining
+step 200
+ETA: 2.53 min remaining
+step 300
+ETA: 2.52 min remaining
+step 400
+ETA: 2.56 min remaining
+step 500
+ETA: 2.51 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.9215,  0.0542],
+        [ 0.3703, -0.3083],
+        [-0.0923,  0.1893],
+        [-0.1840,  0.0940],
+        [-0.2177, -0.3441]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 36 val loss: 0.4521888196468353
+train batch 0 pred: tensor([[ 0.9990,  0.4054],
+        [ 0.1430, -0.0529],
+        [ 0.5384,  0.1917],
+        [ 0.6738,  0.1130],
+        [ 0.6082,  0.0294]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092,  1.5504],
+        [ 1.4184,  0.3876],
+        [ 1.4184,  1.5504],
+        [ 0.7092, -1.1628],
+        [ 1.4184,  0.3876]])
+batch 0 loss: 0.7137165069580078
+step 0
+step 100
+ETA: 2.61 min remaining
+step 200
+ETA: 2.61 min remaining
+step 300
+ETA: 2.58 min remaining
+step 400
+ETA: 2.59 min remaining
+step 500
+ETA: 2.47 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.9272,  0.0538],
+        [ 0.3857, -0.3084],
+        [-0.0861,  0.1875],
+        [-0.1785,  0.0902],
+        [-0.2072, -0.3449]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 37 val loss: 0.44905751943588257
+train batch 0 pred: tensor([[ 0.4380, -0.3979],
+        [ 0.0722, -0.0846],
+        [ 0.8766,  0.2258],
+        [ 0.8664, -0.1461],
+        [ 0.2723,  0.0747]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -0.3876],
+        [ 0.7092,  0.0000],
+        [ 0.7092,  0.3876],
+        [ 0.7092, -1.5504],
+        [ 0.0000,  0.0000]])
+batch 0 loss: 0.287188857793808
+step 0
+step 100
+ETA: 2.69 min remaining
+step 200
+ETA: 2.59 min remaining
+step 300
+ETA: 2.52 min remaining
+step 400
+ETA: 2.50 min remaining
+step 500
+ETA: 2.53 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.9370,  0.0746],
+        [ 0.3925, -0.2742],
+        [-0.0920,  0.2153],
+        [-0.1855,  0.1163],
+        [-0.2110, -0.3160]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 38 val loss: 0.4467914402484894
+train batch 0 pred: tensor([[ 0.2545, -1.4542],
+        [-0.3385,  0.2321],
+        [ 0.1885,  0.0501],
+        [-0.5675,  0.2573],
+        [ 1.2630, -1.1365]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -1.5504],
+        [-0.7092,  1.1628],
+        [ 0.0000,  0.7752],
+        [-1.4184,  0.3876],
+        [ 1.4184, -1.1628]])
+batch 0 loss: 0.2845715284347534
+step 0
+step 100
+ETA: 2.64 min remaining
+step 200
+ETA: 2.57 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.61 min remaining
+step 500
+ETA: 2.60 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.9584,  0.0794],
+        [ 0.3785, -0.2665],
+        [-0.1090,  0.2229],
+        [-0.2031,  0.1219],
+        [-0.2252, -0.3075]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 39 val loss: 0.44538477063179016
+pred shape: torch.Size([16, 2])
+label: tensor([[ 0.7092,  0.0000],
+        [ 0.0000, -0.3876],
+        [ 0.0000, -1.5504],
+        [ 0.7092, -0.7752],
+        [ 0.0000,  0.7752],
+        [-0.7092, -0.3876],
+        [ 0.7092, -0.3876],
+        [-1.4184,  1.5504],
+        [ 0.0000,  1.5504],
+        [ 1.4184,  0.3876],
+        [-0.7092,  1.5504],
+        [ 0.7092, -0.3876],
+        [-0.7092,  0.7752],
+        [ 0.0000, -0.7752],
+        [-0.7092, -1.1628],
+        [-0.7092,  1.5504]])
+train batch 0 pred: tensor([[ 0.2795,  0.1715],
+        [-0.3324,  0.0582],
+        [ 0.4441, -1.4904],
+        [ 0.4844,  0.0801],
+        [-0.0619,  0.0300]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092,  0.0000],
+        [ 0.0000, -0.3876],
+        [ 0.0000, -1.5504],
+        [ 0.7092, -0.7752],
+        [ 0.0000,  0.7752]])
+batch 0 loss: 0.41677868366241455
+step 0
+step 100
+ETA: 2.62 min remaining
+step 200
+ETA: 2.47 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.50 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.9693,  0.0700],
+        [ 0.3817, -0.2881],
+        [-0.1137,  0.2125],
+        [-0.2087,  0.1097],
+        [-0.2270, -0.3249]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 40 val loss: 0.44305479526519775
+train batch 0 pred: tensor([[ 0.4388,  0.0675],
+        [ 0.5231,  0.2851],
+        [ 1.6819, -0.9360],
+        [-0.3633, -0.0388],
+        [ 0.4073,  0.1961]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -0.3876],
+        [ 0.7092,  0.0000],
+        [ 0.7092, -1.5504],
+        [-0.7092, -0.7752],
+        [ 0.7092,  1.1628]])
+batch 0 loss: 0.4252249300479889
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.52 min remaining
+step 300
+ETA: 2.56 min remaining
+step 400
+ETA: 2.57 min remaining
+step 500
+ETA: 2.41 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.9542,  0.0917],
+        [ 0.4297, -0.2480],
+        [-0.0914,  0.2416],
+        [-0.1876,  0.1370],
+        [-0.1923, -0.2921]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 41 val loss: 0.44033172726631165
+train batch 0 pred: tensor([[-0.8623,  0.1883],
+        [-0.9844,  0.2124],
+        [-0.1594, -0.8988],
+        [ 0.1282,  0.0395],
+        [ 0.2495,  0.1666]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -0.7752],
+        [-1.4184,  0.7752],
+        [ 0.7092, -1.5504],
+        [ 1.4184, -0.7752],
+        [ 0.0000,  0.7752]])
+batch 0 loss: 0.49144595861434937
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.51 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.60 min remaining
+step 500
+ETA: 2.63 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0102,  0.0826],
+        [ 0.3497, -0.2622],
+        [-0.1515,  0.2303],
+        [-0.2478,  0.1240],
+        [-0.2611, -0.3046]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 42 val loss: 0.4417366087436676
+train batch 0 pred: tensor([[ 0.1490,  0.1228],
+        [ 0.1591, -0.1880],
+        [ 0.7870,  0.0781],
+        [-0.5916, -0.9384],
+        [-0.3571,  0.2031]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  1.1628],
+        [ 0.0000, -1.5504],
+        [ 1.4184, -0.3876],
+        [-0.7092, -1.1628],
+        [-0.7092,  0.0000]])
+batch 0 loss: 0.4176180958747864
+step 0
+step 100
+ETA: 2.48 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.46 min remaining
+step 400
+ETA: 2.52 min remaining
+step 500
+ETA: 2.39 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.9919,  0.0963],
+        [ 0.3999, -0.2440],
+        [-0.1227,  0.2486],
+        [-0.2201,  0.1409],
+        [-0.2245, -0.2889]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 43 val loss: 0.43784698843955994
+train batch 0 pred: tensor([[-7.4591e-01, -4.1110e-01],
+        [-1.0650e+00, -2.1853e+00],
+        [ 4.9983e-01,  1.6161e-01],
+        [-1.0368e-03,  2.8102e-01],
+        [-5.3065e-01, -1.8565e-01]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -1.5504],
+        [-0.7092, -1.1628],
+        [ 0.7092, -1.1628],
+        [ 0.0000,  0.7752],
+        [-1.4184, -1.1628]])
+batch 0 loss: 0.6550748348236084
+step 0
+step 100
+ETA: 2.54 min remaining
+step 200
+ETA: 2.51 min remaining
+step 300
+ETA: 2.47 min remaining
+step 400
+ETA: 2.57 min remaining
+step 500
+ETA: 2.56 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-0.9943,  0.1094],
+        [ 0.4144, -0.2187],
+        [-0.1158,  0.2643],
+        [-0.2138,  0.1548],
+        [-0.2141, -0.2720]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 44 val loss: 0.43589985370635986
+train batch 0 pred: tensor([[ 2.1756, -0.6704],
+        [ 1.2627, -0.9384],
+        [-0.5707, -0.2761],
+        [ 1.2341,  0.2606],
+        [-1.2299, -0.2250]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -1.5504],
+        [ 1.4184, -1.5504],
+        [-0.7092, -1.5504],
+        [ 1.4184,  1.5504],
+        [-1.4184, -0.7752]])
+batch 0 loss: 1.104482650756836
+step 0
+step 100
+ETA: 2.49 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.54 min remaining
+step 400
+ETA: 2.65 min remaining
+step 500
+ETA: 2.41 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0077,  0.1066],
+        [ 0.4082, -0.2275],
+        [-0.1316,  0.2639],
+        [-0.2304,  0.1527],
+        [-0.2257, -0.2790]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 45 val loss: 0.4348801076412201
+train batch 0 pred: tensor([[ 0.2510,  0.1281],
+        [ 0.8532,  0.1074],
+        [-1.0386, -0.0204],
+        [ 0.8398,  0.3653],
+        [-0.3954,  0.2003]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  0.0000],
+        [ 1.4184, -1.1628],
+        [-1.4184, -1.1628],
+        [ 0.7092, -0.7752],
+        [-0.7092, -1.1628]])
+batch 0 loss: 0.5396146774291992
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.46 min remaining
+step 400
+ETA: 2.43 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0015,  0.1141],
+        [ 0.4369, -0.2162],
+        [-0.1161,  0.2759],
+        [-0.2156,  0.1631],
+        [-0.2054, -0.2673]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 46 val loss: 0.43286916613578796
+train batch 0 pred: tensor([[ 0.1319,  0.1853],
+        [-0.4260,  0.0357],
+        [-0.5879,  0.0635],
+        [-0.7798,  0.2026],
+        [ 0.7017, -1.2812]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  0.3876],
+        [-0.7092, -0.3876],
+        [-1.4184, -0.7752],
+        [-1.4184,  0.0000],
+        [ 0.7092, -1.5504]])
+batch 0 loss: 0.495376318693161
+step 0
+step 100
+ETA: 2.56 min remaining
+step 200
+ETA: 2.47 min remaining
+step 300
+ETA: 2.42 min remaining
+step 400
+ETA: 2.49 min remaining
+step 500
+ETA: 2.47 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0197,  0.0855],
+        [ 0.4201, -0.2668],
+        [-0.1334,  0.2413],
+        [-0.2334,  0.1274],
+        [-0.2226, -0.3121]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 47 val loss: 0.4301060438156128
+train batch 0 pred: tensor([[ 0.0966, -0.6257],
+        [-0.3995,  0.1136],
+        [ 0.3681, -0.0147],
+        [-0.4002,  0.0731],
+        [-0.1594, -1.7419]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -0.7752],
+        [-0.7092,  0.0000],
+        [ 0.7092,  0.7752],
+        [-0.7092, -0.7752],
+        [ 0.0000, -1.5504]])
+batch 0 loss: 0.38762521743774414
+step 0
+step 100
+ETA: 2.67 min remaining
+step 200
+ETA: 2.59 min remaining
+step 300
+ETA: 2.50 min remaining
+step 400
+ETA: 2.55 min remaining
+step 500
+ETA: 2.54 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0293,  0.0859],
+        [ 0.4172, -0.2671],
+        [-0.1374,  0.2443],
+        [-0.2379,  0.1292],
+        [-0.2268, -0.3104]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 48 val loss: 0.428658127784729
+train batch 0 pred: tensor([[-0.8817,  0.0819],
+        [-1.2061, -0.0049],
+        [ 0.8235,  0.1622],
+        [-0.4858, -1.4985],
+        [-0.0814,  0.0240]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -0.3876],
+        [-1.4184, -1.1628],
+        [ 1.4184,  1.5504],
+        [-0.7092, -1.5504],
+        [ 0.0000,  0.0000]])
+batch 0 loss: 0.5122557878494263
+step 0
+step 100
+ETA: 2.48 min remaining
+step 200
+ETA: 2.56 min remaining
+step 300
+ETA: 2.52 min remaining
+step 400
+ETA: 2.53 min remaining
+step 500
+ETA: 2.42 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0256,  0.0945],
+        [ 0.4364, -0.2530],
+        [-0.1293,  0.2556],
+        [-0.2302,  0.1388],
+        [-0.2121, -0.3003]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 49 val loss: 0.42686590552330017
+pred shape: torch.Size([16, 2])
+label: tensor([[ 0.7092,  0.3876],
+        [ 0.7092, -0.7752],
+        [-0.7092, -0.3876],
+        [ 0.0000, -1.1628],
+        [-0.7092,  1.5504],
+        [-0.7092,  0.0000],
+        [ 1.4184, -1.1628],
+        [ 0.0000,  0.7752],
+        [ 1.4184, -0.3876],
+        [ 1.4184,  1.1628],
+        [-0.7092,  0.0000],
+        [ 1.4184, -1.1628],
+        [ 1.4184,  0.3876],
+        [-0.7092,  0.3876],
+        [-1.4184,  0.7752],
+        [ 1.4184, -0.7752]])
+train batch 0 pred: tensor([[ 0.5484,  0.2376],
+        [ 0.6153,  0.2163],
+        [-0.5231, -0.4533],
+        [ 0.2862,  0.0646],
+        [-0.5812,  0.0065]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092,  0.3876],
+        [ 0.7092, -0.7752],
+        [-0.7092, -0.3876],
+        [ 0.0000, -1.1628],
+        [-0.7092,  1.5504]])
+batch 0 loss: 0.32329651713371277
+step 0
+step 100
+ETA: 2.55 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.49 min remaining
+step 400
+ETA: 2.49 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0417,  0.0859],
+        [ 0.4243, -0.2692],
+        [-0.1453,  0.2442],
+        [-0.2470,  0.1265],
+        [-0.2278, -0.3128]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 50 val loss: 0.4259439706802368
+train batch 0 pred: tensor([[ 0.4453,  0.2387],
+        [-0.4184,  0.2680],
+        [ 0.1734,  0.0172],
+        [ 0.9637,  0.3493],
+        [-0.8699,  0.1226]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  1.1628],
+        [-1.4184,  0.3876],
+        [ 0.0000, -1.1628],
+        [ 0.7092,  0.3876],
+        [-1.4184,  0.7752]])
+batch 0 loss: 0.5873229503631592
+step 0
+step 100
+ETA: 2.52 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.46 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.56 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0143,  0.0817],
+        [ 0.4847, -0.2778],
+        [-0.1065,  0.2421],
+        [-0.2089,  0.1232],
+        [-0.1796, -0.3197]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 51 val loss: 0.42264723777770996
+train batch 0 pred: tensor([[-0.0314,  0.2060],
+        [-0.6645,  0.0990],
+        [-0.5952, -0.2641],
+        [-0.9372, -0.2642],
+        [ 0.5695,  0.1269]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  0.0000],
+        [-0.7092, -0.7752],
+        [ 0.0000, -0.7752],
+        [-0.7092, -1.5504],
+        [ 0.7092, -0.3876]])
+batch 0 loss: 0.46157658100128174
+step 0
+step 100
+ETA: 2.53 min remaining
+step 200
+ETA: 2.43 min remaining
+step 300
+ETA: 2.49 min remaining
+step 400
+ETA: 2.50 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0539,  0.0799],
+        [ 0.4280, -0.2775],
+        [-0.1500,  0.2417],
+        [-0.2526,  0.1214],
+        [-0.2285, -0.3230]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 52 val loss: 0.4232851266860962
+train batch 0 pred: tensor([[-0.6903, -0.4338],
+        [-0.5203,  0.1340],
+        [-0.8045,  0.1120],
+        [ 2.3373, -0.7523],
+        [-0.5834, -0.0529]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -1.5504],
+        [-0.7092, -0.3876],
+        [-1.4184, -0.3876],
+        [ 1.4184, -1.5504],
+        [-0.7092,  0.0000]])
+batch 0 loss: 0.31351882219314575
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.43 min remaining
+step 300
+ETA: 2.45 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.49 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0547,  0.1047],
+        [ 0.4362, -0.2400],
+        [-0.1474,  0.2708],
+        [-0.2503,  0.1494],
+        [-0.2238, -0.2891]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 53 val loss: 0.4224488139152527
+train batch 0 pred: tensor([[ 0.3853,  0.1306],
+        [ 0.1206, -0.0225],
+        [ 2.3386, -0.6885],
+        [-0.7623,  0.1308],
+        [-0.6279, -0.1377]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -1.1628],
+        [ 1.4184, -0.3876],
+        [ 0.7092, -1.5504],
+        [-0.7092,  0.7752],
+        [-0.7092, -1.1628]])
+batch 0 loss: 0.7208586931228638
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.60 min remaining
+step 300
+ETA: 2.52 min remaining
+step 400
+ETA: 2.58 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0641,  0.0915],
+        [ 0.4333, -0.2628],
+        [-0.1526,  0.2584],
+        [-0.2560,  0.1361],
+        [-0.2296, -0.3081]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 54 val loss: 0.42102450132369995
+train batch 0 pred: tensor([[ 0.4801, -0.0587],
+        [ 1.7226,  0.6731],
+        [-0.8205, -0.2167],
+        [ 0.2319, -0.2307],
+        [ 0.6219,  0.3176]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  1.1628],
+        [ 1.4184,  0.3876],
+        [-0.7092, -0.3876],
+        [ 1.4184, -1.1628],
+        [ 0.7092,  1.5504]])
+batch 0 loss: 0.5149986743927002
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.52 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.57 min remaining
+step 500
+ETA: 2.52 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0699,  0.0946],
+        [ 0.4318, -0.2578],
+        [-0.1552,  0.2621],
+        [-0.2589,  0.1385],
+        [-0.2318, -0.3058]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 55 val loss: 0.42015954852104187
+train batch 0 pred: tensor([[-0.2840,  0.3060],
+        [-0.5619, -0.4450],
+        [ 0.5110, -0.8186],
+        [ 0.4515,  0.1846],
+        [ 0.5177, -0.1011]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092,  1.5504],
+        [ 0.0000, -1.1628],
+        [ 1.4184, -1.5504],
+        [ 0.0000,  0.3876],
+        [ 0.7092, -0.7752]])
+batch 0 loss: 0.4109216332435608
+step 0
+step 100
+ETA: 2.56 min remaining
+step 200
+ETA: 2.46 min remaining
+step 300
+ETA: 2.42 min remaining
+step 400
+ETA: 2.66 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0621,  0.0698],
+        [ 0.4551, -0.3038],
+        [-0.1450,  0.2325],
+        [-0.2494,  0.1080],
+        [-0.2168, -0.3422]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 56 val loss: 0.4180765151977539
+train batch 0 pred: tensor([[ 0.6776,  0.0462],
+        [ 0.4039, -0.2514],
+        [-0.9247, -0.0270],
+        [-1.4272, -0.1525],
+        [-0.4743,  0.0825]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092,  0.3876],
+        [ 1.4184, -0.3876],
+        [-1.4184, -1.1628],
+        [-1.4184, -1.1628],
+        [-0.7092, -1.1628]])
+batch 0 loss: 0.4353172779083252
+step 0
+step 100
+ETA: 2.61 min remaining
+step 200
+ETA: 2.61 min remaining
+step 300
+ETA: 2.40 min remaining
+step 400
+ETA: 2.47 min remaining
+step 500
+ETA: 2.49 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0728,  0.0903],
+        [ 0.4461, -0.2697],
+        [-0.1524,  0.2622],
+        [-0.2569,  0.1368],
+        [-0.2246, -0.3142]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 57 val loss: 0.41755008697509766
+train batch 0 pred: tensor([[-0.9057,  0.1293],
+        [ 0.7291,  0.0580],
+        [ 0.3153, -0.4640],
+        [-0.4368,  0.0582],
+        [-1.0916,  0.2324]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184,  0.7752],
+        [ 1.4184,  0.3876],
+        [ 1.4184, -0.3876],
+        [-0.7092, -1.1628],
+        [-1.4184,  0.3876]])
+batch 0 loss: 0.47614678740501404
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.51 min remaining
+step 300
+ETA: 2.53 min remaining
+step 400
+ETA: 2.42 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0722,  0.0848],
+        [ 0.4558, -0.2783],
+        [-0.1484,  0.2545],
+        [-0.2534,  0.1280],
+        [-0.2185, -0.3231]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 58 val loss: 0.41608506441116333
+train batch 0 pred: tensor([[ 0.2119,  0.0321],
+        [ 0.2588, -0.1452],
+        [ 0.0064,  0.1253],
+        [ 0.4235, -0.0104],
+        [-0.7697, -0.0103]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -0.7752],
+        [ 0.7092, -0.3876],
+        [ 0.0000,  0.7752],
+        [ 0.7092,  0.3876],
+        [-1.4184, -0.3876]])
+batch 0 loss: 0.36773601174354553
+step 0
+step 100
+ETA: 2.56 min remaining
+step 200
+ETA: 2.45 min remaining
+step 300
+ETA: 2.54 min remaining
+step 400
+ETA: 2.47 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0691,  0.1077],
+        [ 0.4700, -0.2362],
+        [-0.1416,  0.2810],
+        [-0.2469,  0.1533],
+        [-0.2093, -0.2910]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 59 val loss: 0.4154134690761566
+pred shape: torch.Size([16, 2])
+label: tensor([[-1.4184, -1.1628],
+        [-0.7092, -1.1628],
+        [ 1.4184, -0.3876],
+        [ 0.0000, -1.5504],
+        [ 0.7092, -1.1628],
+        [ 0.7092,  0.0000],
+        [-1.4184, -1.5504],
+        [-1.4184, -0.7752],
+        [ 0.7092, -1.5504],
+        [-0.7092,  0.7752],
+        [ 0.7092,  0.3876],
+        [ 1.4184,  0.7752],
+        [-1.4184,  1.5504],
+        [ 1.4184,  1.5504],
+        [ 1.4184, -0.3876],
+        [ 0.7092,  1.1628]])
+train batch 0 pred: tensor([[-0.8209, -0.2286],
+        [-0.8928, -0.9026],
+        [ 0.5145, -0.3164],
+        [-0.4510, -1.7331],
+        [ 0.2492, -0.0547]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.1628],
+        [-0.7092, -1.1628],
+        [ 1.4184, -0.3876],
+        [ 0.0000, -1.5504],
+        [ 0.7092, -1.1628]])
+batch 0 loss: 0.5230758786201477
+step 0
+step 100
+ETA: 2.68 min remaining
+step 200
+ETA: 2.63 min remaining
+step 300
+ETA: 2.52 min remaining
+step 400
+ETA: 2.46 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0795,  0.0808],
+        [ 0.4598, -0.2858],
+        [-0.1538,  0.2503],
+        [-0.2594,  0.1221],
+        [-0.2206, -0.3294]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 60 val loss: 0.4143802523612976
+train batch 0 pred: tensor([[ 1.0197,  0.2322],
+        [-1.1415, -0.7307],
+        [ 0.6433,  0.2349],
+        [-0.9712,  0.1108],
+        [ 0.3559,  0.0955]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -0.7752],
+        [-1.4184, -0.7752],
+        [ 0.7092,  1.5504],
+        [-1.4184,  0.7752],
+        [ 0.7092,  1.1628]])
+batch 0 loss: 0.4972277283668518
+step 0
+step 100
+ETA: 2.67 min remaining
+step 200
+ETA: 2.60 min remaining
+step 300
+ETA: 2.61 min remaining
+step 400
+ETA: 2.57 min remaining
+step 500
+ETA: 2.57 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0871,  0.0951],
+        [ 0.4540, -0.2608],
+        [-0.1581,  0.2697],
+        [-0.2639,  0.1407],
+        [-0.2262, -0.3090]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 61 val loss: 0.4140775501728058
+train batch 0 pred: tensor([[0.8537, 0.2336],
+        [0.9307, 0.1686],
+        [0.7584, 0.0268],
+        [0.3769, 0.4085],
+        [0.3630, 0.0534]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  0.7752],
+        [ 1.4184, -0.3876],
+        [ 1.4184,  0.0000],
+        [ 0.0000,  0.7752],
+        [ 0.7092, -0.7752]])
+batch 0 loss: 0.5033771395683289
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.53 min remaining
+step 300
+ETA: 2.63 min remaining
+step 400
+ETA: 2.53 min remaining
+step 500
+ETA: 2.39 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0804,  0.0999],
+        [ 0.4729, -0.2536],
+        [-0.1471,  0.2763],
+        [-0.2534,  0.1464],
+        [-0.2117, -0.3041]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 62 val loss: 0.4127790629863739
+train batch 0 pred: tensor([[-0.5408, -0.1568],
+        [ 0.4447, -0.1177],
+        [-0.4604,  0.1065],
+        [ 0.1926, -0.1835],
+        [ 1.0768,  0.2847]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.3876],
+        [ 0.7092,  0.3876],
+        [-0.7092, -0.3876],
+        [ 1.4184, -0.3876],
+        [ 1.4184, -0.7752]])
+batch 0 loss: 0.30917176604270935
+step 0
+step 100
+ETA: 2.55 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.46 min remaining
+step 400
+ETA: 2.49 min remaining
+step 500
+ETA: 2.45 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0851,  0.1016],
+        [ 0.4705, -0.2500],
+        [-0.1512,  0.2800],
+        [-0.2578,  0.1494],
+        [-0.2152, -0.3018]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 63 val loss: 0.41224023699760437
+train batch 0 pred: tensor([[-0.2286,  0.2670],
+        [ 0.5847,  0.3399],
+        [-0.4037, -0.1504],
+        [-0.8248, -1.9785],
+        [-0.0474, -0.0405]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  1.5504],
+        [ 0.7092,  1.1628],
+        [-1.4184, -0.3876],
+        [-1.4184, -1.5504],
+        [ 0.0000,  0.0000]])
+batch 0 loss: 0.4977133870124817
+step 0
+step 100
+ETA: 2.49 min remaining
+step 200
+ETA: 2.52 min remaining
+step 300
+ETA: 2.62 min remaining
+step 400
+ETA: 2.57 min remaining
+step 500
+ETA: 2.58 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0943,  0.0855],
+        [ 0.4611, -0.2790],
+        [-0.1602,  0.2591],
+        [-0.2669,  0.1278],
+        [-0.2243, -0.3255]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 64 val loss: 0.4116409420967102
+train batch 0 pred: tensor([[ 0.1992, -0.4126],
+        [-0.6780,  0.2720],
+        [ 0.4896, -0.0584],
+        [ 0.0072,  0.1649],
+        [ 0.9139,  0.1932]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -0.7752],
+        [-0.7092, -0.3876],
+        [ 1.4184,  0.7752],
+        [-0.7092,  0.7752],
+        [ 0.7092, -1.1628]])
+batch 0 loss: 0.4529849886894226
+step 0
+step 100
+ETA: 2.66 min remaining
+step 200
+ETA: 2.52 min remaining
+step 300
+ETA: 2.50 min remaining
+step 400
+ETA: 2.52 min remaining
+step 500
+ETA: 2.53 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0848,  0.0899],
+        [ 0.4836, -0.2726],
+        [-0.1460,  0.2657],
+        [-0.2530,  0.1338],
+        [-0.2074, -0.3204]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 65 val loss: 0.4100891351699829
+train batch 0 pred: tensor([[ 0.7140,  0.1395],
+        [-1.0343, -0.1438],
+        [ 0.6607,  0.4404],
+        [ 0.5594,  0.1392],
+        [-0.4147, -0.2010]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -0.7752],
+        [-1.4184,  0.0000],
+        [ 0.7092,  0.7752],
+        [ 0.7092,  1.5504],
+        [-0.7092, -0.3876]])
+batch 0 loss: 0.3708798885345459
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.58 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.47 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0921,  0.1042],
+        [ 0.4763, -0.2472],
+        [-0.1525,  0.2836],
+        [-0.2597,  0.1509],
+        [-0.2145, -0.3006]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 66 val loss: 0.4101419448852539
+train batch 0 pred: tensor([[ 0.4633,  0.1163],
+        [-0.4089,  0.2865],
+        [-1.4054, -0.0667],
+        [-0.4872, -0.2051],
+        [-0.1516,  0.1051]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092,  1.1628],
+        [-0.7092, -0.3876],
+        [-1.4184, -1.1628],
+        [ 0.0000, -0.7752],
+        [ 0.0000, -0.3876]])
+batch 0 loss: 0.35829058289527893
+step 0
+step 100
+ETA: 2.51 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.51 min remaining
+step 400
+ETA: 2.56 min remaining
+step 500
+ETA: 2.56 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0917,  0.1048],
+        [ 0.4820, -0.2477],
+        [-0.1509,  0.2845],
+        [-0.2583,  0.1513],
+        [-0.2110, -0.3006]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 67 val loss: 0.409542977809906
+train batch 0 pred: tensor([[-0.0733,  0.1531],
+        [-0.0329,  0.2489],
+        [-0.4029, -0.0664],
+        [ 0.0072,  0.0652],
+        [-0.2315, -0.6376]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000, -0.7752],
+        [ 0.0000,  0.3876],
+        [-0.7092,  0.0000],
+        [ 0.0000,  0.7752],
+        [ 0.7092, -1.5504]])
+batch 0 loss: 0.41763556003570557
+step 0
+step 100
+ETA: 2.50 min remaining
+step 200
+ETA: 2.44 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0858,  0.1030],
+        [ 0.4984, -0.2504],
+        [-0.1412,  0.2836],
+        [-0.2490,  0.1498],
+        [-0.1998, -0.3032]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 68 val loss: 0.40837544202804565
+train batch 0 pred: tensor([[ 0.6013,  0.0304],
+        [ 0.9275,  0.2370],
+        [ 0.3631, -0.1777],
+        [ 1.3030, -1.1128],
+        [ 0.5163,  0.1392]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  1.1628],
+        [ 1.4184,  1.1628],
+        [ 0.7092, -0.7752],
+        [ 1.4184, -1.1628],
+        [ 1.4184,  0.7752]])
+batch 0 loss: 0.4376251697540283
+step 0
+step 100
+ETA: 2.51 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.42 min remaining
+step 500
+ETA: 2.47 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0969,  0.0818],
+        [ 0.4839, -0.2892],
+        [-0.1539,  0.2593],
+        [-0.2618,  0.1252],
+        [-0.2133, -0.3339]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 69 val loss: 0.40812918543815613
+pred shape: torch.Size([16, 2])
+label: tensor([[ 0.7092, -1.5504],
+        [ 0.7092, -0.7752],
+        [-0.7092, -0.3876],
+        [ 0.7092,  1.1628],
+        [ 1.4184, -1.1628],
+        [-1.4184, -0.3876],
+        [-0.7092,  1.5504],
+        [ 1.4184, -0.7752],
+        [-0.7092,  1.5504],
+        [-0.7092,  0.7752],
+        [-1.4184,  0.0000],
+        [ 0.0000,  0.7752],
+        [ 0.7092, -0.7752],
+        [-1.4184,  1.1628],
+        [-0.7092,  1.1628],
+        [ 0.0000,  1.1628]])
+train batch 0 pred: tensor([[ 0.6268, -1.4380],
+        [ 0.6740,  0.2343],
+        [-0.2828,  0.1479],
+        [-0.0137, -0.0487],
+        [ 0.5264, -0.4503]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -1.5504],
+        [ 0.7092, -0.7752],
+        [-0.7092, -0.3876],
+        [ 0.7092,  1.1628],
+        [ 1.4184, -1.1628]])
+batch 0 loss: 0.5208638906478882
+step 0
+step 100
+ETA: 2.62 min remaining
+step 200
+ETA: 2.54 min remaining
+step 300
+ETA: 2.57 min remaining
+step 400
+ETA: 2.52 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0961,  0.1021],
+        [ 0.4886, -0.2542],
+        [-0.1506,  0.2825],
+        [-0.2587,  0.1477],
+        [-0.2091, -0.3072]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 70 val loss: 0.4077785611152649
+train batch 0 pred: tensor([[-0.8315, -0.0381],
+        [ 1.0053,  0.0872],
+        [ 0.4724,  0.1439],
+        [-0.9082,  0.3572],
+        [ 0.0597,  0.0590]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.1628],
+        [ 1.4184, -0.7752],
+        [ 1.4184, -0.3876],
+        [-1.4184,  0.0000],
+        [ 0.0000, -0.3876]])
+batch 0 loss: 0.489288330078125
+step 0
+step 100
+ETA: 2.51 min remaining
+step 200
+ETA: 2.55 min remaining
+step 300
+ETA: 2.58 min remaining
+step 400
+ETA: 2.61 min remaining
+step 500
+ETA: 2.50 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1036,  0.0997],
+        [ 0.4785, -0.2576],
+        [-0.1587,  0.2817],
+        [-0.2668,  0.1466],
+        [-0.2179, -0.3097]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 71 val loss: 0.40772342681884766
+train batch 0 pred: tensor([[-0.9596, -0.0663],
+        [-0.3670, -1.0184],
+        [ 0.2770,  0.2622],
+        [-0.2430,  0.0727],
+        [ 0.9572, -0.0682]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -1.5504],
+        [ 0.0000, -1.5504],
+        [ 0.0000, -0.3876],
+        [ 0.0000,  1.5504],
+        [ 1.4184, -1.1628]])
+batch 0 loss: 0.49092501401901245
+step 0
+step 100
+ETA: 2.60 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.50 min remaining
+step 500
+ETA: 2.42 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.0949,  0.0920],
+        [ 0.4978, -0.2713],
+        [-0.1465,  0.2732],
+        [-0.2549,  0.1376],
+        [-0.2034, -0.3218]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 72 val loss: 0.4063815176486969
+train batch 0 pred: tensor([[ 1.7885e+00,  6.1957e-01],
+        [ 5.4328e-01, -8.2257e-04],
+        [ 4.8131e-01, -9.8963e-02],
+        [-8.2374e-02, -3.3044e-02],
+        [-5.2674e-01,  2.2661e-01]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  0.3876],
+        [ 0.7092, -0.3876],
+        [ 1.4184,  0.0000],
+        [ 0.0000, -1.1628],
+        [-0.7092, -0.3876]])
+batch 0 loss: 0.481353759765625
+step 0
+step 100
+ETA: 2.59 min remaining
+step 200
+ETA: 2.64 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.50 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1041,  0.0956],
+        [ 0.4851, -0.2654],
+        [-0.1563,  0.2773],
+        [-0.2647,  0.1413],
+        [-0.2141, -0.3173]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 73 val loss: 0.40656521916389465
+train batch 0 pred: tensor([[-0.8195,  0.0454],
+        [-0.9722,  0.0113],
+        [ 0.6704,  0.3230],
+        [-0.4371,  0.0519],
+        [-0.7870,  0.1308]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092,  0.7752],
+        [-1.4184, -0.3876],
+        [ 0.7092, -1.1628],
+        [-0.7092,  0.0000],
+        [-0.7092,  0.7752]])
+batch 0 loss: 0.3566315770149231
+step 0
+step 100
+ETA: 2.60 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.39 min remaining
+step 500
+ETA: 2.39 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1046,  0.0983],
+        [ 0.4881, -0.2609],
+        [-0.1560,  0.2802],
+        [-0.2647,  0.1438],
+        [-0.2130, -0.3138]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 74 val loss: 0.40618380904197693
+train batch 0 pred: tensor([[-0.2895, -1.6535],
+        [ 0.3829, -1.5357],
+        [ 2.3617, -0.7851],
+        [ 0.5356, -0.4184],
+        [-0.3379, -0.4310]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000, -1.1628],
+        [-0.7092, -1.5504],
+        [-0.7092, -1.5504],
+        [ 1.4184, -1.1628],
+        [ 0.0000, -1.1628]])
+batch 0 loss: 0.8801690340042114
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.47 min remaining
+step 300
+ETA: 2.58 min remaining
+step 400
+ETA: 2.51 min remaining
+step 500
+ETA: 2.45 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1035,  0.0994],
+        [ 0.4920, -0.2589],
+        [-0.1531,  0.2822],
+        [-0.2618,  0.1455],
+        [-0.2102, -0.3124]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 75 val loss: 0.40577712655067444
+train batch 0 pred: tensor([[-0.0643, -0.0592],
+        [ 0.7793,  0.0187],
+        [ 0.5253,  0.1028],
+        [ 0.1254,  0.1334],
+        [-0.1988,  0.3344]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  0.0000],
+        [ 1.4184, -0.3876],
+        [ 0.7092,  0.3876],
+        [ 0.7092,  1.5504],
+        [-0.7092,  1.1628]])
+batch 0 loss: 0.7751528024673462
+step 0
+step 100
+ETA: 2.62 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.44 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1051,  0.0989],
+        [ 0.4923, -0.2600],
+        [-0.1538,  0.2821],
+        [-0.2626,  0.1451],
+        [-0.2106, -0.3129]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 76 val loss: 0.4054686725139618
+train batch 0 pred: tensor([[ 0.0280,  0.0937],
+        [-1.0778, -0.9537],
+        [-1.0577, -0.1042],
+        [ 0.7937,  0.3008],
+        [-0.6592,  0.0043]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000,  0.3876],
+        [-0.7092, -1.5504],
+        [-1.4184, -1.1628],
+        [ 0.7092, -0.7752],
+        [-1.4184,  0.7752]])
+batch 0 loss: 0.5800656080245972
+step 0
+step 100
+ETA: 2.48 min remaining
+step 200
+ETA: 2.50 min remaining
+step 300
+ETA: 2.50 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.53 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1059,  0.0965],
+        [ 0.4928, -0.2649],
+        [-0.1542,  0.2796],
+        [-0.2632,  0.1423],
+        [-0.2105, -0.3171]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 77 val loss: 0.4051644206047058
+train batch 0 pred: tensor([[ 1.1219,  0.2182],
+        [ 0.0853,  0.2003],
+        [ 0.4987,  0.0305],
+        [-0.9314,  0.0808],
+        [-0.8936,  0.0052]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  0.0000],
+        [ 0.0000,  0.7752],
+        [ 1.4184,  1.1628],
+        [-1.4184,  1.1628],
+        [-0.7092, -0.3876]])
+batch 0 loss: 0.402900755405426
+step 0
+step 100
+ETA: 2.49 min remaining
+step 200
+ETA: 2.54 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.44 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1044,  0.0952],
+        [ 0.4984, -0.2677],
+        [-0.1517,  0.2782],
+        [-0.2608,  0.1407],
+        [-0.2066, -0.3193]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 78 val loss: 0.40468335151672363
+train batch 0 pred: tensor([[ 0.6200,  0.0758],
+        [-0.4756, -0.8335],
+        [ 0.8549, -0.0061],
+        [-0.3809, -0.2168],
+        [-0.4635, -0.0313]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -0.3876],
+        [ 0.0000, -1.1628],
+        [ 1.4184,  0.3876],
+        [-0.7092, -1.1628],
+        [-0.7092,  0.0000]])
+batch 0 loss: 0.32845860719680786
+step 0
+step 100
+ETA: 2.61 min remaining
+step 200
+ETA: 2.57 min remaining
+step 300
+ETA: 2.57 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1092,  0.1020],
+        [ 0.4918, -0.2554],
+        [-0.1566,  0.2869],
+        [-0.2657,  0.1492],
+        [-0.2122, -0.3095]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 79 val loss: 0.40497860312461853
+pred shape: torch.Size([16, 2])
+label: tensor([[-0.7092, -1.1628],
+        [-0.7092, -0.3876],
+        [-1.4184, -1.5504],
+        [ 0.7092, -1.1628],
+        [-1.4184,  0.3876],
+        [ 0.7092, -1.1628],
+        [-1.4184,  1.5504],
+        [ 1.4184, -0.3876],
+        [-0.7092, -1.5504],
+        [ 0.7092, -1.5504],
+        [ 0.7092, -0.3876],
+        [-1.4184, -0.3876],
+        [-1.4184, -0.7752],
+        [ 1.4184, -1.1628],
+        [-0.7092,  0.0000],
+        [ 0.7092,  0.3876]])
+train batch 0 pred: tensor([[-1.1517, -1.6281],
+        [-0.7276,  0.0371],
+        [-0.9388,  0.0028],
+        [-0.1269, -1.5918],
+        [-0.5681,  0.2084]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -1.1628],
+        [-0.7092, -0.3876],
+        [-1.4184, -1.5504],
+        [ 0.7092, -1.1628],
+        [-1.4184,  0.3876]])
+batch 0 loss: 0.5396466255187988
+step 0
+step 100
+ETA: 2.63 min remaining
+step 200
+ETA: 2.47 min remaining
+step 300
+ETA: 2.49 min remaining
+step 400
+ETA: 2.52 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1079,  0.0985],
+        [ 0.4955, -0.2615],
+        [-0.1548,  0.2826],
+        [-0.2640,  0.1447],
+        [-0.2101, -0.3146]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 80 val loss: 0.40455636382102966
+train batch 0 pred: tensor([[ 0.8264,  0.0899],
+        [-0.8836,  0.0684],
+        [-0.9876, -0.4462],
+        [-1.3890, -0.1805],
+        [-1.0562,  0.1636]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184,  0.7752],
+        [-1.4184, -0.3876],
+        [-0.7092, -1.1628],
+        [-1.4184, -1.1628],
+        [-1.4184,  1.5504]])
+batch 0 loss: 0.4878925383090973
+step 0
+step 100
+ETA: 2.49 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.51 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.42 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1110,  0.0996],
+        [ 0.4919, -0.2600],
+        [-0.1575,  0.2843],
+        [-0.2667,  0.1462],
+        [-0.2133, -0.3134]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 81 val loss: 0.40456321835517883
+train batch 0 pred: tensor([[-1.0320,  0.1439],
+        [ 0.0083,  0.0477],
+        [ 0.7231, -0.1270],
+        [ 0.3778,  0.0463],
+        [-0.0783, -0.1611]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184,  1.5504],
+        [ 0.0000,  0.3876],
+        [ 1.4184,  1.5504],
+        [ 0.7092, -0.7752],
+        [ 0.0000, -0.3876]])
+batch 0 loss: 0.5484899282455444
+step 0
+step 100
+ETA: 2.60 min remaining
+step 200
+ETA: 2.48 min remaining
+step 300
+ETA: 2.44 min remaining
+step 400
+ETA: 2.50 min remaining
+step 500
+ETA: 2.47 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1091,  0.0972],
+        [ 0.4961, -0.2638],
+        [-0.1549,  0.2812],
+        [-0.2642,  0.1429],
+        [-0.2102, -0.3168]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 82 val loss: 0.40415918827056885
+train batch 0 pred: tensor([[-0.8950, -2.0350],
+        [ 0.4499,  0.1139],
+        [-0.7969,  0.2654],
+        [-0.7506, -0.3018],
+        [ 0.5717,  0.1333]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -1.5504],
+        [ 0.7092,  0.3876],
+        [-1.4184,  0.0000],
+        [-1.4184, -0.3876],
+        [ 1.4184,  1.5504]])
+batch 0 loss: 0.7925361394882202
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.61 min remaining
+step 300
+ETA: 2.63 min remaining
+step 400
+ETA: 2.58 min remaining
+step 500
+ETA: 2.50 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1083,  0.0994],
+        [ 0.4991, -0.2600],
+        [-0.1531,  0.2844],
+        [-0.2625,  0.1460],
+        [-0.2079, -0.3136]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 83 val loss: 0.4039553999900818
+train batch 0 pred: tensor([[ 1.2529, -0.6526],
+        [ 0.0994, -0.2214],
+        [-0.7396,  0.0331],
+        [ 0.2395,  0.0823],
+        [ 0.6352, -0.3320]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -1.5504],
+        [ 1.4184, -0.7752],
+        [-1.4184,  0.3876],
+        [ 0.7092,  1.1628],
+        [ 1.4184, -1.1628]])
+batch 0 loss: 0.5472346544265747
+step 0
+step 100
+ETA: 2.63 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.44 min remaining
+step 400
+ETA: 2.46 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1110,  0.0997],
+        [ 0.4955, -0.2601],
+        [-0.1562,  0.2849],
+        [-0.2656,  0.1463],
+        [-0.2113, -0.3137]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 84 val loss: 0.40402522683143616
+train batch 0 pred: tensor([[-0.4061,  0.0738],
+        [-0.2932,  0.0314],
+        [-1.1039, -0.4477],
+        [ 1.3599, -0.2369],
+        [ 1.3027,  0.2480]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092,  1.1628],
+        [-0.7092, -0.3876],
+        [-0.7092, -1.1628],
+        [ 1.4184, -1.5504],
+        [ 1.4184,  0.0000]])
+batch 0 loss: 0.37337565422058105
+step 0
+step 100
+ETA: 2.54 min remaining
+step 200
+ETA: 2.45 min remaining
+step 300
+ETA: 2.39 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1112,  0.1024],
+        [ 0.4959, -0.2552],
+        [-0.1562,  0.2882],
+        [-0.2657,  0.1495],
+        [-0.2113, -0.3100]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 85 val loss: 0.4040161073207855
+train batch 0 pred: tensor([[-1.2838, -0.2907],
+        [-0.8482,  0.1091],
+        [-0.3361, -0.0094],
+        [-0.3229, -0.0429],
+        [ 0.9612, -0.1757]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -1.5504],
+        [-1.4184,  1.5504],
+        [ 0.0000,  1.5504],
+        [ 0.0000, -0.7752],
+        [ 1.4184, -1.1628]])
+batch 0 loss: 0.6526492834091187
+step 0
+step 100
+ETA: 2.53 min remaining
+step 200
+ETA: 2.51 min remaining
+step 300
+ETA: 2.51 min remaining
+step 400
+ETA: 2.55 min remaining
+step 500
+ETA: 2.52 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1120,  0.0976],
+        [ 0.4954, -0.2639],
+        [-0.1568,  0.2827],
+        [-0.2663,  0.1440],
+        [-0.2117, -0.3168]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 86 val loss: 0.4038167893886566
+train batch 0 pred: tensor([[ 0.8214,  0.0533],
+        [-1.0213,  0.2199],
+        [ 0.3476, -0.4871],
+        [ 0.0067,  0.1930],
+        [ 0.7748,  0.2192]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -0.3876],
+        [-1.4184,  0.0000],
+        [ 1.4184, -0.3876],
+        [ 0.0000, -0.3876],
+        [ 0.7092, -0.7752]])
+batch 0 loss: 0.36628836393356323
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.53 min remaining
+step 300
+ETA: 2.49 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.45 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1114,  0.0984],
+        [ 0.4971, -0.2624],
+        [-0.1560,  0.2837],
+        [-0.2655,  0.1449],
+        [-0.2106, -0.3157]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 87 val loss: 0.40369781851768494
+train batch 0 pred: tensor([[-0.3724,  0.0531],
+        [ 0.5925,  0.2110],
+        [-1.0882,  0.3119],
+        [-0.0322,  0.2464],
+        [-0.7484, -0.3478]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-0.7092, -0.3876],
+        [ 0.7092,  0.7752],
+        [-1.4184,  0.3876],
+        [ 0.0000,  0.0000],
+        [-0.7092,  1.5504]])
+batch 0 loss: 0.4731173515319824
+step 0
+step 100
+ETA: 2.49 min remaining
+step 200
+ETA: 2.44 min remaining
+step 300
+ETA: 2.42 min remaining
+step 400
+ETA: 2.40 min remaining
+step 500
+ETA: 2.43 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1119,  0.0998],
+        [ 0.4968, -0.2600],
+        [-0.1563,  0.2854],
+        [-0.2659,  0.1465],
+        [-0.2110, -0.3139]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 88 val loss: 0.4036952257156372
+train batch 0 pred: tensor([[ 0.6351,  0.2552],
+        [ 1.1695,  0.3870],
+        [-0.2578,  0.1068],
+        [ 1.2750, -0.9772],
+        [-0.5547, -0.0080]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092,  1.1628],
+        [ 1.4184, -0.3876],
+        [ 0.0000,  0.3876],
+        [ 0.7092, -1.5504],
+        [-0.7092, -1.1628]])
+batch 0 loss: 0.4291495382785797
+step 0
+step 100
+ETA: 2.66 min remaining
+step 200
+ETA: 2.61 min remaining
+step 300
+ETA: 2.58 min remaining
+step 400
+ETA: 2.47 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1123,  0.0986],
+        [ 0.4965, -0.2622],
+        [-0.1565,  0.2840],
+        [-0.2661,  0.1451],
+        [-0.2113, -0.3156]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 89 val loss: 0.4036233425140381
+pred shape: torch.Size([16, 2])
+label: tensor([[ 1.4184, -1.5504],
+        [-1.4184,  1.5504],
+        [-0.7092,  1.1628],
+        [-0.7092, -0.3876],
+        [ 1.4184, -0.3876],
+        [-1.4184, -0.3876],
+        [ 1.4184,  1.5504],
+        [ 0.0000,  0.7752],
+        [ 1.4184, -1.5504],
+        [ 1.4184,  1.5504],
+        [-1.4184,  1.5504],
+        [-0.7092,  0.0000],
+        [-0.7092, -1.1628],
+        [-0.7092, -0.7752],
+        [-0.7092, -0.3876],
+        [-0.7092,  0.7752]])
+train batch 0 pred: tensor([[ 1.2844, -0.1506],
+        [-0.9403,  0.1652],
+        [-0.3896,  0.2631],
+        [-0.5365,  0.2362],
+        [ 0.3744, -0.4707]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -1.5504],
+        [-1.4184,  1.5504],
+        [-0.7092,  1.1628],
+        [-0.7092, -0.3876],
+        [ 1.4184, -0.3876]])
+batch 0 loss: 0.5584383010864258
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.54 min remaining
+step 300
+ETA: 2.39 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.49 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1132,  0.0984],
+        [ 0.4952, -0.2625],
+        [-0.1574,  0.2838],
+        [-0.2670,  0.1449],
+        [-0.2123, -0.3160]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 90 val loss: 0.40363049507141113
+train batch 0 pred: tensor([[ 0.4629,  0.1560],
+        [ 0.8423, -0.0187],
+        [-0.9737,  0.1779],
+        [ 0.1825, -0.1728],
+        [ 0.2948, -0.0343]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092,  1.5504],
+        [ 1.4184,  1.5504],
+        [-1.4184,  0.3876],
+        [ 0.0000, -1.1628],
+        [ 0.7092,  0.0000]])
+batch 0 loss: 0.9175408482551575
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.59 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.55 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1123,  0.0994],
+        [ 0.4969, -0.2608],
+        [-0.1564,  0.2850],
+        [-0.2660,  0.1460],
+        [-0.2110, -0.3146]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 91 val loss: 0.4035707712173462
+train batch 0 pred: tensor([[ 2.4853, -0.7500],
+        [-0.7060,  0.0573],
+        [ 0.6349, -0.1084],
+        [-0.8482,  0.3787],
+        [ 1.4607,  0.3532]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.7092, -1.5504],
+        [-1.4184,  1.5504],
+        [ 1.4184,  1.5504],
+        [-1.4184,  0.0000],
+        [ 1.4184,  0.0000]])
+batch 0 loss: 0.5010367631912231
+step 0
+step 100
+ETA: 2.65 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.47 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.48 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1125,  0.0991],
+        [ 0.4969, -0.2613],
+        [-0.1565,  0.2847],
+        [-0.2661,  0.1457],
+        [-0.2111, -0.3150]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 92 val loss: 0.4035463035106659
+train batch 0 pred: tensor([[-0.3280, -0.7268],
+        [-0.2661, -1.8448],
+        [ 0.0179,  0.4003],
+        [-0.3004,  0.1599],
+        [-0.5966, -0.1552]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000, -1.5504],
+        [ 0.0000, -1.5504],
+        [ 0.0000,  1.5504],
+        [ 0.0000,  1.1628],
+        [-1.4184, -1.5504]])
+batch 0 loss: 0.5816992521286011
+step 0
+step 100
+ETA: 2.52 min remaining
+step 200
+ETA: 2.44 min remaining
+step 300
+ETA: 2.48 min remaining
+step 400
+ETA: 2.48 min remaining
+step 500
+ETA: 2.46 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1127,  0.0988],
+        [ 0.4965, -0.2618],
+        [-0.1568,  0.2843],
+        [-0.2664,  0.1454],
+        [-0.2114, -0.3154]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 93 val loss: 0.40354228019714355
+train batch 0 pred: tensor([[-0.9662,  0.1854],
+        [-0.3282, -0.7273],
+        [-0.3654, -0.7633],
+        [ 0.2003,  0.1381],
+        [ 0.4408,  0.4021]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184,  0.7752],
+        [ 0.0000, -1.5504],
+        [ 0.7092, -1.5504],
+        [ 0.0000,  0.0000],
+        [ 0.7092,  0.3876]])
+batch 0 loss: 0.40953201055526733
+step 0
+step 100
+ETA: 2.52 min remaining
+step 200
+ETA: 2.53 min remaining
+step 300
+ETA: 2.52 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.44 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1127,  0.0989],
+        [ 0.4967, -0.2617],
+        [-0.1567,  0.2844],
+        [-0.2663,  0.1454],
+        [-0.2113, -0.3154]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 94 val loss: 0.40352991223335266
+train batch 0 pred: tensor([[ 0.6282, -0.5815],
+        [ 1.2678,  0.2743],
+        [ 0.7787,  0.0949],
+        [ 0.8896,  0.1770],
+        [-0.5915,  0.2924]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -0.7752],
+        [ 1.4184,  0.7752],
+        [ 1.4184,  1.5504],
+        [ 0.7092,  1.1628],
+        [-0.7092,  0.7752]])
+batch 0 loss: 0.5515719056129456
+step 0
+step 100
+ETA: 2.57 min remaining
+step 200
+ETA: 2.49 min remaining
+step 300
+ETA: 2.56 min remaining
+step 400
+ETA: 2.55 min remaining
+step 500
+ETA: 2.55 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1128,  0.0990],
+        [ 0.4966, -0.2615],
+        [-0.1568,  0.2846],
+        [-0.2664,  0.1456],
+        [-0.2114, -0.3152]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 95 val loss: 0.4035348892211914
+train batch 0 pred: tensor([[ 1.1848,  0.4443],
+        [-0.2963,  0.0554],
+        [-0.9839,  0.1573],
+        [ 2.3483, -0.7864],
+        [ 0.7353,  0.0893]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -0.3876],
+        [-0.7092, -0.7752],
+        [-1.4184, -0.3876],
+        [ 0.7092, -1.5504],
+        [ 1.4184,  1.1628]])
+batch 0 loss: 0.5730217099189758
+step 0
+step 100
+ETA: 2.69 min remaining
+step 200
+ETA: 2.63 min remaining
+step 300
+ETA: 2.53 min remaining
+step 400
+ETA: 2.45 min remaining
+step 500
+ETA: 2.45 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1128,  0.0990],
+        [ 0.4966, -0.2615],
+        [-0.1568,  0.2846],
+        [-0.2664,  0.1456],
+        [-0.2114, -0.3152]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 96 val loss: 0.4035336673259735
+train batch 0 pred: tensor([[-0.2716,  0.1297],
+        [-0.4461,  0.5534],
+        [-1.0450,  0.1742],
+        [-0.2591,  0.2281],
+        [-0.6880,  0.0125]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[-1.4184, -0.3876],
+        [-0.7092,  1.5504],
+        [-1.4184,  1.5504],
+        [-0.7092,  0.7752],
+        [-0.7092, -1.5504]])
+batch 0 loss: 0.6458989381790161
+step 0
+step 100
+ETA: 2.62 min remaining
+step 200
+ETA: 2.59 min remaining
+step 300
+ETA: 2.57 min remaining
+step 400
+ETA: 2.62 min remaining
+step 500
+ETA: 2.59 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1128,  0.0990],
+        [ 0.4966, -0.2615],
+        [-0.1568,  0.2846],
+        [-0.2664,  0.1456],
+        [-0.2114, -0.3152]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 97 val loss: 0.40353378653526306
+train batch 0 pred: tensor([[ 0.3835,  0.0210],
+        [-0.6233,  0.2790],
+        [-0.9013,  0.4179],
+        [-0.2520,  0.0499],
+        [-1.2002, -0.1490]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 0.0000, -0.3876],
+        [-0.7092,  1.5504],
+        [-1.4184,  0.3876],
+        [ 0.0000,  0.3876],
+        [-1.4184, -1.1628]])
+batch 0 loss: 0.48353421688079834
+step 0
+step 100
+ETA: 2.58 min remaining
+step 200
+ETA: 2.56 min remaining
+step 300
+ETA: 2.60 min remaining
+step 400
+ETA: 2.57 min remaining
+step 500
+ETA: 2.51 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1128,  0.0990],
+        [ 0.4966, -0.2615],
+        [-0.1568,  0.2846],
+        [-0.2664,  0.1456],
+        [-0.2114, -0.3152]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 98 val loss: 0.40353378653526306
+train batch 0 pred: tensor([[ 0.8201, -0.0321],
+        [-1.1037,  0.2076],
+        [-0.1868, -0.0276],
+        [ 0.3922, -0.1496],
+        [ 0.8522, -0.0329]], device='cuda:0', grad_fn=<SliceBackward0>)
+train batch 0 label: tensor([[ 1.4184, -0.7752],
+        [-1.4184,  0.7752],
+        [ 0.0000,  0.0000],
+        [ 1.4184,  0.0000],
+        [ 0.7092,  0.7752]])
+batch 0 loss: 0.5071568489074707
+step 0
+step 100
+ETA: 2.59 min remaining
+step 200
+ETA: 2.56 min remaining
+step 300
+ETA: 2.55 min remaining
+step 400
+ETA: 2.54 min remaining
+step 500
+ETA: 2.53 min remaining
+Loaded 75 validation batches, batch size 16
+val batch 0 pred: tensor([[-1.1128,  0.0990],
+        [ 0.4966, -0.2615],
+        [-0.1568,  0.2846],
+        [-0.2664,  0.1456],
+        [-0.2114, -0.3152]], device='cuda:0')
+val batch 0 label: tensor([[-1.4184,  1.1628],
+        [ 0.7092, -0.3876],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504],
+        [-0.7092,  1.5504]])
+Epoch 99 val loss: 0.40353378653526306
+all checkpoints saved to checkpoints/baseline-linear-probe/baseline-linear-probe_2026-04-26_19-19-29
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mbaseline-linear-probe[0m at: [34mhttps://wandb.ai/aditirai2020-new-york-university/physics-jepa/runs/x52wcihf[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20260426_191914-x52wcihf/logs[0m

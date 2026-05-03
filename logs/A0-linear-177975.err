@@ -1,0 +1,66 @@
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:303: UserWarning: Overwriting vit_small_patch16_224 in registry with physics_jepa.videomae.vit_small_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_small_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:312: UserWarning: Overwriting vit_base_patch16_224 in registry with physics_jepa.videomae.vit_base_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_base_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:321: UserWarning: Overwriting vit_base_patch16_384 in registry with physics_jepa.videomae.vit_base_patch16_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_base_patch16_384(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:330: UserWarning: Overwriting vit_large_patch16_224 in registry with physics_jepa.videomae.vit_large_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_large_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:339: UserWarning: Overwriting vit_large_patch16_384 in registry with physics_jepa.videomae.vit_large_patch16_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_large_patch16_384(pretrained=False, **kwargs):
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/hydra/_internal/config_loader_impl.py", line 390, in _apply_overrides_to_config
+    OmegaConf.update(cfg, key, value, merge=True)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/omegaconf.py", line 741, in update
+    root.__setattr__(last_key, value)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/dictconfig.py", line 337, in __setattr__
+    raise e
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/dictconfig.py", line 334, in __setattr__
+    self.__set_impl(key, value)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/dictconfig.py", line 318, in __set_impl
+    self._set_item_impl(key, value)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/basecontainer.py", line 549, in _set_item_impl
+    self._validate_set(key, value)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/dictconfig.py", line 180, in _validate_set
+    target = self._get_node(key) if key is not None else self
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+omegaconf.errors.ConfigAttributeError: Key 'trained_model_path' is not in struct
+    full_key: trained_model_path
+    object_type=dict
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/finetune.py", line 19, in <module>
+    cfg = compose(args.config, args.overrides)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/utils/hydra.py", line 35, in compose
+    cfg = hydra.compose(config_name=config_name, overrides=overrides)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/hydra/compose.py", line 38, in compose
+    cfg = gh.hydra.compose_config(
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/hydra/_internal/hydra.py", line 594, in compose_config
+    cfg = self.config_loader.load_configuration(
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/hydra/_internal/config_loader_impl.py", line 142, in load_configuration
+    return self._load_configuration_impl(
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/hydra/_internal/config_loader_impl.py", line 276, in _load_configuration_impl
+    ConfigLoaderImpl._apply_overrides_to_config(config_overrides, cfg)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/hydra/_internal/config_loader_impl.py", line 392, in _apply_overrides_to_config
+    raise ConfigCompositionException(
+hydra.errors.ConfigCompositionException: Could not override 'trained_model_path'.
+To append to your config use +trained_model_path=checkpoints/active_matter-8frames-cnn-jepa-A0-gap0-177696_2026-04-29_09-33-37/ConvEncoder_49.pth

@@ -1,0 +1,26 @@
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:303: UserWarning: Overwriting vit_small_patch16_224 in registry with physics_jepa.videomae.vit_small_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_small_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:312: UserWarning: Overwriting vit_base_patch16_224 in registry with physics_jepa.videomae.vit_base_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_base_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:321: UserWarning: Overwriting vit_base_patch16_384 in registry with physics_jepa.videomae.vit_base_patch16_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_base_patch16_384(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:330: UserWarning: Overwriting vit_large_patch16_224 in registry with physics_jepa.videomae.vit_large_patch16_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_large_patch16_224(pretrained=False, **kwargs):
+/scratch/ml9542/active-matter-representation/physics_jepa/videomae.py:339: UserWarning: Overwriting vit_large_patch16_384 in registry with physics_jepa.videomae.vit_large_patch16_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  def vit_large_patch16_384(pretrained=False, **kwargs):
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ml9542/.netrc.
+wandb: Currently logged in as: ml9542 (aditirai2020-new-york-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run 2s72t2l3
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in /scratch/ml9542/active-matter-representation/wandb/run-20260426_154558-2s72t2l3
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run baseline-linear-probe
+wandb: ⭐️ View project at https://wandb.ai/aditirai2020-new-york-university/physics-jepa
+wandb: 🚀 View run at https://wandb.ai/aditirai2020-new-york-university/physics-jepa/runs/2s72t2l3
+val embeddings:   0%|                                                                                                                          | 0/38 [00:00<?, ?it/s]/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/conv.py:720: UserWarning: Using padding='same' with even kernel lengths and odd dilation may require a zero-padded copy of the input be created (Triggered internally at /pytorch/aten/src/ATen/native/Convolution.cpp:1036.)
+  return F.conv3d(
+val embeddings:   3%|███                                                                                                               | 1/38 [00:41<25:46, 41.79s/it]val embeddings:   5%|██████                                                                                                            | 2/38 [00:43<10:45, 17.93s/it]val embeddings:   8%|█████████                                                                                                         | 3/38 [00:44<06:00, 10.30s/it]val embeddings:  11%|████████████                                                                                                      | 4/38 [00:45<03:48,  6.72s/it]slurmstepd: error: *** JOB 173997 ON b-19-44 CANCELLED AT 2026-04-26T16:11:01 ***

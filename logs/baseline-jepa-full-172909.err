@@ -1,0 +1,117 @@
+/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ml9542/.netrc.
+wandb: Currently logged in as: ml9542 (aditirai2020-new-york-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run x9p73v5o
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in /scratch/ml9542/active-matter-representation/wandb/run-20260425_105059-x9p73v5o
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run active_matter-16frames-cnn-jepa-baseline-jepa-full
+wandb: ⭐️ View project at https://wandb.ai/aditirai2020-new-york-university/physics-jepa
+wandb: 🚀 View run at https://wandb.ai/aditirai2020-new-york-university/physics-jepa/runs/x9p73v5o
+  0%|                                                                     | 0/30 [00:00<?, ?it/s]/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/conv.py:720: UserWarning: Using padding='same' with even kernel lengths and odd dilation may require a zero-padded copy of the input be created (Triggered internally at /pytorch/aten/src/ATen/native/Convolution.cpp:1036.)
+  return F.conv3d(
+  0%|                                                                     | 0/30 [00:13<?, ?it/s]
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train_jepa.py", line 46, in <module>
+    trainer.train()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 79, in train
+    self.training_loop(model_components, loss_fn, optimizer, run_name)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 145, in training_loop
+    pred, loss_dict = self.step(batch, model_components, loss_fn, self.rank, log=(i == 0 and epoch % 10 == 0))
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 245, in step
+    pred, loss_dict = self.pred_fn(batch, model_components, loss_fn)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train_jepa.py", line 14, in pred_fn
+    ctx_embed = encoder(batch['context'])
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/utils/model_utils.py", line 157, in forward
+    x = self.res_blocks[i](x)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/container.py", line 240, in forward
+    input = module(input)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/utils/model_utils.py", line 80, in forward
+    x = self.pwconv1(x)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 98.00 MiB. GPU 0 has a total capacity of 22.03 GiB of which 99.06 MiB is free. Including non-PyTorch memory, this process has 21.92 GiB memory in use. Of the allocated memory 21.67 GiB is allocated by PyTorch, and 26.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train_jepa.py", line 46, in <module>
+    trainer.train()
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 79, in train
+    self.training_loop(model_components, loss_fn, optimizer, run_name)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 145, in training_loop
+    pred, loss_dict = self.step(batch, model_components, loss_fn, self.rank, log=(i == 0 and epoch % 10 == 0))
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train.py", line 245, in step
+    pred, loss_dict = self.pred_fn(batch, model_components, loss_fn)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/train_jepa.py", line 14, in pred_fn
+    ctx_embed = encoder(batch['context'])
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/utils/model_utils.py", line 157, in forward
+    x = self.res_blocks[i](x)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/container.py", line 240, in forward
+    input = module(input)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/ml9542/active-matter-representation/physics_jepa/utils/model_utils.py", line 80, in forward
+    x = self.pwconv1(x)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 98.00 MiB. GPU 0 has a total capacity of 22.03 GiB of which 99.06 MiB is free. Including non-PyTorch memory, this process has 21.92 GiB memory in use. Of the allocated memory 21.67 GiB is allocated by PyTorch, and 26.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Exception in thread Thread-3 (_pin_memory_loop):
+Traceback (most recent call last):
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py", line 61, in _pin_memory_loop
+    do_one_step()
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py", line 37, in do_one_step
+    r = in_queue.get(timeout=MP_STATUS_CHECK_INTERVAL)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/multiprocessing/queues.py", line 122, in get
+    return _ForkingPickler.loads(res)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/site-packages/torch/multiprocessing/reductions.py", line 541, in rebuild_storage_fd
+    fd = df.detach()
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/multiprocessing/resource_sharer.py", line 57, in detach
+    with _resource_sharer.get_connection(self._id) as conn:
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/multiprocessing/resource_sharer.py", line 86, in get_connection
+    c = Client(address, authkey=process.current_process().authkey)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/multiprocessing/connection.py", line 502, in Client
+    c = SocketClient(address)
+  File "/scratch/ml9542/miniconda3/envs/active_matter/lib/python3.10/multiprocessing/connection.py", line 630, in SocketClient
+    s.connect(address)
+ConnectionRefusedError: [Errno 111] Connection refused
